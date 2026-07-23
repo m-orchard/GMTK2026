@@ -6,6 +6,9 @@ public class TimerDisplay : MonoBehaviour
 {
     [SerializeField] private Timer timer;
     [SerializeField] private TextMeshProUGUI label;
+
+    [Tooltip("TimeSpan custom format string, e.g. mm\\:ss or mm\\:ss\\.f\n" +
+             "Docs: https://learn.microsoft.com/dotnet/standard/base-types/custom-timespan-format-strings")]
     [SerializeField] private string timeSpanFormat = @"mm\:ss\.fff";
 
     private void OnEnable()
