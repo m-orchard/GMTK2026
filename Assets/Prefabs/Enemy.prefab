@@ -15,6 +15,9 @@ GameObject:
   - component: {fileID: 7906780459576110367}
   - component: {fileID: 7985835331573285975}
   - component: {fileID: 8831552448166869791}
+  - component: {fileID: 3044195822112636612}
+  - component: {fileID: 6363653798227008602}
+  - component: {fileID: -564015342643231615}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
@@ -87,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3899e02d14e977242905ab3a750ec9b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHealth: 5
+  maxHealth: 10
 --- !u!114 &5291937364565752778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,6 +136,7 @@ MonoBehaviour:
   attackDamage: 10
   attackInterval: 0.5
   attackDuration: 3
+  resourcesPerAttack: 5
   returnPoint: {fileID: 0}
   destroyDelayAfterReturn: 0.5
 --- !u!114 &8831552448166869791
@@ -173,6 +177,44 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3044195822112636612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2308790289441638048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c8fc31d44be5bb43928dfe71cb502c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ResourceCarrier
+--- !u!114 &6363653798227008602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2308790289441638048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bad2524b265b7544c9a10ecffdcf89dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DropResourcesOnDeath
+  pickupPrefab: {fileID: 7612391125650264983, guid: 0c36cbcb8242e284f9d7dabbda9a5fd2, type: 3}
+--- !u!114 &-564015342643231615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2308790289441638048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f9ab5a569538ba4eaa259bf249f1588, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Knockback
+  recoverySpeed: 20
 --- !u!1 &5809766856321064327
 GameObject:
   m_ObjectHideFlags: 0

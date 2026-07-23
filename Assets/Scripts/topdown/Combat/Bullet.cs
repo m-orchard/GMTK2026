@@ -17,6 +17,10 @@ public class Bullet : MonoBehaviour
     [Tooltip("Which layers this bullet is allowed to hit.")]
     [SerializeField] private LayerMask hittableLayers;
 
+    [Header("Knockback")]
+    [Tooltip("How hard the bullet shoves what it hits, along its travel direction.")]
+    [SerializeField, Min(0f)] private float knockbackForce = 3f;
+
     private Rigidbody2D bulletRigidbody;
     private float despawnTime;
 
@@ -48,6 +52,7 @@ public class Bullet : MonoBehaviour
         }
 
         ApplyDamageIfPossible(other);
+        ApplyKnockbackIfPossible(other);
         Despawn();
     }
 
@@ -61,6 +66,19 @@ public class Bullet : MonoBehaviour
         if (other.TryGetComponent(out IDamageable damageable))
         {
             damageable.TakeDamage(damage);
+        }
+    }
+
+    private void ApplyKnockbackIfPossible(Collider2D other)
+    {
+        if (knockbackForce <= 0f)
+        {
+            return;
+        }
+
+        if (other.TryGetComponent(out IKnockbackable knockbackable))
+        {
+            knockbackable.ApplyKnockback(bulletRigidbody.linearVelocity, knockbackForce);
         }
     }
 

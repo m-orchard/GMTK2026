@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyMovement))]
+[RequireComponent(typeof(ResourceCarrier))]
 public class EnemyAI : MonoBehaviour
 {
     [Header("Spawning")]
@@ -18,6 +19,9 @@ public class EnemyAI : MonoBehaviour
     [SerializeField, Min(0.01f)] private float attackInterval = 0.5f;
     [SerializeField, Min(0f)] private float attackDuration = 3f;
 
+    [Tooltip("Resources stolen from the module on each attack. Dropped if the enemy is killed, kept if it escapes.")]
+    [SerializeField, Min(0)] private int resourcesPerAttack = 5;
+
     [Header("Retreat")]
     [Tooltip("Point the enemy returns to after attacking. Eventually the boarding point.")]
     [SerializeField] private Transform returnPoint;
@@ -26,6 +30,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField, Min(0f)] private float destroyDelayAfterReturn = 0.5f;
 
     private EnemyMovement movement;
+    private ResourceCarrier resourceCarrier;
     private StateMachine stateMachine;
 
     public EnemySpawningState SpawningState { get; private set; }
@@ -45,6 +50,7 @@ public class EnemyAI : MonoBehaviour
     private void Awake()
     {
         movement = GetComponent<EnemyMovement>();
+        resourceCarrier = GetComponent<ResourceCarrier>();
         stateMachine = new StateMachine();
 
         SpawningState = new EnemySpawningState(this);
@@ -105,6 +111,11 @@ public class EnemyAI : MonoBehaviour
         }
 
         return closest;
+    }
+
+    public void CollectAttackResources()
+    {
+        resourceCarrier.Collect(resourcesPerAttack);
     }
 
     public void SetReturnPoint(Transform point)

@@ -34,6 +34,7 @@ public class EnemyAttackingModuleState : IState
         if (Time.time >= nextAttackTime)
         {
             targetModule.Health.TakeDamage(enemy.AttackDamage);
+            enemy.CollectAttackResources();
             nextAttackTime = Time.time + enemy.AttackInterval;
         }
     }

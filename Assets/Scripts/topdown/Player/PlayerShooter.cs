@@ -18,7 +18,17 @@ public class PlayerShooter : MonoBehaviour
     [Tooltip("If true, holding fire keeps shooting. If false, each shot needs a fresh press.")]
     [SerializeField] private bool automatic = true;
 
+    [Header("Recoil")]
+    [Tooltip("How hard each shot shoves the player backwards. Eventually driven by the equipped gun.")]
+    [SerializeField, Min(0f)] private float recoilForce = 1.5f;
+
     private float nextFireTime;
+    private Knockback recoil;
+
+    private void Awake()
+    {
+        recoil = GetComponentInParent<Knockback>();
+    }
 
     private void Update()
     {
@@ -36,9 +46,21 @@ public class PlayerShooter : MonoBehaviour
     private void Fire()
     {
         Transform spawnPoint = firePoint != null ? firePoint : transform;
+        Vector2 fireDirection = spawnPoint.up;
         Bullet bullet = Instantiate(bulletPrefab, spawnPoint.position, spawnPoint.rotation);
-        bullet.Launch(spawnPoint.up);
+        bullet.Launch(fireDirection);
+        ApplyRecoil(fireDirection);
         nextFireTime = Time.time + SecondsBetweenShots();
+    }
+
+    private void ApplyRecoil(Vector2 fireDirection)
+    {
+        if (recoil == null || recoilForce <= 0f)
+        {
+            return;
+        }
+
+        recoil.ApplyKnockback(-fireDirection, recoilForce);
     }
 
     private float SecondsBetweenShots()

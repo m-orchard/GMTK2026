@@ -23,7 +23,14 @@ public class WaveManager : Singleton<WaveManager>
     [SerializeField] private List<BreachPoint> breachPoints = new List<BreachPoint>();
 
     [Header("Spawning")]
-    [SerializeField, Min(0f)] private float firstWaveDelay = 3f;
+    [SerializeField, Min(0f)] private float firstWaveDelay = 1f;
+
+    [Tooltip("Fixed countdown for the opening wave so the first breach lands at a predictable time instead of a random roll.")]
+    [SerializeField, Min(0f)] private float firstWaveCountdown = 30f;
+
+    [Tooltip("How many upcoming waves to keep queued on screen. A new wave is added whenever one breaches.")]
+    [SerializeField, Min(1)] private int queuedWaveCount = 5;
+
     [SerializeField, Min(0f)] private float spawnScatterRadius = 1f;
 
     [Tooltip("Shared heartbeat all waves are aligned to. Wave starts and countdown durations snap to this tick so every timer counts down in sync.")]
@@ -31,15 +38,18 @@ public class WaveManager : Singleton<WaveManager>
 
     [Header("Escalation (X = seconds since waves began)")]
     [Tooltip("Number of enemies spawned by a wave.")]
-    [SerializeField] private AnimationCurve enemiesPerWaveCurve = AnimationCurve.Linear(0f, 1f, 120f, 6f);
+    [SerializeField] private AnimationCurve enemiesPerWaveCurve = AnimationCurve.Linear(0f, 1f, 300f, 8f);
 
-    [Tooltip("Seconds between the start of one wave and the next.")]
-    [SerializeField] private AnimationCurve waveIntervalCurve = AnimationCurve.Linear(0f, 10f, 120f, 6f);
+    [Tooltip("Shortest gap added after the previous wave's breach when scheduling a new one. Each new wave always breaches later than every queued wave.")]
+    [SerializeField] private AnimationCurve breachGapMinCurve = AnimationCurve.Linear(0f, 40f, 600f, 60f);
 
-    [Tooltip("Countdown length shown on a wave's timer before it breaches. Much longer than the interval so many timers stack up at once.")]
-    [SerializeField] private AnimationCurve warningDurationCurve = AnimationCurve.Linear(0f, 90f, 120f, 75f);
+    [Tooltip("Longest gap added after the previous wave's breach. A random gap between min and max gives the queue a spread from seconds to minutes.")]
+    [SerializeField] private AnimationCurve breachGapMaxCurve = AnimationCurve.Linear(0f, 95f, 600f, 150f);
 
     private float wavesStartTime;
+    private float lastBreachElapsed;
+    private int spawnedWaveCount;
+    private int queuedWaves;
 
     public event System.Action<ShipLocation> OnWaveBreached;
 
@@ -67,15 +77,13 @@ public class WaveManager : Singleton<WaveManager>
         yield return new WaitForSecondsRealtime(firstWaveDelay);
         wavesStartTime = Time.unscaledTime;
 
-        float nextWaveElapsed = 0f;
         for (int tick = 0; ; tick++)
         {
             float elapsed = tick * spawnTickInterval;
 
-            if (elapsed >= nextWaveElapsed)
+            while (queuedWaves < queuedWaveCount)
             {
-                BeginWave(elapsed);
-                nextWaveElapsed = elapsed + QuantizeToTick(waveIntervalCurve.Evaluate(elapsed));
+                QueueWave(elapsed);
             }
 
             yield return WaitForTick(tick + 1);
@@ -93,22 +101,47 @@ public class WaveManager : Singleton<WaveManager>
         return Mathf.Max(spawnTickInterval, Mathf.Round(seconds / spawnTickInterval) * spawnTickInterval);
     }
 
-    private void BeginWave(float elapsed)
+    private void QueueWave(float elapsed)
     {
         BreachPoint breachPoint = PickRandomBreachPoint();
         int enemyCount = Mathf.Max(1, Mathf.RoundToInt(enemiesPerWaveCurve.Evaluate(elapsed)));
+
+        lastBreachElapsed = NextBreachElapsed(elapsed);
+        float countdown = Mathf.Max(spawnTickInterval, lastBreachElapsed - elapsed);
 
         InvasionTimerView timerView = Instantiate(invasionTimerPrefab, invasionTimersParent);
         timerView.SetLabel($"Breach at {breachPoint.location}:");
 
         Timer timer = timerView.Timer;
-        timer.SetDuration(QuantizeToTick(warningDurationCurve.Evaluate(elapsed)));
+        timer.SetDuration(countdown);
         timer.OnTimerComplete += () => HandleWaveBreach(breachPoint, enemyCount, timerView);
         timer.StartTimer();
+
+        spawnedWaveCount++;
+        queuedWaves++;
+    }
+
+    private float NextBreachElapsed(float elapsed)
+    {
+        if (spawnedWaveCount == 0)
+        {
+            return QuantizeToTick(elapsed + firstWaveCountdown);
+        }
+
+        return lastBreachElapsed + RollBreachGap(elapsed);
+    }
+
+    private float RollBreachGap(float elapsed)
+    {
+        float minGap = breachGapMinCurve.Evaluate(elapsed);
+        float maxGap = breachGapMaxCurve.Evaluate(elapsed);
+        float rolled = Random.Range(Mathf.Min(minGap, maxGap), Mathf.Max(minGap, maxGap));
+        return QuantizeToTick(rolled);
     }
 
     private void HandleWaveBreach(BreachPoint breachPoint, int enemyCount, InvasionTimerView timerView)
     {
+        queuedWaves--;
         SpawnWaveEnemies(breachPoint, enemyCount);
         OnWaveBreached?.Invoke(breachPoint.location);
         Destroy(timerView.gameObject);
