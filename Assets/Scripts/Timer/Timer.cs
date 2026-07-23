@@ -88,6 +88,12 @@ public class Timer : MonoBehaviour
 
     public void SetTimeScale(float scale) => timeScale = Mathf.Max(0f, scale);
 
+    public void SetDuration(float newDuration)
+    {
+        duration = Mathf.Max(0f, newDuration);
+        ResetState();
+    }
+
     public void Pause()
     {
         if (!isRunning || isPaused) return;
