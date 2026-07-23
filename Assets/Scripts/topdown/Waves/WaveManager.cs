@@ -50,17 +50,48 @@ public class WaveManager : Singleton<WaveManager>
     private float lastBreachElapsed;
     private int spawnedWaveCount;
     private int queuedWaves;
+    private bool hasBegun;
 
     public event System.Action<ShipLocation> OnWaveBreached;
 
     private void Start()
     {
+        if (GameSession.Instance == null)
+        {
+            BeginWaves();
+            return;
+        }
+
+        GameSession.Instance.OnGameStarted += BeginWaves;
+
+        if (GameSession.Instance.HasStarted)
+        {
+            BeginWaves();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (GameSession.Instance != null)
+        {
+            GameSession.Instance.OnGameStarted -= BeginWaves;
+        }
+    }
+
+    public void BeginWaves()
+    {
+        if (hasBegun)
+        {
+            return;
+        }
+
         if (!HasRequiredReferences())
         {
             Debug.LogWarning("WaveManager is missing references or breach points; not starting waves.", this);
             return;
         }
 
+        hasBegun = true;
         StartCoroutine(RunWaveLoop());
     }
 
@@ -99,6 +130,33 @@ public class WaveManager : Singleton<WaveManager>
     private float QuantizeToTick(float seconds)
     {
         return Mathf.Max(spawnTickInterval, Mathf.Round(seconds / spawnTickInterval) * spawnTickInterval);
+    }
+
+    public void ForceNextBreach()
+    {
+        if (invasionTimersParent == null)
+        {
+            return;
+        }
+
+        Timer soonest = null;
+        foreach (Timer timer in invasionTimersParent.GetComponentsInChildren<Timer>())
+        {
+            if (!timer.IsRunning)
+            {
+                continue;
+            }
+
+            if (soonest == null || timer.TimeRemaining < soonest.TimeRemaining)
+            {
+                soonest = timer;
+            }
+        }
+
+        if (soonest != null)
+        {
+            soonest.Complete();
+        }
     }
 
     private void QueueWave(float elapsed)

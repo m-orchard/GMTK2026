@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float rotationOffset = -90f;
 
     private Rigidbody2D playerRigidbody;
+    private Knockback knockback;
     private Camera mainCamera;
     private Vector2 movementInput;
 
@@ -34,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
+        knockback = GetComponent<Knockback>();
         mainCamera = Camera.main;
 
         if (graphics == null)
@@ -75,7 +77,19 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
         Vector2 direction = ClampToUnitLength(movementInput);
-        playerRigidbody.linearVelocity = direction * moveSpeed;
+        playerRigidbody.linearVelocity = direction * moveSpeed + KnockbackVelocity();
+    }
+
+    private Vector2 KnockbackVelocity()
+    {
+        if (knockback == null)
+        {
+            return Vector2.zero;
+        }
+
+        Vector2 knockbackVelocity = knockback.Velocity;
+        knockback.Decay(Time.fixedDeltaTime);
+        return knockbackVelocity;
     }
 
     private Vector2 ClampToUnitLength(Vector2 vector)

@@ -86,12 +86,31 @@ public class Timer : MonoBehaviour
         OnTimerStopped?.Invoke();
     }
 
+    public void Complete()
+    {
+        if (!isRunning)
+        {
+            return;
+        }
+
+        timeRemaining = direction == Direction.CountDown ? 0f : duration;
+        isRunning = false;
+        isPaused = false;
+        OnTimerComplete?.Invoke();
+    }
+
     public void SetTimeScale(float scale) => timeScale = Mathf.Max(0f, scale);
 
     public void SetDuration(float newDuration)
     {
         duration = Mathf.Max(0f, newDuration);
         ResetState();
+    }
+
+    public void AddTime(float seconds)
+    {
+        timeRemaining = Mathf.Clamp(timeRemaining + seconds, 0f, duration);
+        OnTimeUpdated?.Invoke(timeRemaining);
     }
 
     public void Pause()
