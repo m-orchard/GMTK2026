@@ -139,6 +139,7 @@ MonoBehaviour:
   resourcesPerAttack: 5
   returnPoint: {fileID: 0}
   destroyDelayAfterReturn: 0.5
+  attackSfx: {fileID: 8300000, guid: f6f84cfa956f8774a806655adc1f9c9d, type: 3}
 --- !u!114 &8831552448166869791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,6 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropResourcesOnDeath
   pickupPrefab: {fileID: 7612391125650264983, guid: 0c36cbcb8242e284f9d7dabbda9a5fd2, type: 3}
+  scatterRadius: 0.75
 --- !u!114 &-564015342643231615
 MonoBehaviour:
   m_ObjectHideFlags: 0

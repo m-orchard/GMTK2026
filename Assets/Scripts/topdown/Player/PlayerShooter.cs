@@ -14,6 +14,12 @@ public class PlayerShooter : MonoBehaviour {
     [Tooltip("Where bullets spawn from. Falls back to this object's transform if unset.")]
     [SerializeField] private Transform firePoint;
 
+    [Tooltip("Muzzle flash shown on each shot. Parent it to the fire point so it inherits position and aim. Left disabled between shots.")]
+    [SerializeField] private GameObject muzzleFlash;
+
+    [Tooltip("How long the muzzle flash stays visible after a shot.")]
+    [SerializeField, Min(0f)] private float muzzleFlashDuration = 0.05f;
+
     [Header("Firing")]
     [Tooltip("Shots fired per second.")]
     [SerializeField, Min(0f)] private float fireRate = 5f;
@@ -28,16 +34,20 @@ public class PlayerShooter : MonoBehaviour {
     [SerializeField] private AudioClip fireSfx;
 
     private float nextFireTime;
+    private float muzzleFlashHideTime;
     private Knockback recoil;
 
     private void Awake() {
         recoil = GetComponentInParent<Knockback>();
+        HideMuzzleFlash();
     }
 
     private void Update() {
         if (IsFireInputActive() && CanFire()) {
             Fire();
         }
+
+        UpdateMuzzleFlash();
     }
 
     private bool CanFire() {
@@ -50,8 +60,30 @@ public class PlayerShooter : MonoBehaviour {
         Bullet bullet = Instantiate(bulletPrefab, spawnPoint.position, spawnPoint.rotation);
         bullet.Launch(fireDirection);
         ApplyRecoil(fireDirection);
+        PlayMuzzleFlash();
         nextFireTime = Time.time + SecondsBetweenShots();
         AudioManager.Instance.PlaySound(fireSfx);
+    }
+
+    private void PlayMuzzleFlash() {
+        if (muzzleFlash == null) {
+            return;
+        }
+
+        muzzleFlash.SetActive(true);
+        muzzleFlashHideTime = Time.time + muzzleFlashDuration;
+    }
+
+    private void UpdateMuzzleFlash() {
+        if (muzzleFlash != null && muzzleFlash.activeSelf && Time.time >= muzzleFlashHideTime) {
+            HideMuzzleFlash();
+        }
+    }
+
+    private void HideMuzzleFlash() {
+        if (muzzleFlash != null) {
+            muzzleFlash.SetActive(false);
+        }
     }
 
     private void ApplyRecoil(Vector2 fireDirection) {

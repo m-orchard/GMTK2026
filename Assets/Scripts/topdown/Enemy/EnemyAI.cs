@@ -1,9 +1,10 @@
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyMovement))]
+[RequireComponent(typeof(EnemyPathFollower))]
 [RequireComponent(typeof(ResourceCarrier))]
-public class EnemyAI : MonoBehaviour
-{
+public class EnemyAI : MonoBehaviour {
+
     [Header("Spawning")]
     [SerializeField, Min(0f)] private float spawnDuration = 0.5f;
 
@@ -16,6 +17,7 @@ public class EnemyAI : MonoBehaviour
 
     [Header("Attacking")]
     [SerializeField, Min(0f)] private float attackDamage = 10f;
+
     [SerializeField, Min(0.01f)] private float attackInterval = 0.5f;
     [SerializeField, Min(0f)] private float attackDuration = 3f;
 
@@ -29,7 +31,10 @@ public class EnemyAI : MonoBehaviour
     [Tooltip("How long the enemy waits at the return point before being destroyed.")]
     [SerializeField, Min(0f)] private float destroyDelayAfterReturn = 0.5f;
 
+    [SerializeField] private AudioClip attackSfx;
+
     private EnemyMovement movement;
+    private EnemyPathFollower pathFollower;
     private ResourceCarrier resourceCarrier;
     private StateMachine stateMachine;
 
@@ -43,13 +48,14 @@ public class EnemyAI : MonoBehaviour
     public float AttackInterval => attackInterval;
     public float AttackDuration => attackDuration;
     public float DestroyDelayAfterReturn => destroyDelayAfterReturn;
+    public AudioClip AttackSfx => attackSfx;
     public Vector3 ReturnPosition => returnPoint != null ? returnPoint.position : transform.position;
 
     public event System.Action OnReachedReturnPoint;
 
-    private void Awake()
-    {
+    private void Awake() {
         movement = GetComponent<EnemyMovement>();
+        pathFollower = GetComponent<EnemyPathFollower>();
         resourceCarrier = GetComponent<ResourceCarrier>();
         stateMachine = new StateMachine();
 
@@ -59,52 +65,42 @@ public class EnemyAI : MonoBehaviour
         ReturningState = new EnemyReturningState(this);
     }
 
-    private void Start()
-    {
+    private void Start() {
         stateMachine.ChangeState(SpawningState);
     }
 
-    private void Update()
-    {
+    private void Update() {
         stateMachine.Tick();
     }
 
-    public void TransitionTo(IState nextState)
-    {
+    public void TransitionTo(IState nextState) {
         stateMachine.ChangeState(nextState);
     }
 
-    public void MoveTowards(Vector3 target)
-    {
-        movement.MoveTowards(target);
+    public void MoveTowards(Vector3 target) {
+        pathFollower.MoveTowards(target);
     }
 
-    public bool IsWithinAttackRange(Vector3 target)
-    {
+    public bool IsWithinAttackRange(Vector3 target) {
         return movement.DistanceTo(target) <= attackRange;
     }
 
-    public bool HasArrivedAt(Vector3 target)
-    {
+    public bool HasArrivedAt(Vector3 target) {
         return movement.DistanceTo(target) <= arrivalThreshold;
     }
 
-    public ShipModule FindClosestModule()
-    {
+    public ShipModule FindClosestModule() {
         ShipModule[] modules = FindObjectsByType<ShipModule>(FindObjectsSortMode.None);
         ShipModule closest = null;
         float closestSqrDistance = float.MaxValue;
 
-        foreach (ShipModule module in modules)
-        {
-            if (module.IsBroken)
-            {
+        foreach (ShipModule module in modules) {
+            if (module.IsBroken) {
                 continue;
             }
 
             float sqrDistance = (module.transform.position - transform.position).sqrMagnitude;
-            if (sqrDistance < closestSqrDistance)
-            {
+            if (sqrDistance < closestSqrDistance) {
                 closestSqrDistance = sqrDistance;
                 closest = module;
             }
@@ -113,23 +109,19 @@ public class EnemyAI : MonoBehaviour
         return closest;
     }
 
-    public void CollectAttackResources()
-    {
+    public void CollectAttackResources() {
         resourceCarrier.Collect(resourcesPerAttack);
     }
 
-    public void SetReturnPoint(Transform point)
-    {
+    public void SetReturnPoint(Transform point) {
         returnPoint = point;
     }
 
-    public void NotifyReachedReturnPoint()
-    {
+    public void NotifyReachedReturnPoint() {
         OnReachedReturnPoint?.Invoke();
     }
 
-    public void Despawn()
-    {
+    public void Despawn() {
         Destroy(gameObject);
     }
 }

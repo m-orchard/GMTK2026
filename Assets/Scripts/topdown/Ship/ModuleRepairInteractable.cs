@@ -16,6 +16,9 @@ public class ModuleRepairInteractable : MonoBehaviour, IInteractable, IHoldInter
     [Header("Audio")]
     [SerializeField] private AudioClip repairSound;
 
+    [Tooltip("Volume for the repair sound. Above 1 amplifies past the clip's recorded level.")]
+    [SerializeField, Min(0f)] private float repairSoundVolume = 2f;
+
     private float tickTimer;
 
     public string InteractionPrompt => interactionPrompt;
@@ -68,6 +71,6 @@ public class ModuleRepairInteractable : MonoBehaviour, IInteractable, IHoldInter
     }
 
     private void PlayRepairSound() {
-        AudioManager.Instance.PlaySound(repairSound, transform);
+        AudioManager.Instance.PlaySound(repairSound, transform, new AudioClipOptions { Volume = repairSoundVolume });
     }
 }

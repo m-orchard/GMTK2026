@@ -134,9 +134,31 @@ public class WaveManager : Singleton<WaveManager>
 
     public void ForceNextBreach()
     {
+        Timer soonest = FindSoonestRunningTimer();
+        if (soonest != null)
+        {
+            soonest.Complete();
+        }
+    }
+
+    public bool TryGetTimeUntilNextBreach(out float timeRemaining)
+    {
+        Timer soonest = FindSoonestRunningTimer();
+        if (soonest == null)
+        {
+            timeRemaining = 0f;
+            return false;
+        }
+
+        timeRemaining = soonest.TimeRemaining;
+        return true;
+    }
+
+    private Timer FindSoonestRunningTimer()
+    {
         if (invasionTimersParent == null)
         {
-            return;
+            return null;
         }
 
         Timer soonest = null;
@@ -153,10 +175,7 @@ public class WaveManager : Singleton<WaveManager>
             }
         }
 
-        if (soonest != null)
-        {
-            soonest.Complete();
-        }
+        return soonest;
     }
 
     private void QueueWave(float elapsed)

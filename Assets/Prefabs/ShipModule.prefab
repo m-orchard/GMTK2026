@@ -191,6 +191,7 @@ MonoBehaviour:
   healPerTick: 10
   resourceCostPerTick: 5
   repairSound: {fileID: 8300000, guid: a3f9cb5245fdb3c45930fef013ac5da6, type: 3}
+  repairSoundVolume: 5
 --- !u!1 &2118991264809345357
 GameObject:
   m_ObjectHideFlags: 0

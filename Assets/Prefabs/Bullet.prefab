@@ -117,6 +117,10 @@ MonoBehaviour:
   hittableLayers:
     serializedVersion: 2
     m_Bits: 256
+  obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 1024
+  knockbackForce: 3
 --- !u!1 &5798837578125050030
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,6 +17,9 @@ public class Bullet : MonoBehaviour
     [Tooltip("Which layers this bullet is allowed to hit.")]
     [SerializeField] private LayerMask hittableLayers;
 
+    [Tooltip("Layers that stop the bullet without taking damage, such as walls.")]
+    [SerializeField] private LayerMask obstacleLayers;
+
     [Header("Knockback")]
     [Tooltip("How hard the bullet shoves what it hits, along its travel direction.")]
     [SerializeField, Min(0f)] private float knockbackForce = 3f;
@@ -46,7 +49,13 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!IsHittable(other))
+        if (IsOnLayers(other, obstacleLayers))
+        {
+            Despawn();
+            return;
+        }
+
+        if (!IsOnLayers(other, hittableLayers))
         {
             return;
         }
@@ -56,9 +65,9 @@ public class Bullet : MonoBehaviour
         Despawn();
     }
 
-    private bool IsHittable(Collider2D other)
+    private bool IsOnLayers(Collider2D other, LayerMask layers)
     {
-        return (hittableLayers.value & (1 << other.gameObject.layer)) != 0;
+        return (layers.value & (1 << other.gameObject.layer)) != 0;
     }
 
     private void ApplyDamageIfPossible(Collider2D other)

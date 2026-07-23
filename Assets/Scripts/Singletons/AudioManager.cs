@@ -80,6 +80,20 @@ public class AudioManager : Singleton<AudioManager> {
             Random.Range(audioOptions.Pitch - audioOptions.PitchRange, audioOptions.Pitch + audioOptions.PitchRange) :
             audioOptions.Pitch;
 
+        // AudioSource.volume is capped at 1, so a louder-than-unity request is met by layering
+        // identical, sample-aligned voices whose amplitudes sum.
+        float remainingVolume = Mathf.Max(0f, audioOptions.Volume);
+        int voiceCount = Mathf.Max(1, Mathf.CeilToInt(remainingVolume));
+
+        for (int i = 0; i < voiceCount; i++) {
+            PlayVoice(clip, audioObject, audioOptions, pitch, Mathf.Clamp01(remainingVolume));
+            remainingVolume -= 1f;
+        }
+
+        Destroy(audioObject, clip.length);
+    }
+
+    private void PlayVoice(AudioClip clip, GameObject audioObject, AudioClipOptions audioOptions, float pitch, float volume) {
         AudioSource audioSource = audioObject.AddComponent<AudioSource>();
         audioSource.clip = clip;
         audioSource.maxDistance = 100f;
@@ -88,12 +102,10 @@ public class AudioManager : Singleton<AudioManager> {
         audioSource.dopplerLevel = 0f;
         audioSource.outputAudioMixerGroup = sfxMixer;
         audioSource.pitch = pitch;
-        audioSource.volume = audioOptions.Volume;
+        audioSource.volume = volume;
         audioSource.loop = audioOptions.Loop;
 
         audioSource.Play();
-
-        Destroy(audioObject, audioSource.clip.length);
     }
 
     public void SetMasterVolume(float volume) {
