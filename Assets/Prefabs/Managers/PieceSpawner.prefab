@@ -48,13 +48,13 @@ MonoBehaviour:
   spawnPoint: {fileID: 6287022380906288934}
   rocket: {fileID: 0}
   availablePieces:
-  - prefab: {fileID: 2848562934725609983, guid: b146ad9ab101b4ec985480869d797792, type: 3}
+  - prefab: {fileID: 3043429153780255533, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
     chance: 0.7
-  - prefab: {fileID: 354508522822000735, guid: 659ac1381b9234ffba050f2de62f5ab1, type: 3}
+  - prefab: {fileID: 7610202894727582270, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
     chance: 0.2
-  - prefab: {fileID: 354508522822000735, guid: 6ef1f9978cee15148aa722e609b7a03d, type: 3}
+  - prefab: {fileID: 4250123244721277833, guid: 7a3fef3f41928964fbcad258057827e1, type: 3}
     chance: 0.1
-  cargoPrefab: {fileID: 6566122703513750154, guid: 5706c3779a15d437ba9d586fb7e466d2, type: 3}
+  cargoPrefab: {fileID: 8976659357231157856, guid: 0dda6ef7762e7a24baa614cce3977481, type: 3}
   bagSize: 7
   wellMinX: -2
   wellMaxX: 2
