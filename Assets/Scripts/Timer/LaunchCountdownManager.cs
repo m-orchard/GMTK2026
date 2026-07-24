@@ -1,12 +1,16 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class LaunchCountdownManager : Singleton<LaunchCountdownManager>
 {
     [System.Serializable]
-    private class CountdownVoice
+    private class CountdownStep
     {
         public int number;
         public AudioClip clip;
+        [FormerlySerializedAs("numberColor")]
+        public Color topColor = Color.white;
+        public Color bottomColor = Color.white;
     }
 
     [SerializeField] private Timer launchTimer;
@@ -14,7 +18,8 @@ public class LaunchCountdownManager : Singleton<LaunchCountdownManager>
     [SerializeField] private SlammingNumber slammingNumberPrefab;
     [SerializeField] private RectTransform slammingNumberParent;
     [SerializeField] private int countdownStartSecond = 5;
-    [SerializeField] private CountdownVoice[] countdownVoices;
+    [FormerlySerializedAs("countdownVoices")]
+    [SerializeField] private CountdownStep[] countdownSteps;
 
     private int nextNumberToSlam;
 
@@ -63,17 +68,22 @@ public class LaunchCountdownManager : Singleton<LaunchCountdownManager>
 
     private void SlamNumber(int numberToDisplay)
     {
+        CountdownStep step = FindStepForNumber(numberToDisplay);
+        AudioClip voiceClip = step != null ? step.clip : null;
+        Color topColor = step != null ? step.topColor : Color.white;
+        Color bottomColor = step != null ? step.bottomColor : Color.white;
+
         SlammingNumber slammingNumber = Instantiate(slammingNumberPrefab, slammingNumberParent);
-        slammingNumber.Play(numberToDisplay, FindVoiceForNumber(numberToDisplay));
+        slammingNumber.Play(numberToDisplay, voiceClip, topColor, bottomColor);
     }
 
-    private AudioClip FindVoiceForNumber(int numberToDisplay)
+    private CountdownStep FindStepForNumber(int numberToDisplay)
     {
-        foreach (CountdownVoice countdownVoice in countdownVoices)
+        foreach (CountdownStep countdownStep in countdownSteps)
         {
-            if (countdownVoice.number == numberToDisplay)
+            if (countdownStep.number == numberToDisplay)
             {
-                return countdownVoice.clip;
+                return countdownStep;
             }
         }
 
