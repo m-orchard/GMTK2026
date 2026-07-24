@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     private enum State { Building, Launching, Result }
 
@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 
     public event System.Action<float, float, bool> OnRoundResult;
     public event System.Action OnBuildingStarted;
+    public event System.Action OnLaunchStarted;
     public event System.Action<float> OnTargetHeightChanged;
 
     private void Awake()
@@ -97,12 +98,14 @@ public class GameManager : MonoBehaviour
         rocket.ReleaseFoundation();
         heightTracker.BeginTracking();
         CameraManager.Instance.StartFollowing();
+        OnLaunchStarted?.Invoke();
         StartCoroutine(Launch());
     }
 
     private IEnumerator Launch()
     {
         yield return launchController.Launch(rocket, burnDuration, settleTime);
+        yield return new WaitUntil(() => !heightTracker.IsTracking);
         EnterResult();
     }
 

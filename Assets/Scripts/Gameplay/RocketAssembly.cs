@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RocketAssembly : MonoBehaviour
+public class RocketAssembly : Singleton<RocketAssembly>
 {
     [SerializeField] private GameObject rocketFoundationPrefab;
     [SerializeField] private bool requireEngineBracing = false;
