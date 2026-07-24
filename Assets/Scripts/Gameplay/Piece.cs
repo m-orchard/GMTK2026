@@ -14,15 +14,27 @@ public struct PieceWeld
 [RequireComponent(typeof(Rigidbody2D))]
 public class Piece : MonoBehaviour
 {
+    [SerializeField] private int engineSupportCapacity = 1;
+
     public bool IsLocked { get; private set; }
     public bool IsConnected { get; private set; }
     public Rigidbody2D Body2D { get; private set; }
+    public int EngineSupportCapacity => engineSupportCapacity;
 
     // Welds to child pieces (i.e. this is the parent)
     private readonly List<PieceWeld> childPieceWelds = new();
 
     // Welds to parent pieces (i.e. this is the child)
     private readonly List<PieceWeld> parentPieceWelds = new();
+
+    public IEnumerable<Piece> WeldedNeighbors
+    {
+        get
+        {
+            foreach (var weld in childPieceWelds) yield return weld.child;
+            foreach (var weld in parentPieceWelds) yield return weld.parent;
+        }
+    }
 
     public UnityEvent<Piece> OnWeld;
 

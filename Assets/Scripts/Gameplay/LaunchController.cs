@@ -1,19 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class LaunchController : MonoBehaviour {
-    private Coroutine burnRoutine;
+    private Coroutine launchRoutine;
 
-    public void Launch(RocketAssembly rocket, float burnDuration) {
-        if (burnRoutine != null)
-            StopCoroutine(burnRoutine);
-        LogThrustVsWeight(rocket);
-        ScreenShake.Instance?.Shake(2f);
-        burnRoutine = StartCoroutine(Burn(rocket, burnDuration));
+    public IEnumerator Launch(RocketAssembly rocket, float burnDuration, float settleTime) {
+        if (launchRoutine != null)
+            StopCoroutine(launchRoutine);
+
+        HashSet<Piece> braced = rocket.GetBracedEngines();
+        launchRoutine = StartCoroutine(BurnEngines(rocket, burnDuration, settleTime, braced));
+        yield return launchRoutine;
+        launchRoutine = null;
     }
 
-    private void LogThrustVsWeight(RocketAssembly rocket) {
+    private IEnumerator BurnEngines(RocketAssembly rocket, float burnDuration, float settleTime, HashSet<Piece> braced)
+    {
+        var phases = rocket.GetComponentsInChildren<EngineThrustEffect>().Select(engine => engine.Phase).Distinct().OrderBy(v => v);
+        ScreenShake.Instance?.Shake(2f);
+        foreach (var phase in phases)
+        {
+            LogThrustVsWeight(rocket, phase, braced);
+            yield return Burn(rocket, burnDuration, settleTime, phase, braced);
+        }
+    }
+
+    private void LogThrustVsWeight(RocketAssembly rocket, int phase, HashSet<Piece> braced) {
         float totalThrust = 0f;
         float totalWeight = 0f;
         float gravity = Mathf.Abs(Physics2D.gravity.y);
@@ -22,37 +36,52 @@ public class LaunchController : MonoBehaviour {
             if (!p.IsLocked)
                 continue;
             totalWeight += p.Body2D.mass * gravity * p.Body2D.gravityScale;
-            if (p.TryGetComponent<EngineThrustEffect>(out var engine))
-                totalThrust += engine.Thrust;
+            if (braced.Contains(p) && p.TryGetComponent<EngineThrustEffect>(out var engine))
+            {
+                if (engine.Phase == phase)
+                {
+                    totalThrust += engine.Thrust;
+                }
+            }
         }
 
-        Debug.Log($"[Launch] totalThrust={totalThrust:0.0} totalWeight={totalWeight:0.0} (need thrust > weight to lift off)");
+        var message = phase == 1 ? " (need thrust > weight to lift off)" : "";
+        Debug.Log($"[Launch (burn phase {phase})] totalThrust={totalThrust:0.0} totalWeight={totalWeight:0.0}{message}");
     }
 
-    private IEnumerator Burn(RocketAssembly rocket, float burnDuration) {
-        var engines = rocket.GetComponentsInChildren<EngineThrustEffect>();
+    private IEnumerator Burn(RocketAssembly rocket, float burnDuration, float settleDuration, int phase, HashSet<Piece> braced) {
+        var engines = rocket.GetComponentsInChildren<EngineThrustEffect>().Where(engine => engine.Phase == phase);
         var pieces = new Dictionary<EngineThrustEffect, Piece>();
         foreach (var engine in engines) {
             var piece = engine.GetComponent<Piece>();
             pieces.Add(engine, piece);
-            engine.SetFiring(piece.IsLocked);
+            engine.SetFiring(piece.IsLocked && braced.Contains(piece));
         }
 
-        float elapsed = 0f;
-        while (elapsed < burnDuration) {
+        Debug.Log($"[Launch Controller] Phase {phase}: Burning {engines.Count()} engines");
+        float elapsedBurn = 0f;
+        while (elapsedBurn < burnDuration) {
             foreach (var engine in engines) {
                 var piece = pieces[engine];
-                if (!piece.IsLocked)
+                if (!piece.IsLocked || !braced.Contains(piece))
                     continue;
                 piece.Body2D.AddForce((Vector2)engine.transform.up * engine.Thrust, ForceMode2D.Force);
             }
-            elapsed += Time.fixedDeltaTime;
+            elapsedBurn += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
 
         foreach (var engine in engines) {
             engine.SetFiring(false);
         }
-        burnRoutine = null;
+
+        Debug.Log($"[Launch Controller] Phase {phase}: Settling");
+        float elapsedSettle = 0f;
+        while (elapsedSettle < settleDuration) {
+            elapsedSettle += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+
+        Debug.Log($"[Launch Controller] Phase {phase}: Complete");
     }
 }
