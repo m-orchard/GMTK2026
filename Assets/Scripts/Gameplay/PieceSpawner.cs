@@ -1,15 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct AvailablePiece
+{
+    public GameObject prefab;
+
+    [Range(0f, 1f)]
+    public float chance;
+}
+
 public class PieceSpawner : Singleton<PieceSpawner> {
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private RocketAssembly rocket;
-    [SerializeField] private GameObject bodyPrefab;
-    [SerializeField] private GameObject enginePrefab;
+    [SerializeField] private List<AvailablePiece> availablePieces;
     [SerializeField] private GameObject cargoPrefab;
-
-    [Range(0f, 1f)]
-    [SerializeField] private float engineChance = 0.3f;
 
     [SerializeField] private int bagSize = 7;
     [SerializeField] private float wellMinX = -2f;
@@ -82,14 +87,28 @@ public class PieceSpawner : Singleton<PieceSpawner> {
     }
 
     private void RefillBag() {
-        int engineCount = Mathf.Clamp(Mathf.RoundToInt(bagSize * engineChance), 1, bagSize);
-        int bodyCount = bagSize - engineCount;
-
         bag.Clear();
-        for (int i = 0; i < engineCount; i++)
-            bag.Add(enginePrefab);
-        for (int i = 0; i < bodyCount; i++)
-            bag.Add(bodyPrefab);
+
+        float totalChance = 0f;
+        foreach (var entry in availablePieces)
+            totalChance += entry.chance;
+
+        int remaining = bagSize;
+        for (int i = 0; i < availablePieces.Count; i++) {
+            int count;
+            if (i == availablePieces.Count - 1) {
+                // last entry takes whatever's left, avoiding rounding shortfalls
+                count = remaining;
+            } else {
+                float normalizedChance = totalChance > 0f ? availablePieces[i].chance / totalChance : 0f;
+                count = Mathf.Clamp(Mathf.RoundToInt(bagSize * normalizedChance), 0, remaining);
+            }
+
+            for (int j = 0; j < count; j++)
+                bag.Add(availablePieces[i].prefab);
+
+            remaining -= count;
+        }
 
         for (int i = bag.Count - 1; i > 0; i--) {
             int j = Random.Range(0, i + 1);

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class RocketAssembly : MonoBehaviour
@@ -16,9 +15,6 @@ public class RocketAssembly : MonoBehaviour
     }
 
     public IEnumerable<Piece> Pieces => GetComponentsInChildren<Piece>();
-
-    public IEnumerable<Piece> GetPiecesOfType(Piece.PieceType type) =>
-        Pieces.Where(p => p.Type == type);
 
     public float HighestPointY()
     {

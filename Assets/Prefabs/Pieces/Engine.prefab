@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7078730003168839049}
   - component: {fileID: 6818177050238321789}
   - component: {fileID: 2345641163916019360}
+  - component: {fileID: 6141669203600731435}
   m_Layer: 0
   m_Name: Engine
   m_TagString: Untagged
@@ -181,8 +182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed2bacde2e24f42cfabfee52d497ba1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Piece
-  pieceType: 1
-  thrust: 100
 --- !u!114 &2345641163916019360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,3 +203,23 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   lockedLayerName: Locked
+  settleDuration: 1
+  settleLinearSpeedThreshold: 0.3
+  settleAngularSpeedThreshold: 15
+--- !u!114 &6141669203600731435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354508522822000735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98c06951d7c5149ef9f130a0d4474c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EngineThrustEffect
+  flameColor: {r: 1, g: 0.55, b: 0.1, a: 1}
+  particleLifetime: 0.35
+  particleSpeed: 4
+  particleSize: 0.2
+  thrust: 20
