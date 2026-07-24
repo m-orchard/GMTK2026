@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,6 +12,8 @@ public class FallingPieceController : MonoBehaviour
     [SerializeField] private float softDropSpeed = 8f;
     [SerializeField] private float rotateStepDegrees = 90f;
     [SerializeField] private float rotateCooldown = 0.15f;
+    [SerializeField] private float rotateTweenDuration = 0.12f;
+    [SerializeField] private float rotateOvershoot = 2.2f;
     [SerializeField] private LayerMask landingMask;
     [SerializeField] private string lockedLayerName = "Locked";
     [SerializeField] private float settleDuration = 1f;
@@ -29,6 +32,9 @@ public class FallingPieceController : MonoBehaviour
     private float maxX = float.PositiveInfinity;
     private float lockCeilingY = float.PositiveInfinity;
     private float nextRotateTime;
+    private float currentRotationZ;
+    private float targetRotationZ;
+    private Tween rotateTween;
     private bool released;
     private float settleTimer;
     private float wiggleTimer;
@@ -46,6 +52,8 @@ public class FallingPieceController : MonoBehaviour
         body2D.bodyType = RigidbodyType2D.Kinematic;
         body2D.useFullKinematicContacts = true;
         collider2D.sharedMaterial = new PhysicsMaterial2D("PieceFriction") { friction = pieceFriction };
+        currentRotationZ = transform.eulerAngles.z;
+        targetRotationZ = currentRotationZ;
     }
 
     public void SetBounds(float min, float max)
@@ -69,9 +77,24 @@ public class FallingPieceController : MonoBehaviour
         if (Time.time >= nextRotateTime &&
             (keyboard.upArrowKey.wasPressedThisFrame || keyboard.wKey.wasPressedThisFrame))
         {
-            transform.Rotate(0f, 0f, rotateStepDegrees);
+            RotateStep();
             nextRotateTime = Time.time + rotateCooldown;
         }
+    }
+
+    private void RotateStep()
+    {
+        targetRotationZ += rotateStepDegrees;
+        rotateTween?.Kill();
+        rotateTween = DOTween
+            .To(() => currentRotationZ, ApplyRotationZ, targetRotationZ, rotateTweenDuration)
+            .SetEase(Ease.OutBack, rotateOvershoot);
+    }
+
+    private void ApplyRotationZ(float rotationZ)
+    {
+        currentRotationZ = rotationZ;
+        transform.rotation = Quaternion.Euler(0f, 0f, rotationZ);
     }
 
     private void FixedUpdate()
@@ -120,6 +143,7 @@ public class FallingPieceController : MonoBehaviour
     public void Release()
     {
         released = true;
+        rotateTween?.Kill();
         body2D.bodyType = RigidbodyType2D.Dynamic;
         settleTimer = 0f;
 
@@ -170,6 +194,11 @@ public class FallingPieceController : MonoBehaviour
         enabled = false;
         if (spriteRenderer != null) spriteRenderer.color *= lockedTint;
         OnLocked?.Invoke();
+    }
+
+    private void OnDestroy()
+    {
+        rotateTween?.Kill();
     }
 
     public int CheckContacts()

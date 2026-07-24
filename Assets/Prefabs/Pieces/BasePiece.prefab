@@ -181,6 +181,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed2bacde2e24f42cfabfee52d497ba1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Piece
+  engineSupportCapacity: 1
+  OnWeld:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2726803989224796958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,6 +202,8 @@ MonoBehaviour:
   softDropSpeed: 8
   rotateStepDegrees: 90
   rotateCooldown: 0.15
+  rotateTweenDuration: 0.12
+  rotateOvershoot: 1.7
   landingMask:
     serializedVersion: 2
     m_Bits: 8
@@ -207,3 +213,5 @@ MonoBehaviour:
   settleAngularSpeedThreshold: 15
   settleDecayRate: 0.5
   lockedTint: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
+  wiggleGraceDuration: 0.3
+  pieceFriction: 0.6
