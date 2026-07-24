@@ -13,6 +13,9 @@ public class FallingPieceController : MonoBehaviour
     [SerializeField] private float rotateCooldown = 0.15f;
     [SerializeField] private LayerMask landingMask;
     [SerializeField] private string lockedLayerName = "Locked";
+    [SerializeField] private float settleDuration = 1f;
+    [SerializeField] private float settleLinearSpeedThreshold = 0.3f;
+    [SerializeField] private float settleAngularSpeedThreshold = 15f;
 
     private Rigidbody2D body2D;
     private Collider2D collider2D;
@@ -20,9 +23,13 @@ public class FallingPieceController : MonoBehaviour
     private RocketAssembly rocket;
     private float minX = float.NegativeInfinity;
     private float maxX = float.PositiveInfinity;
+    private float lockCeilingY = float.PositiveInfinity;
     private float nextRotateTime;
+    private bool released;
+    private float settleTimer;
     private static readonly Collider2D[] OverlapBuffer = new Collider2D[8];
 
+    public System.Action OnReleased;
     public System.Action OnLocked;
 
     private void Awake()
@@ -40,6 +47,11 @@ public class FallingPieceController : MonoBehaviour
         maxX = max;
     }
 
+    public void SetLockCeiling(float y)
+    {
+        lockCeilingY = y;
+    }
+
     public void SetRocket(RocketAssembly rocketAssembly)
     {
         rocket = rocketAssembly;
@@ -47,6 +59,8 @@ public class FallingPieceController : MonoBehaviour
 
     private void Update()
     {
+        if (released) return;
+
         var keyboard = Keyboard.current;
         if (keyboard == null) return;
 
@@ -60,9 +74,15 @@ public class FallingPieceController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (collider2D.IsTouchingLayers(landingMask))
+        if (released)
         {
-            LockPiece();
+            TickSettle();
+            return;
+        }
+
+        if (body2D.position.y < lockCeilingY && collider2D.IsTouchingLayers(landingMask))
+        {
+            Release();
             return;
         }
 
@@ -85,15 +105,48 @@ public class FallingPieceController : MonoBehaviour
         body2D.MovePosition(target);
     }
 
+    private void Release()
+    {
+        released = true;
+        body2D.bodyType = RigidbodyType2D.Dynamic;
+        settleTimer = 0f;
+        OnReleased?.Invoke();
+    }
+
+    private void TickSettle()
+    {
+        if (piece.IsLocked) return;
+
+        bool settled = collider2D.IsTouchingLayers(landingMask)
+                     && body2D.linearVelocity.sqrMagnitude <= settleLinearSpeedThreshold * settleLinearSpeedThreshold
+                     && Mathf.Abs(body2D.angularVelocity) <= settleAngularSpeedThreshold;
+
+        settleTimer = settled ? settleTimer + Time.fixedDeltaTime : 0f;
+
+        if (settleTimer >= settleDuration) FinalizeLock();
+    }
+
     public void ForceLock()
+    {
+        if (piece.IsLocked) return;
+        if (!released) body2D.bodyType = RigidbodyType2D.Dynamic;
+        FinalizeLock();
+    }
+
+    private void FinalizeLock()
     {
         if (piece.IsLocked) return;
         piece.Lock();
         WeldToContacts();
-        body2D.bodyType = RigidbodyType2D.Dynamic;
-        int lockedLayer = LayerMask.NameToLayer(lockedLayerName);
-        if (lockedLayer >= 0) gameObject.layer = lockedLayer;
+
+        if (piece.IsConnected)
+        {
+            int lockedLayer = LayerMask.NameToLayer(lockedLayerName);
+            if (lockedLayer >= 0) gameObject.layer = lockedLayer;
+        }
+
         enabled = false;
+        OnLocked?.Invoke();
     }
 
     private void WeldToContacts()
@@ -137,11 +190,5 @@ public class FallingPieceController : MonoBehaviour
         weld.connectedBody = other;
         weld.frequency = 0f;
         return weld;
-    }
-
-    private void LockPiece()
-    {
-        ForceLock();
-        OnLocked?.Invoke();
     }
 }

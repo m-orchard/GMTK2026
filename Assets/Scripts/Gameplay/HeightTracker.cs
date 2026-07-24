@@ -20,9 +20,9 @@ public class HeightTracker : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!tracking) return;
+        if (!tracking || rocket.CargoPiece == null) return;
 
-        float current = rocket.HighestPointY() - rocket.PadY;
+        float current = rocket.CargoPiece.transform.position.y - rocket.PadY;
         if (current > ApexHeight) ApexHeight = current;
     }
 }

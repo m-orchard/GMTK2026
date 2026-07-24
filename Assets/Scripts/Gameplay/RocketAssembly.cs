@@ -6,6 +6,7 @@ public class RocketAssembly : MonoBehaviour
 {
     public float PadY { get; private set; }
     public Piece PadPiece { get; private set; }
+    public Piece CargoPiece { get; private set; }
 
     private FixedJoint2D padJoint;
 
@@ -49,6 +50,11 @@ public class RocketAssembly : MonoBehaviour
     {
         PadPiece = piece;
         padJoint = joint;
+    }
+
+    public void SetCargoPiece(Piece piece)
+    {
+        CargoPiece = piece;
     }
 
     public void ReleasePad()
@@ -109,6 +115,7 @@ public class RocketAssembly : MonoBehaviour
     {
         PadPiece = null;
         padJoint = null;
+        CargoPiece = null;
         for (int i = transform.childCount - 1; i >= 0; i--)
         {
             Destroy(transform.GetChild(i).gameObject);

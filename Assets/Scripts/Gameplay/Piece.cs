@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Piece : MonoBehaviour
 {
-    public enum PieceType { Body, Engine }
+    public enum PieceType { Body, Engine, Cargo }
 
     [SerializeField] private PieceType pieceType = PieceType.Body;
     [SerializeField] private float thrust = 20f;

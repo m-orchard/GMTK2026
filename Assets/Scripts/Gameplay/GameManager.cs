@@ -43,11 +43,16 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (state != State.Result) return;
+        if (Keyboard.current == null) return;
 
-        if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
+        if (state == State.Result && Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             Continue();
+        }
+
+        if (state == State.Building && Keyboard.current.cKey.wasPressedThisFrame)
+        {
+            spawner.SpawnCargo();
         }
     }
 
@@ -55,6 +60,7 @@ public class GameManager : MonoBehaviour
     {
         state = State.Building;
         rocket.ClearAll();
+        spawner.ResetCargo();
         cameraFollow.ResetToBuildFraming();
         spawner.SpawnNext();
         buildTimer.StartTimer();
