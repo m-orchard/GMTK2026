@@ -103,7 +103,7 @@ public class FallingPieceController : MonoBehaviour
         body2D.MovePosition(target);
     }
 
-    private void Release()
+    public void Release()
     {
         released = true;
         body2D.bodyType = RigidbodyType2D.Dynamic;

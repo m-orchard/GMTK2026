@@ -62,6 +62,8 @@ MonoBehaviour:
     chance: 0.1
   - prefab: {fileID: 3043429153780255533, guid: 102c77911c4a8b54088897579c6c27c0, type: 3}
     chance: 0.1
+  - prefab: {fileID: 2959881588920163696, guid: 91dd64b0e90727748bd7addbc3ffc231, type: 3}
+    chance: 0.1
   cargoPrefab: {fileID: 8976659357231157856, guid: 0dda6ef7762e7a24baa614cce3977481, type: 3}
   bagSize: 20
   wellMinX: -2

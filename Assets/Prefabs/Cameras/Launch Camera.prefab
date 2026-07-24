@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5950262645921236800}
   - component: {fileID: 8462244048036464826}
   - component: {fileID: 4296410970659813495}
+  - component: {fileID: 7707473635671177644}
   m_Layer: 0
   m_Name: Launch Camera
   m_TagString: Untagged
@@ -60,7 +61,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 60
-    OrthographicSize: 5
+    OrthographicSize: 10
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -153,4 +154,17 @@ MonoBehaviour:
   LateralAdjustment: 0
   FovRange: {x: 1, y: 100}
   DollyRange: {x: -100, y: 100}
-  OrthoSizeRange: {x: 5, y: 1000}
+  OrthoSizeRange: {x: 10, y: 1000}
+--- !u!114 &7707473635671177644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8744546326571800468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d411b1c7dd5c20645952ee72f1140cd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraMinimumHeight
+  groundHeight: -6
