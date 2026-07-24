@@ -110,7 +110,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 1000
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -181,6 +181,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed2bacde2e24f42cfabfee52d497ba1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Piece
+  engineSupportCapacity: 1
+  OnWeld:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2726803989224796958
 MonoBehaviour:
   m_ObjectHideFlags: 0
