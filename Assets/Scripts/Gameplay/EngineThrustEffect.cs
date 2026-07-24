@@ -7,8 +7,7 @@ public class EngineThrustEffect : MonoBehaviour
     [SerializeField] private float particleLifetime = 0.35f;
     [SerializeField] private float particleSpeed = 4f;
     [SerializeField] private float particleSize = 0.2f;
-    [SerializeField] private float thrust = 20f;
-    public float Thrust => thrust;
+    [SerializeField] public float Thrust = 20f;
 
     public UnityEvent OnFiringStart;
 

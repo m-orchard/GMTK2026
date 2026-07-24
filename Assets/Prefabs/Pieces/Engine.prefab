@@ -26,7 +26,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2848562934725609983, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: m_Name
-      value: Engine1
+      value: Engine
       objectReference: {fileID: 0}
     - target: {fileID: 6424228768344603949, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: m_Sprite
@@ -113,7 +113,7 @@ MonoBehaviour:
   particleLifetime: 0.35
   particleSpeed: 4
   particleSize: 0.2
-  thrust: 100
+  Thrust: 100
   OnFiringStart:
     m_PersistentCalls:
       m_Calls: []

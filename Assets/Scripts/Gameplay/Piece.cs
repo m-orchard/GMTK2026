@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [System.Serializable]
 public struct PieceWeld
@@ -22,6 +23,8 @@ public class Piece : MonoBehaviour
 
     // Welds to parent pieces (i.e. this is the child)
     private readonly List<PieceWeld> parentPieceWelds = new();
+
+    public UnityEvent<Piece> OnWeld;
 
     private void Awake()
     {
@@ -59,11 +62,13 @@ public class Piece : MonoBehaviour
     public void WeldAsParent(PieceWeld weld)
     {
         childPieceWelds.Add(weld);
+        OnWeld?.Invoke(weld.child);
     }
 
     public void WeldAsChild(PieceWeld weld)
     {
         parentPieceWelds.Add(weld);
+        OnWeld?.Invoke(weld.parent);
     }
 
     public void DetachAsParent(PieceWeld weld)
