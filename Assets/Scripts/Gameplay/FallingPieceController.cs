@@ -23,7 +23,6 @@ public class FallingPieceController : MonoBehaviour
     private Collider2D collider2D;
     private SpriteRenderer spriteRenderer;
     private Piece piece;
-    private RocketAssembly rocket;
     private float minX = float.NegativeInfinity;
     private float maxX = float.PositiveInfinity;
     private float lockCeilingY = float.PositiveInfinity;
@@ -54,11 +53,6 @@ public class FallingPieceController : MonoBehaviour
     public void SetLockCeiling(float y)
     {
         lockCeilingY = y;
-    }
-
-    public void SetRocket(RocketAssembly rocketAssembly)
-    {
-        rocket = rocketAssembly;
     }
 
     private void Update()
@@ -109,7 +103,7 @@ public class FallingPieceController : MonoBehaviour
         body2D.MovePosition(target);
     }
 
-    private void Release()
+    public void Release()
     {
         released = true;
         body2D.bodyType = RigidbodyType2D.Dynamic;
@@ -175,30 +169,14 @@ public class FallingPieceController : MonoBehaviour
 
         piece.MarkConnected();
 
-        bool touchedGround = false;
         var welded = new System.Collections.Generic.HashSet<Rigidbody2D>();
 
         for (int i = 0; i < count; i++)
         {
             Rigidbody2D other = OverlapBuffer[i].attachedRigidbody;
-            if (other == null)
-            {
-                touchedGround = true;
-                continue; // resting on static ground - plain collision is enough, no joint
-            }
-            if (other == body2D) continue;
+            if (other == null || other == body2D) continue; // bare scenery (ground/walls) - rest on it, nothing to weld to
             if (!welded.Add(other)) continue;
-            if (other.TryGetComponent<Piece>(out var otherPiece))
-            {
-                piece.WeldTo(otherPiece);
-            }
-        }
-
-        if (touchedGround && rocket != null && rocket.PadPiece == null)
-        {
-            Rigidbody2D padWeldTarget = null;
-            var padJoint = piece.WeldTo(padWeldTarget);
-            rocket.SetPadPiece(piece, padJoint);
+            if (other.TryGetComponent<Piece>(out var otherPiece)) piece.WeldTo(otherPiece);
         }
     }
 }

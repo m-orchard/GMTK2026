@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class RocketAssembly : MonoBehaviour
 {
+    [SerializeField] private GameObject rocketFoundationPrefab;
+
     public float PadY { get; private set; }
     public Piece PadPiece { get; private set; }
     public Piece CargoPiece { get; private set; }
-
-    private FixedJoint2D padJoint;
 
     private void Awake()
     {
@@ -42,12 +42,6 @@ public class RocketAssembly : MonoBehaviour
         return bounds;
     }
 
-    public void SetPadPiece(Piece piece, FixedJoint2D joint)
-    {
-        PadPiece = piece;
-        padJoint = joint;
-    }
-
     public void SetCargoPiece(Piece piece)
     {
         CargoPiece = piece;
@@ -62,16 +56,23 @@ public class RocketAssembly : MonoBehaviour
         }
     }
 
-    public void ReleasePad()
-    {
-        if (padJoint != null) Destroy(padJoint);
-        padJoint = null;
-    }
-
     public HashSet<Piece> GetConnectedPieces()
     {
         var result = new HashSet<Piece>();
-        if (PadPiece == null) return result;
+
+        Piece root = PadPiece;
+        if (root == null)
+        {
+            // No foundation piece was spawned this round (prefab not assigned yet) -
+            // fall back to any locked piece so connectivity/camera framing still works.
+            foreach (var p in Pieces)
+            {
+                if (!p.IsLocked) continue;
+                root = p;
+                break;
+            }
+        }
+        if (root == null) return result;
 
         var adjacency = new Dictionary<Rigidbody2D, List<Rigidbody2D>>();
         foreach (var p in Pieces)
@@ -84,9 +85,9 @@ public class RocketAssembly : MonoBehaviour
             }
         }
 
-        var visited = new HashSet<Rigidbody2D> { PadPiece.Body2D };
+        var visited = new HashSet<Rigidbody2D> { root.Body2D };
         var queue = new Queue<Rigidbody2D>();
-        queue.Enqueue(PadPiece.Body2D);
+        queue.Enqueue(root.Body2D);
 
         while (queue.Count > 0)
         {
@@ -119,11 +120,31 @@ public class RocketAssembly : MonoBehaviour
     public void ClearAll()
     {
         PadPiece = null;
-        padJoint = null;
         CargoPiece = null;
         for (int i = transform.childCount - 1; i >= 0; i--)
         {
             Destroy(transform.GetChild(i).gameObject);
         }
+        SpawnRocketFoundation();
+    }
+
+    private void SpawnRocketFoundation()
+    {
+        if (rocketFoundationPrefab == null) return;
+
+        var instance = Instantiate(rocketFoundationPrefab, new Vector3(transform.position.x, PadY, 0f), Quaternion.identity, transform);
+
+        int lockedLayer = LayerMask.NameToLayer("Locked");
+        if (lockedLayer >= 0) instance.layer = lockedLayer;
+
+        if (instance.TryGetComponent<FallingPieceController>(out var controller)) controller.ForceLock();
+
+        PadPiece = instance.GetComponent<Piece>();
+        if (PadPiece != null) PadPiece.Body2D.bodyType = RigidbodyType2D.Kinematic;
+    }
+
+    public void ReleaseFoundation()
+    {
+        if (PadPiece != null) PadPiece.Body2D.bodyType = RigidbodyType2D.Dynamic;
     }
 }

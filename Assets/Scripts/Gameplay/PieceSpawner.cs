@@ -56,7 +56,6 @@ public class PieceSpawner : Singleton<PieceSpawner> {
         var controller = instance.GetComponent<FallingPieceController>();
         controller.SetBounds(wellMinX, wellMaxX);
         controller.SetLockCeiling(spawnPoint.position.y);
-        controller.SetRocket(rocket);
         controller.OnReleased += HandleReleased;
         Active = controller;
         return controller;
