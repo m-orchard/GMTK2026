@@ -43,6 +43,7 @@ public class SlammingNumber : MonoBehaviour
         slamSequence.SetUpdate(true);
         slamSequence.Append(slammingTransform.DOScale(Vector3.one, slamDuration).SetEase(Ease.InQuad));
         slamSequence.AppendCallback(ApplyRecoil);
+        slamSequence.AppendCallback(PulseChromaticAberration);
         slamSequence.Append(slammingTransform.DOScale(Vector3.one * impactSettleScale, halfSettleDuration).SetEase(Ease.OutQuad));
         slamSequence.Append(slammingTransform.DOScale(Vector3.one, halfSettleDuration).SetEase(Ease.InOutQuad));
         slamSequence.Append(slammingTransform.DOScale(Vector3.one * (1f + hangScaleBonus), hangDuration).SetEase(Ease.OutSine));
@@ -79,6 +80,16 @@ public class SlammingNumber : MonoBehaviour
         }
 
         ScreenShake.Instance.Recoil(recoilForce);
+    }
+
+    private void PulseChromaticAberration()
+    {
+        if (ChromaticAberrationPulse.Instance == null)
+        {
+            return;
+        }
+
+        ChromaticAberrationPulse.Instance.Pulse();
     }
 
     private void DestroySelf()

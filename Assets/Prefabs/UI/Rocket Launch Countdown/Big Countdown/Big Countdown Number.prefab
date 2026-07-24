@@ -152,7 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SlammingNumber
   slammingTransform: {fileID: 3800000000000000002}
   numberLabel: {fileID: 3800000000000000004}
-  slamSound: {fileID: 0}
+  slamSound: {fileID: 8300000, guid: 3a1bb85439626b84f96e78ec5e1923c3, type: 3}
   slamStartScale: 3
   slamDuration: 0.1
   impactSettleScale: 1.05
