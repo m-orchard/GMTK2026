@@ -15,21 +15,24 @@ public class MagneticFrame : MonoBehaviour
 
     void Update()
     {
-        if (!piece.IsLocked)
-        {
-            return;
-        }
-
         var activeController = PieceSpawner.Instance.Active;
         if (activeController == null)
         {
             return;
         }
 
-        var activeCollider = activeController.GetComponent<Collider2D>();
-        if (collider.IsTouching(activeCollider))
+        if (piece.IsLocked)
         {
-            Debug.Log($"Magnetic Frame: Found collision with falling piece; locking");
+            var activeCollider = activeController.GetComponent<Collider2D>();
+            if (piece.IsLocked && collider.IsTouching(activeCollider))
+            {
+                Debug.Log($"Magnetic Frame: Found collision with falling piece; locking");
+                activeController.Release();
+                activeController.ForceLock();
+            }
+        } else if (activeController.CheckContacts() > 0)
+        {
+            Debug.Log($"Magnetic Frame: Found collision with locked piece; locking");
             activeController.Release();
             activeController.ForceLock();
         }

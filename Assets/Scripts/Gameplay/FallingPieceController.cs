@@ -158,20 +158,26 @@ public class FallingPieceController : MonoBehaviour
         OnLocked?.Invoke();
     }
 
-    private void WeldToContacts()
+    public int CheckContacts()
     {
         var filter = new ContactFilter2D();
         filter.SetLayerMask(landingMask);
         filter.useTriggers = false;
 
-        int count = Physics2D.OverlapCollider(collider2D, filter, OverlapBuffer);
-        if (count == 0) return; // never touched anything - stray piece, stays unconnected
+        return Physics2D.OverlapCollider(collider2D, filter, OverlapBuffer);
+
+    }
+
+    private void WeldToContacts()
+    {
+        int contactCount = CheckContacts();
+        if (contactCount == 0) return; // never touched anything - stray piece, stays unconnected
 
         piece.MarkConnected();
 
         var welded = new System.Collections.Generic.HashSet<Rigidbody2D>();
 
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < contactCount; i++)
         {
             Rigidbody2D other = OverlapBuffer[i].attachedRigidbody;
             if (other == null || other == body2D) continue; // bare scenery (ground/walls) - rest on it, nothing to weld to
