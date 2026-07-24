@@ -13,6 +13,7 @@ public struct AvailablePiece
 public class PieceSpawner : Singleton<PieceSpawner> {
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private RocketAssembly rocket;
+    [SerializeField] private Conveyor conveyor;
     [SerializeField] private List<AvailablePiece> availablePieces;
     [SerializeField] private GameObject cargoPrefab;
 
@@ -25,8 +26,13 @@ public class PieceSpawner : Singleton<PieceSpawner> {
     public FallingPieceController Active { get; private set; }
     public bool HasCargoBeenDropped { get; private set; }
 
-    public void SpawnNext() {
-        SpawnPiece(NextFromBag());
+    public void StartBelt() {
+        conveyor.OnPieceReachedDrop -= HandlePieceReachedDrop;
+        conveyor.OnPieceReachedDrop += HandlePieceReachedDrop;
+        conveyor.Clear();
+        for (int i = 0; i < conveyor.SlotCount; i++)
+            AddPieceToConveyor(NextFromBag());
+        conveyor.ReleaseFront();
     }
 
     public void SpawnCargo() {
@@ -61,10 +67,29 @@ public class PieceSpawner : Singleton<PieceSpawner> {
         return controller;
     }
 
+    private void AddPieceToConveyor(GameObject prefab) {
+        GameObject instance = Instantiate(prefab, Vector3.zero, Quaternion.identity);
+        instance.GetComponent<FallingPieceController>().enabled = false;
+        conveyor.Enqueue(instance);
+    }
+
+    private void HandlePieceReachedDrop(GameObject instance) {
+        instance.transform.SetParent(rocket.transform, worldPositionStays: true);
+
+        var controller = instance.GetComponent<FallingPieceController>();
+        controller.enabled = true;
+        controller.SetBounds(wellMinX, wellMaxX);
+        controller.SetLockCeiling(instance.transform.position.y);
+        controller.OnReleased += HandleReleased;
+        Active = controller;
+
+        AddPieceToConveyor(NextFromBag());
+    }
+
     private void HandleReleased() {
         Active.OnReleased -= HandleReleased;
         Active = null;
-        SpawnNext();
+        conveyor.ReleaseFront();
     }
 
     public void ForceLockActive() {

@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
         rocket.ClearAll();
         spawner.ResetCargo();
         CameraManager.Instance.ResetToBuildFraming();
-        spawner.SpawnNext();
+        spawner.StartBelt();
         buildTimer.StartTimer();
         OnBuildingStarted?.Invoke();
         OnTargetHeightChanged?.Invoke(targetHeight);
