@@ -4,6 +4,7 @@ using UnityEngine;
 public class RocketAssembly : MonoBehaviour
 {
     [SerializeField] private GameObject rocketFoundationPrefab;
+    [SerializeField] private bool requireEngineBracing = false;
 
     public float PadY { get; private set; }
     public Piece PadPiece { get; private set; }
@@ -50,6 +51,13 @@ public class RocketAssembly : MonoBehaviour
     public HashSet<EngineThrustEffect> GetBracedEngines()
     {
         var braced = new HashSet<EngineThrustEffect>();
+
+        if (!requireEngineBracing)
+        {
+            foreach (var engine in GetComponentsInChildren<EngineThrustEffect>()) braced.Add(engine);
+            return braced;
+        }
+
         var remainingCapacity = new Dictionary<Piece, int>();
 
         foreach (var p in Pieces)

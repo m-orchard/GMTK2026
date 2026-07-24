@@ -217,7 +217,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0, g: 1, b: 0.39443535, a: 1}
@@ -2020,6 +2020,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4885478395770502327, guid: 5851f5bc7c39da84eb39be4aabce9d56, type: 3}
+      propertyPath: rocketFoundationPrefab
+      value: 
+      objectReference: {fileID: 9012865499610388601, guid: e005405acebb94931aeb5145703002ea, type: 3}
     - target: {fileID: 8392401390479595753, guid: 5851f5bc7c39da84eb39be4aabce9d56, type: 3}
       propertyPath: m_Name
       value: RocketAssembly
