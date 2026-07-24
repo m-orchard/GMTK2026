@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
         state = State.Launching;
         spawner.ForceLockActive();
         rocket.LockSettledPieces();
-        rocket.ReleasePad();
+        rocket.ReleaseFoundation();
         heightTracker.BeginTracking();
         CameraManager.Instance.StartFollowing();
         launchController.Launch(rocket, burnDuration);

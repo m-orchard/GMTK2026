@@ -8,19 +8,18 @@ public class LaunchController : MonoBehaviour {
     public void Launch(RocketAssembly rocket, float burnDuration) {
         if (burnRoutine != null)
             StopCoroutine(burnRoutine);
-        HashSet<Piece> connected = rocket.GetConnectedPieces();
-        LogThrustVsWeight(rocket, connected);
+        LogThrustVsWeight(rocket);
         ScreenShake.Instance?.Shake(2f);
-        burnRoutine = StartCoroutine(Burn(rocket, burnDuration, connected));
+        burnRoutine = StartCoroutine(Burn(rocket, burnDuration));
     }
 
-    private void LogThrustVsWeight(RocketAssembly rocket, HashSet<Piece> connected) {
+    private void LogThrustVsWeight(RocketAssembly rocket) {
         float totalThrust = 0f;
         float totalWeight = 0f;
         float gravity = Mathf.Abs(Physics2D.gravity.y);
 
         foreach (var p in rocket.Pieces) {
-            if (!connected.Contains(p))
+            if (!p.IsLocked)
                 continue;
             totalWeight += p.Body2D.mass * gravity * p.Body2D.gravityScale;
             if (p.TryGetComponent<EngineThrustEffect>(out var engine))
@@ -30,20 +29,20 @@ public class LaunchController : MonoBehaviour {
         Debug.Log($"[Launch] totalThrust={totalThrust:0.0} totalWeight={totalWeight:0.0} (need thrust > weight to lift off)");
     }
 
-    private IEnumerator Burn(RocketAssembly rocket, float burnDuration, HashSet<Piece> connected) {
+    private IEnumerator Burn(RocketAssembly rocket, float burnDuration) {
         var engines = rocket.GetComponentsInChildren<EngineThrustEffect>();
         var pieces = new Dictionary<EngineThrustEffect, Piece>();
         foreach (var engine in engines) {
             var piece = engine.GetComponent<Piece>();
             pieces.Add(engine, piece);
-            engine.SetFiring(connected.Contains(piece));
+            engine.SetFiring(piece.IsLocked);
         }
 
         float elapsed = 0f;
         while (elapsed < burnDuration) {
             foreach (var engine in engines) {
                 var piece = pieces[engine];
-                if (!connected.Contains(piece))
+                if (!piece.IsLocked)
                     continue;
                 piece.Body2D.AddForce((Vector2)engine.transform.up * engine.Thrust, ForceMode2D.Force);
             }
