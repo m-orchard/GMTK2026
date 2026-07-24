@@ -7,7 +7,13 @@ public class ScreenShake : Singleton<ScreenShake> {
     private CinemachineImpulseSource impulseSource;
 
     [SerializeField]
+    private CinemachineImpulseSource recoilImpulseSource;
+
+    [SerializeField]
     private float defaultForce = 1f;
+
+    [SerializeField]
+    private float defaultRecoilForce = 0.5f;
 
     public void Shake() {
         Shake(defaultForce);
@@ -23,5 +29,17 @@ public class ScreenShake : Singleton<ScreenShake> {
         }
 
         impulseSource.GenerateImpulseWithForce(force);
+    }
+
+    public void Recoil() {
+        Recoil(defaultRecoilForce);
+    }
+
+    public void Recoil(float force) {
+        if (recoilImpulseSource == null) {
+            return;
+        }
+
+        recoilImpulseSource.GenerateImpulseWithForce(force);
     }
 }

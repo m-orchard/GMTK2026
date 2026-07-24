@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &382562376661927892
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5016153052660820557}
+  - component: {fileID: 1618527165041143644}
+  m_Layer: 0
+  m_Name: Launch Countdown Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5016153052660820557
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 382562376661927892}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1618527165041143644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 382562376661927892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c1f4a7b2e8d40639a5c6d7e8f012a3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LaunchCountdownManager
+  _isGlobal: 0
+  launchTimer: {fileID: 0}
+  smallDisplay: {fileID: 0}
+  slammingNumberPrefab: {fileID: 3800000000000000005, guid: 4a3b2c1d0e9f80716253849a5b6c7d8e, type: 3}
+  slammingNumberParent: {fileID: 0}
+  countdownStartSecond: 5
+  countdownVoices:
+  - number: 5
+    clip: {fileID: 8300000, guid: 72fdf49a36cd3e84a8c1ddc09efaf502, type: 3}
+  - number: 4
+    clip: {fileID: 8300000, guid: bdaf7cd157ea70645a6ede0ffb1cd26f, type: 3}
+  - number: 3
+    clip: {fileID: 8300000, guid: c51a5f8ffca00c34a91478303da6235e, type: 3}
+  - number: 2
+    clip: {fileID: 8300000, guid: 159898ac2e3dc7d4aae8fabbe08ebc0b, type: 3}
+  - number: 1
+    clip: {fileID: 8300000, guid: 19c472d293133f241bf56f2e8ec0af6d, type: 3}
