@@ -9,12 +9,16 @@ public class EngineThrustEffect : MonoBehaviour
     [SerializeField] private float particleSize = 0.2f;
     [SerializeField] public float Thrust = 20f;
     [SerializeField] private AudioClip thrusterFireSound;
+    [SerializeField] private Color poweredColor = new Color(0.2f, 1f, 0.3f, 1f);
+    [SerializeField] private Color unpoweredColor = new Color(0.6f, 0.1f, 0.1f, 1f);
 
     public UnityEvent OnFiringStart;
 
     public UnityEvent OnFiringEnd;
 
     private ParticleSystem.EmissionModule emission;
+    private SpriteRenderer powerIndicator;
+    private bool? powered;
 
     private void Awake()
     {
@@ -22,6 +26,34 @@ public class EngineThrustEffect : MonoBehaviour
         emission = system.emission;
         emission.enabled = false;
         system.Play();
+
+        powerIndicator = BuildPowerIndicator();
+        SetPowered(false);
+    }
+
+    public void SetPowered(bool isPowered)
+    {
+        if (powered == isPowered) return;
+        powered = isPowered;
+        if (powerIndicator != null) powerIndicator.color = isPowered ? poweredColor : unpoweredColor;
+    }
+
+    private SpriteRenderer BuildPowerIndicator()
+    {
+        var indicatorObject = new GameObject("PowerIndicator");
+        indicatorObject.transform.SetParent(transform, false);
+        indicatorObject.transform.localPosition = new Vector3(0f, 0.35f, -0.1f);
+        indicatorObject.transform.localScale = new Vector3(0.2f, 0.2f, 1f);
+
+        var texture = new Texture2D(1, 1);
+        texture.SetPixel(0, 0, Color.white);
+        texture.Apply();
+        var sprite = Sprite.Create(texture, new Rect(0f, 0f, 1f, 1f), new Vector2(0.5f, 0.5f), 1f);
+
+        var renderer = indicatorObject.AddComponent<SpriteRenderer>();
+        renderer.sprite = sprite;
+        renderer.sortingOrder = 11;
+        return renderer;
     }
 
     public void SetFiring(bool firing)
