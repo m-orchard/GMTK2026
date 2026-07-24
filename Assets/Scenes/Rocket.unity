@@ -1022,6 +1022,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2381062847258963983, guid: c261082270f07db429c7a97a306ed51a, type: 3}
   m_PrefabInstance: {fileID: 4129834744659899417}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1842954890 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2828653536041778428, guid: 1de52cb552689a64fafbb32d19f079e4, type: 3}
+  m_PrefabInstance: {fileID: 2751250629469760293}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 671ad4db8cb06d24bb62ad3e25dc31a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CargoCrane
 --- !u!1001 &599394924126491080
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1161,6 +1172,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5412701273852950779, guid: 2b47d7d27921ace4191bb64b6a3b3f28, type: 3}
+      propertyPath: crane
+      value: 
+      objectReference: {fileID: 1842954890}
+    - target: {fileID: 5412701273852950779, guid: 2b47d7d27921ace4191bb64b6a3b3f28, type: 3}
       propertyPath: rocket
       value: 
       objectReference: {fileID: 1096021164}
@@ -1168,6 +1183,14 @@ PrefabInstance:
       propertyPath: conveyor
       value: 
       objectReference: {fileID: 451605637}
+    - target: {fileID: 5412701273852950779, guid: 2b47d7d27921ace4191bb64b6a3b3f28, type: 3}
+      propertyPath: craneRig
+      value: 
+      objectReference: {fileID: 2751250629469760294}
+    - target: {fileID: 5412701273852950779, guid: 2b47d7d27921ace4191bb64b6a3b3f28, type: 3}
+      propertyPath: conveyorRig
+      value: 
+      objectReference: {fileID: 6467613142118052110}
     - target: {fileID: 6287022380906288934, guid: 2b47d7d27921ace4191bb64b6a3b3f28, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1379,6 +1402,82 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22816d3444e1e8645853dd06e13efd32, type: 3}
+--- !u!1001 &2751250629469760293
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2743515834597277369, guid: 1de52cb552689a64fafbb32d19f079e4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2743515834597277369, guid: 1de52cb552689a64fafbb32d19f079e4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2743515834597277369, guid: 1de52cb552689a64fafbb32d19f079e4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2743515834597277369, guid: 1de52cb552689a64fafbb32d19f079e4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2743515834597277369, guid: 1de52cb552689a64fafbb32d19f079e4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2743515834597277369, guid: 1de52cb552689a64fafbb32d19f079e4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2743515834597277369, guid: 1de52cb552689a64fafbb32d19f079e4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2743515834597277369, guid: 1de52cb552689a64fafbb32d19f079e4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2743515834597277369, guid: 1de52cb552689a64fafbb32d19f079e4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2743515834597277369, guid: 1de52cb552689a64fafbb32d19f079e4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7183411144706974766, guid: 1de52cb552689a64fafbb32d19f079e4, type: 3}
+      propertyPath: m_Name
+      value: Cargo Crane
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689174253893665484, guid: 1de52cb552689a64fafbb32d19f079e4, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 23.484669
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689174253893665484, guid: 1de52cb552689a64fafbb32d19f079e4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.6247
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1de52cb552689a64fafbb32d19f079e4, type: 3}
+--- !u!114 &2751250629469760294 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 153372420973006499, guid: 1de52cb552689a64fafbb32d19f079e4, type: 3}
+  m_PrefabInstance: {fileID: 2751250629469760293}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddfea5d2723e0c04e8b96c2abcfcedce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OffScreenSlider
 --- !u!1001 &3304689665133613047
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2056,6 +2155,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b556b94d3705b784f95bd3058b1b6e28, type: 3}
+--- !u!114 &6467613142118052110 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2336342031917090962, guid: b556b94d3705b784f95bd3058b1b6e28, type: 3}
+  m_PrefabInstance: {fileID: 6467613142118052109}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddfea5d2723e0c04e8b96c2abcfcedce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OffScreenSlider
 --- !u!1001 &7090198714868543430
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2110,7 +2220,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8049285471130272535, guid: ed415ac2adf9d5a47a3501de8f5b6369, type: 3}
       propertyPath: orthographic size
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2195,6 +2305,7 @@ SceneRoots:
   - {fileID: 798646737}
   - {fileID: 8095069664046928853}
   - {fileID: 4108066521586846035}
+  - {fileID: 2751250629469760293}
   - {fileID: 6467613142118052109}
   - {fileID: 453049927}
   - {fileID: 5624197820368415737}

@@ -45,8 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PieceSpawner
   _isGlobal: 0
-  spawnPoint: {fileID: 6287022380906288934}
   rocket: {fileID: 0}
+  conveyor: {fileID: 0}
+  crane: {fileID: 0}
   availablePieces:
   - prefab: {fileID: 3043429153780255533, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
     chance: 0.3
@@ -64,7 +65,9 @@ MonoBehaviour:
     chance: 0.1
   - prefab: {fileID: 2959881588920163696, guid: 91dd64b0e90727748bd7addbc3ffc231, type: 3}
     chance: 0.1
-  cargoPrefab: {fileID: 8976659357231157856, guid: 0dda6ef7762e7a24baa614cce3977481, type: 3}
+  cargoPrefabs:
+  - {fileID: 8976659357231157856, guid: 0dda6ef7762e7a24baa614cce3977481, type: 3}
+  - {fileID: 8976659357231157856, guid: 0dda6ef7762e7a24baa614cce3977481, type: 3}
   bagSize: 20
   wellMinX: -2
   wellMaxX: 2

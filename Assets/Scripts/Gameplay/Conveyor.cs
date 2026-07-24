@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
 
 public class Conveyor : MonoBehaviour
@@ -14,28 +13,13 @@ public class Conveyor : MonoBehaviour
     [SerializeField] private float arrivalThreshold = 0.02f;
     [SerializeField] private SpriteRenderer beltSurface;
     [SerializeField] private float scrollSpeed = 0.5f;
-    [SerializeField] private float exitTargetX = -25f;
-    [SerializeField] private Ease exitEase = Ease.InQuad;
 
     private readonly List<Rigidbody2D> queue = new List<Rigidbody2D>();
     private Rigidbody2D releasing;
-    private Vector3 homePosition;
-    private Tween exitTween;
 
     public event Action<GameObject> OnPieceReachedDrop;
 
     public int SlotCount => slotCount;
-
-    private void Awake()
-    {
-        homePosition = transform.position;
-    }
-
-    public void ExitOffScreen(float duration)
-    {
-        exitTween?.Kill();
-        exitTween = transform.DOMoveX(exitTargetX, duration).SetEase(exitEase);
-    }
 
     public void Enqueue(GameObject instance)
     {
@@ -58,10 +42,6 @@ public class Conveyor : MonoBehaviour
 
     public void Clear()
     {
-        exitTween?.Kill();
-        exitTween = null;
-        transform.position = homePosition;
-
         foreach (var body in queue)
         {
             if (body != null)

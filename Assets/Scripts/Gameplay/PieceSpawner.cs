@@ -11,11 +11,13 @@ public struct AvailablePiece
 }
 
 public class PieceSpawner : Singleton<PieceSpawner> {
-    [SerializeField] private Transform spawnPoint;
     [SerializeField] private RocketAssembly rocket;
     [SerializeField] private Conveyor conveyor;
+    [SerializeField] private OffScreenSlider conveyorRig;
+    [SerializeField] private CargoCrane crane;
+    [SerializeField] private OffScreenSlider craneRig;
     [SerializeField] private List<AvailablePiece> availablePieces;
-    [SerializeField] private GameObject cargoPrefab;
+    [SerializeField] private List<GameObject> cargoPrefabs;
 
     [SerializeField] private int bagSize = 20;
     [SerializeField] private float wellMinX = -2f;
@@ -24,12 +26,14 @@ public class PieceSpawner : Singleton<PieceSpawner> {
     private readonly List<GameObject> bag = new List<GameObject>();
 
     private bool conveyorDispensingStopped;
+    private bool craneBlocked;
+    private int nextCargoIndex;
 
     public FallingPieceController Active { get; private set; }
-    public bool HasCargoBeenDropped { get; private set; }
 
     public void StartBelt() {
         conveyorDispensingStopped = false;
+        conveyorRig.ResetPosition();
         conveyor.OnPieceReachedDrop -= HandlePieceReachedDrop;
         conveyor.OnPieceReachedDrop += HandlePieceReachedDrop;
         conveyor.Clear();
@@ -38,20 +42,26 @@ public class PieceSpawner : Singleton<PieceSpawner> {
         conveyor.ReleaseFront();
     }
 
-    public void BeginConveyorExit(float exitDuration) {
+    public void BeginBuildEndExit(float exitDuration) {
         conveyorDispensingStopped = true;
-        conveyor.ExitOffScreen(exitDuration);
+        conveyorRig.ExitOffScreen(exitDuration);
+
+        craneBlocked = true;
+        crane.StopFetching();
+        craneRig.ExitOffScreen(exitDuration);
     }
 
     public void SpawnCargo() {
-        if (HasCargoBeenDropped)
+        if (craneBlocked || !crane.IsReady)
             return;
         if (Active != null)
             DiscardActive();
 
-        HasCargoBeenDropped = true;
-        var controller = SpawnPiece(cargoPrefab);
-        rocket.SetCargoPiece(controller.GetComponent<Piece>());
+        GameObject cargo = crane.ReleaseHeld();
+        BecomeActiveFallingPiece(cargo);
+        rocket.SetCargoPiece(cargo.GetComponent<Piece>());
+
+        FetchNextCargo();
     }
 
     private void DiscardActive() {
@@ -61,18 +71,23 @@ public class PieceSpawner : Singleton<PieceSpawner> {
     }
 
     public void ResetCargo() {
-        HasCargoBeenDropped = false;
+        nextCargoIndex = 0;
+        craneBlocked = false;
+        craneRig.ResetPosition();
+        crane.ResetCrane();
+        FetchNextCargo();
     }
 
-    private FallingPieceController SpawnPiece(GameObject prefab) {
-        GameObject instance = Instantiate(prefab, spawnPoint.position, Quaternion.identity, rocket.transform);
+    private void FetchNextCargo() {
+        if (nextCargoIndex >= cargoPrefabs.Count)
+            return;
 
-        var controller = instance.GetComponent<FallingPieceController>();
-        controller.SetBounds(wellMinX, wellMaxX);
-        controller.SetLockCeiling(spawnPoint.position.y);
-        controller.OnReleased += HandleReleased;
-        Active = controller;
-        return controller;
+        GameObject prefab = cargoPrefabs[nextCargoIndex];
+        nextCargoIndex++;
+
+        GameObject instance = Instantiate(prefab, Vector3.zero, Quaternion.identity);
+        instance.GetComponent<FallingPieceController>().enabled = false;
+        crane.Fetch(instance);
     }
 
     private void AddPieceToConveyor(GameObject prefab) {
@@ -81,7 +96,7 @@ public class PieceSpawner : Singleton<PieceSpawner> {
         conveyor.Enqueue(instance);
     }
 
-    private void HandlePieceReachedDrop(GameObject instance) {
+    private void BecomeActiveFallingPiece(GameObject instance) {
         instance.transform.SetParent(rocket.transform, worldPositionStays: true);
 
         var controller = instance.GetComponent<FallingPieceController>();
@@ -90,6 +105,10 @@ public class PieceSpawner : Singleton<PieceSpawner> {
         controller.SetLockCeiling(instance.transform.position.y);
         controller.OnReleased += HandleReleased;
         Active = controller;
+    }
+
+    private void HandlePieceReachedDrop(GameObject instance) {
+        BecomeActiveFallingPiece(instance);
 
         if (!conveyorDispensingStopped)
             AddPieceToConveyor(NextFromBag());

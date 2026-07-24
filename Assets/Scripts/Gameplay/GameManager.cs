@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
             buildTimer.TimeRemaining <= conveyorExitAtSecondsRemaining)
         {
             conveyorExitTriggered = true;
-            spawner.BeginConveyorExit(conveyorExitAtSecondsRemaining - conveyorOffScreenAtSecondsRemaining);
+            spawner.BeginBuildEndExit(conveyorExitAtSecondsRemaining - conveyorOffScreenAtSecondsRemaining);
         }
 
         if (Keyboard.current == null) return;
