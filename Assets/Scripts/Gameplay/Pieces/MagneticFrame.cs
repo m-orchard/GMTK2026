@@ -40,8 +40,8 @@ public class MagneticFrame : MonoBehaviour
         }
 
         Debug.Log(piece.IsLocked
-            ? "Magnetic Frame: Found collision with falling piece; locking"
-            : "Magnetic Frame: Found collision with locked piece; locking");
+            ? "[MagneticFrame]: Found collision with falling piece; locking"
+            : "[MagneticFrame]: Found collision with locked piece; locking");
         activeController.Release();
         activeController.ForceLock();
     }

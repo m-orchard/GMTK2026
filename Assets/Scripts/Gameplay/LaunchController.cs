@@ -63,7 +63,7 @@ public class LaunchController : MonoBehaviour {
         }
 
         var message = phase == 1 ? " (need thrust > weight to lift off)" : "";
-        Debug.Log($"[Launch Controller] Phase {phase}: totalThrust={totalThrust:0.0} totalWeight={totalWeight:0.0}{message}");
+        Debug.Log($"[LaunchController] Phase {phase}: totalThrust={totalThrust:0.0} totalWeight={totalWeight:0.0}{message}");
     }
 
     private IEnumerator Burn(int phase, IEnumerable<EngineThrustEffect> activeEngines, float burnDuration, float settleDuration) {
@@ -74,7 +74,7 @@ public class LaunchController : MonoBehaviour {
             engine.SetFiring(piece.IsLocked);
         }
 
-        Debug.Log($"[Launch Controller] Phase {phase}: Burning {activeEngines.Count()} engines");
+        Debug.Log($"[LaunchController] Phase {phase}: Burning {activeEngines.Count()} engines");
         float elapsedBurn = 0f;
         while (elapsedBurn < burnDuration) {
             foreach (var engine in activeEngines) {
@@ -91,13 +91,13 @@ public class LaunchController : MonoBehaviour {
             engine.SetFiring(false);
         }
 
-        Debug.Log($"[Launch Controller] Phase {phase}: Settling");
+        Debug.Log($"[LaunchController] Phase {phase}: Settling");
         float elapsedSettle = 0f;
         while (elapsedSettle < settleDuration) {
             elapsedSettle += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
 
-        Debug.Log($"[Launch Controller] Phase {phase}: Complete");
+        Debug.Log($"[LaunchController] Phase {phase}: Complete");
     }
 }
