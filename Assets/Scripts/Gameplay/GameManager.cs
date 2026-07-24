@@ -12,15 +12,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LaunchController launchController;
     [SerializeField] private HeightTracker heightTracker;
 
-    [SerializeField] private float startingTargetHeight = 8f;
-    [SerializeField] private float targetHeightIncrement = 4f;
     [SerializeField] private float burnDuration = 2.5f;
     [SerializeField] private float settleTime = 2f;
     [SerializeField] private float conveyorExitAtSecondsRemaining = 3f;
     [SerializeField] private float conveyorOffScreenAtSecondsRemaining = 1f;
 
     private State state;
-    private float targetHeight;
     private bool conveyorExitTriggered;
     private bool lastRoundSucceeded;
 
@@ -40,7 +37,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        targetHeight = startingTargetHeight;
         LevelManager.Instance.ResetToFirstLevel();
         EnterBuilding();
     }
@@ -83,7 +79,7 @@ public class GameManager : MonoBehaviour
         spawner.StartBelt();
         buildTimer.StartTimer();
         OnBuildingStarted?.Invoke();
-        OnTargetHeightChanged?.Invoke(targetHeight);
+        OnTargetHeightChanged?.Invoke(LevelManager.Instance.TargetHeight);
     }
 
     private void HandleBuildTimerComplete()
@@ -115,6 +111,7 @@ public class GameManager : MonoBehaviour
         heightTracker.StopTracking();
 
         float apex = heightTracker.ApexHeight;
+        float targetHeight = LevelManager.Instance.TargetHeight;
         lastRoundSucceeded = apex >= targetHeight;
         OnRoundResult?.Invoke(apex, targetHeight, lastRoundSucceeded);
     }
@@ -131,7 +128,6 @@ public class GameManager : MonoBehaviour
 
     public void GoToNextLevel()
     {
-        targetHeight += targetHeightIncrement;
         LevelManager.Instance.AdvanceLevel();
         EnterBuilding();
     }

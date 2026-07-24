@@ -63,3 +63,5 @@ MonoBehaviour:
     chance: 0.15
   - prefab: {fileID: 3043429153780255533, guid: 102c77911c4a8b54088897579c6c27c0, type: 3}
     chance: 0.1
+  startingTargetHeight: 16
+  targetHeightIncrement: 4
