@@ -23,16 +23,24 @@ public class PieceSpawner : Singleton<PieceSpawner> {
 
     private readonly List<GameObject> bag = new List<GameObject>();
 
+    private bool conveyorDispensingStopped;
+
     public FallingPieceController Active { get; private set; }
     public bool HasCargoBeenDropped { get; private set; }
 
     public void StartBelt() {
+        conveyorDispensingStopped = false;
         conveyor.OnPieceReachedDrop -= HandlePieceReachedDrop;
         conveyor.OnPieceReachedDrop += HandlePieceReachedDrop;
         conveyor.Clear();
         for (int i = 0; i < conveyor.SlotCount; i++)
             AddPieceToConveyor(NextFromBag());
         conveyor.ReleaseFront();
+    }
+
+    public void BeginConveyorExit(float exitDuration) {
+        conveyorDispensingStopped = true;
+        conveyor.ExitOffScreen(exitDuration);
     }
 
     public void SpawnCargo() {
@@ -83,13 +91,15 @@ public class PieceSpawner : Singleton<PieceSpawner> {
         controller.OnReleased += HandleReleased;
         Active = controller;
 
-        AddPieceToConveyor(NextFromBag());
+        if (!conveyorDispensingStopped)
+            AddPieceToConveyor(NextFromBag());
     }
 
     private void HandleReleased() {
         Active.OnReleased -= HandleReleased;
         Active = null;
-        conveyor.ReleaseFront();
+        if (!conveyorDispensingStopped)
+            conveyor.ReleaseFront();
     }
 
     public void ForceLockActive() {

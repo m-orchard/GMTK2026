@@ -16,9 +16,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float targetHeightIncrement = 4f;
     [SerializeField] private float burnDuration = 2.5f;
     [SerializeField] private float settleTime = 2f;
+    [SerializeField] private float conveyorExitAtSecondsRemaining = 3f;
+    [SerializeField] private float conveyorOffScreenAtSecondsRemaining = 1f;
 
     private State state;
     private float targetHeight;
+    private bool conveyorExitTriggered;
 
     public event System.Action<float, float, bool> OnRoundResult;
     public event System.Action OnBuildingStarted;
@@ -42,6 +45,13 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (state == State.Building && !conveyorExitTriggered &&
+            buildTimer.TimeRemaining <= conveyorExitAtSecondsRemaining)
+        {
+            conveyorExitTriggered = true;
+            spawner.BeginConveyorExit(conveyorExitAtSecondsRemaining - conveyorOffScreenAtSecondsRemaining);
+        }
+
         if (Keyboard.current == null) return;
 
         if (state == State.Result && Keyboard.current.spaceKey.wasPressedThisFrame)
@@ -63,6 +73,7 @@ public class GameManager : MonoBehaviour
     private void EnterBuilding()
     {
         state = State.Building;
+        conveyorExitTriggered = false;
         rocket.ClearAll();
         spawner.ResetCargo();
         CameraManager.Instance.ResetToBuildFraming();
