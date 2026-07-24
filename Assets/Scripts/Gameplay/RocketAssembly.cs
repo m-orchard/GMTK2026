@@ -47,9 +47,9 @@ public class RocketAssembly : MonoBehaviour
         CargoPiece = piece;
     }
 
-    public HashSet<Piece> GetBracedEngines()
+    public HashSet<EngineThrustEffect> GetBracedEngines()
     {
-        var braced = new HashSet<Piece>();
+        var braced = new HashSet<EngineThrustEffect>();
         var remainingCapacity = new Dictionary<Piece, int>();
 
         foreach (var p in Pieces)
@@ -60,13 +60,13 @@ public class RocketAssembly : MonoBehaviour
 
         foreach (var p in Pieces)
         {
-            if (!p.TryGetComponent<EngineThrustEffect>(out _)) continue;
+            if (!p.TryGetComponent<EngineThrustEffect>(out var engine)) continue;
 
             foreach (var neighbor in p.WeldedNeighbors)
             {
                 if (!remainingCapacity.TryGetValue(neighbor, out int capacity) || capacity <= 0) continue;
                 remainingCapacity[neighbor] = capacity - 1;
-                braced.Add(p);
+                braced.Add(engine);
                 break;
             }
         }
@@ -79,7 +79,7 @@ public class RocketAssembly : MonoBehaviour
         var braced = GetBracedEngines();
         foreach (var engine in GetComponentsInChildren<EngineThrustEffect>())
         {
-            if (engine.TryGetComponent<Piece>(out var enginePiece)) engine.SetPowered(braced.Contains(enginePiece));
+            engine.SetPowered(braced.Contains(engine));
         }
     }
 

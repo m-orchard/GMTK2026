@@ -10,24 +10,24 @@ public class LaunchController : MonoBehaviour {
         if (launchRoutine != null)
             StopCoroutine(launchRoutine);
 
-        HashSet<Piece> braced = rocket.GetBracedEngines();
-        launchRoutine = StartCoroutine(BurnEngines(rocket, burnDuration, settleTime, braced));
+        HashSet<EngineThrustEffect> bracedEngines = rocket.GetBracedEngines();
+        launchRoutine = StartCoroutine(BurnEngines(rocket, burnDuration, settleTime, bracedEngines));
         yield return launchRoutine;
         launchRoutine = null;
     }
 
-    private IEnumerator BurnEngines(RocketAssembly rocket, float burnDuration, float settleTime, HashSet<Piece> braced)
+    private IEnumerator BurnEngines(RocketAssembly rocket, float burnDuration, float settleTime, HashSet<EngineThrustEffect> bracedEngines)
     {
-        var phases = rocket.GetComponentsInChildren<EngineThrustEffect>().Select(engine => engine.Phase).Distinct().OrderBy(v => v);
+        var phases = bracedEngines.Select(piece => piece.GetComponent<EngineThrustEffect>().Phase).Distinct().OrderBy(v => v);
         ScreenShake.Instance?.Shake(2f);
         foreach (var phase in phases)
         {
-            LogThrustVsWeight(rocket, phase, braced);
-            yield return Burn(rocket, burnDuration, settleTime, phase, braced);
+            LogThrustVsWeight(rocket, phase, bracedEngines);
+            yield return Burn(rocket, burnDuration, settleTime, phase, bracedEngines);
         }
     }
 
-    private void LogThrustVsWeight(RocketAssembly rocket, int phase, HashSet<Piece> braced) {
+    private void LogThrustVsWeight(RocketAssembly rocket, int phase, HashSet<EngineThrustEffect> bracedEngines) {
         float totalThrust = 0f;
         float totalWeight = 0f;
         float gravity = Mathf.Abs(Physics2D.gravity.y);
@@ -36,9 +36,9 @@ public class LaunchController : MonoBehaviour {
             if (!p.IsLocked)
                 continue;
             totalWeight += p.Body2D.mass * gravity * p.Body2D.gravityScale;
-            if (braced.Contains(p) && p.TryGetComponent<EngineThrustEffect>(out var engine))
+            if (p.TryGetComponent<EngineThrustEffect>(out var engine))
             {
-                if (engine.Phase == phase)
+                if (engine.Phase == phase && bracedEngines.Contains(engine))
                 {
                     totalThrust += engine.Thrust;
                 }
@@ -49,21 +49,21 @@ public class LaunchController : MonoBehaviour {
         Debug.Log($"[Launch (burn phase {phase})] totalThrust={totalThrust:0.0} totalWeight={totalWeight:0.0}{message}");
     }
 
-    private IEnumerator Burn(RocketAssembly rocket, float burnDuration, float settleDuration, int phase, HashSet<Piece> braced) {
-        var engines = rocket.GetComponentsInChildren<EngineThrustEffect>().Where(engine => engine.Phase == phase);
+    private IEnumerator Burn(RocketAssembly rocket, float burnDuration, float settleDuration, int phase, HashSet<EngineThrustEffect> bracedEngines) {
+        var firingEngines = bracedEngines.Where(engine => engine.Phase == phase);
         var pieces = new Dictionary<EngineThrustEffect, Piece>();
-        foreach (var engine in engines) {
+        foreach (var engine in firingEngines) {
             var piece = engine.GetComponent<Piece>();
             pieces.Add(engine, piece);
-            engine.SetFiring(piece.IsLocked && braced.Contains(piece));
+            engine.SetFiring(piece.IsLocked);
         }
 
-        Debug.Log($"[Launch Controller] Phase {phase}: Burning {engines.Count()} engines");
+        Debug.Log($"[Launch Controller] Phase {phase}: Burning {firingEngines.Count()} engines");
         float elapsedBurn = 0f;
         while (elapsedBurn < burnDuration) {
-            foreach (var engine in engines) {
+            foreach (var engine in firingEngines) {
                 var piece = pieces[engine];
-                if (!piece.IsLocked || !braced.Contains(piece))
+                if (!piece.IsLocked)
                     continue;
                 piece.Body2D.AddForce((Vector2)engine.transform.up * engine.Thrust, ForceMode2D.Force);
             }
@@ -71,7 +71,7 @@ public class LaunchController : MonoBehaviour {
             yield return new WaitForFixedUpdate();
         }
 
-        foreach (var engine in engines) {
+        foreach (var engine in firingEngines) {
             engine.SetFiring(false);
         }
 
