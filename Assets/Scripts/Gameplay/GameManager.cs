@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private RocketAssembly rocket;
     [SerializeField] private LaunchController launchController;
     [SerializeField] private HeightTracker heightTracker;
-    [SerializeField] private CameraFollow cameraFollow;
 
     [SerializeField] private float startingTargetHeight = 8f;
     [SerializeField] private float targetHeightIncrement = 4f;
@@ -54,6 +53,11 @@ public class GameManager : MonoBehaviour
         {
             spawner.SpawnCargo();
         }
+
+        if (Keyboard.current.kKey.wasPressedThisFrame)
+        {
+            ScreenShake.Instance?.Shake();
+        }
     }
 
     private void EnterBuilding()
@@ -61,7 +65,7 @@ public class GameManager : MonoBehaviour
         state = State.Building;
         rocket.ClearAll();
         spawner.ResetCargo();
-        cameraFollow.ResetToBuildFraming();
+        CameraManager.Instance.ResetToBuildFraming();
         spawner.SpawnNext();
         buildTimer.StartTimer();
         OnBuildingStarted?.Invoke();
@@ -80,7 +84,7 @@ public class GameManager : MonoBehaviour
         spawner.ForceLockActive();
         rocket.ReleasePad();
         heightTracker.BeginTracking();
-        cameraFollow.StartFollowing();
+        CameraManager.Instance.StartFollowing();
         launchController.Launch(rocket, burnDuration);
         StartCoroutine(WaitAndEvaluate());
     }

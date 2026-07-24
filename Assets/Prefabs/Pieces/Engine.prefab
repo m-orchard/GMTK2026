@@ -222,4 +222,4 @@ MonoBehaviour:
   particleLifetime: 0.35
   particleSpeed: 4
   particleSize: 0.2
-  thrust: 20
+  thrust: 100
