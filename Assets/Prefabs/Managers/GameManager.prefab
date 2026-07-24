@@ -49,8 +49,7 @@ MonoBehaviour:
   rocket: {fileID: 0}
   launchController: {fileID: 0}
   heightTracker: {fileID: 0}
-  cameraFollow: {fileID: 0}
-  startingTargetHeight: 8
+  startingTargetHeight: 16
   targetHeightIncrement: 4
   burnDuration: 2.5
   settleTime: 2
