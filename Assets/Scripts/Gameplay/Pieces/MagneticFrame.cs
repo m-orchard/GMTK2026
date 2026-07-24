@@ -22,7 +22,7 @@ public class MagneticFrame : MonoBehaviour
         }
 
         var activeCollider = activeController.GetComponent<Collider2D>();
-        if (!collider.IsTouching(activeCollider))
+        if (!Physics2D.Distance(collider, activeCollider).isOverlapped)
         {
             return;
         }
