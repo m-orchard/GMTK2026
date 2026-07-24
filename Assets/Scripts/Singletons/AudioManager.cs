@@ -25,6 +25,36 @@ public class AudioManager : Singleton<AudioManager> {
     [SerializeField]
     private AudioMixerGroup sfxMixer;
 
+    private const float MUTED_VOLUME = -80f;
+
+    private float musicVolumeBeforeMute;
+    private float sfxVolumeBeforeMute;
+
+    public bool IsMusicMuted { get; private set; }
+    public bool IsSoundMuted { get; private set; }
+
+    public void ToggleMusic() {
+        IsMusicMuted = !IsMusicMuted;
+
+        if (IsMusicMuted) {
+            musicMixer.audioMixer.GetFloat("MusicVolume", out musicVolumeBeforeMute);
+            musicMixer.audioMixer.SetFloat("MusicVolume", MUTED_VOLUME);
+        } else {
+            musicMixer.audioMixer.SetFloat("MusicVolume", musicVolumeBeforeMute);
+        }
+    }
+
+    public void ToggleSFX() {
+        IsSoundMuted = !IsSoundMuted;
+
+        if (IsSoundMuted) {
+            sfxMixer.audioMixer.GetFloat("SFXVolume", out sfxVolumeBeforeMute);
+            sfxMixer.audioMixer.SetFloat("SFXVolume", MUTED_VOLUME);
+        } else {
+            sfxMixer.audioMixer.SetFloat("SFXVolume", sfxVolumeBeforeMute);
+        }
+    }
+
     private AudioClip GetRandomClip(List<AudioClip> clips) {
         int randomIndex = Random.Range(0, clips.Count);
         return clips[randomIndex];
