@@ -1454,14 +1454,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cargo Crane
       objectReference: {fileID: 0}
-    - target: {fileID: 8689174253893665484, guid: 1de52cb552689a64fafbb32d19f079e4, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 23.484669
-      objectReference: {fileID: 0}
-    - target: {fileID: 8689174253893665484, guid: 1de52cb552689a64fafbb32d19f079e4, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 6.6247
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
