@@ -162,4 +162,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NuclearReactor
   BoostValue: 0
-  BoostMultiplier: 5
+  BoostMultiplier: 1.2
