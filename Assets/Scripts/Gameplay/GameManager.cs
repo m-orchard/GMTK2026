@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     private State state;
     private float targetHeight;
     private bool conveyorExitTriggered;
+    private bool lastRoundSucceeded;
 
     public event System.Action<float, float, bool> OnRoundResult;
     public event System.Action OnBuildingStarted;
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         targetHeight = startingTargetHeight;
+        LevelManager.Instance.ResetToFirstLevel();
         EnterBuilding();
     }
 
@@ -77,6 +79,7 @@ public class GameManager : MonoBehaviour
         rocket.ClearAll();
         spawner.ResetCargo();
         CameraManager.Instance.ResetToBuildFraming();
+        spawner.SetPool(LevelManager.Instance.CurrentPool);
         spawner.StartBelt();
         buildTimer.StartTimer();
         OnBuildingStarted?.Invoke();
@@ -112,15 +115,24 @@ public class GameManager : MonoBehaviour
         heightTracker.StopTracking();
 
         float apex = heightTracker.ApexHeight;
-        bool success = apex >= targetHeight;
-        OnRoundResult?.Invoke(apex, targetHeight, success);
-
-        if (success) targetHeight += targetHeightIncrement;
+        lastRoundSucceeded = apex >= targetHeight;
+        OnRoundResult?.Invoke(apex, targetHeight, lastRoundSucceeded);
     }
 
     public void Continue()
     {
         if (state != State.Result) return;
+
+        if (lastRoundSucceeded)
+            GoToNextLevel();
+        else
+            EnterBuilding();
+    }
+
+    public void GoToNextLevel()
+    {
+        targetHeight += targetHeightIncrement;
+        LevelManager.Instance.AdvanceLevel();
         EnterBuilding();
     }
 }

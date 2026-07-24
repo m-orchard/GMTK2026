@@ -16,7 +16,6 @@ public class PieceSpawner : Singleton<PieceSpawner> {
     [SerializeField] private OffScreenSlider conveyorRig;
     [SerializeField] private CargoCrane crane;
     [SerializeField] private OffScreenSlider craneRig;
-    [SerializeField] private List<AvailablePiece> availablePieces;
     [SerializeField] private List<GameObject> cargoPrefabs;
 
     [SerializeField] private int bagSize = 20;
@@ -24,6 +23,7 @@ public class PieceSpawner : Singleton<PieceSpawner> {
     [SerializeField] private float wellMaxX = 2f;
 
     private readonly List<GameObject> bag = new List<GameObject>();
+    private readonly List<AvailablePiece> pool = new List<AvailablePiece>();
 
     private bool conveyorDispensingStopped;
     private bool craneBlocked;
@@ -33,14 +33,22 @@ public class PieceSpawner : Singleton<PieceSpawner> {
 
     public IEnumerable<GameObject> PiecePrefabs {
         get {
-            foreach (AvailablePiece availablePiece in availablePieces)
+            foreach (AvailablePiece availablePiece in pool)
                 yield return availablePiece.prefab;
         }
     }
 
+    public void SetPool(IReadOnlyList<AvailablePiece> pieces) {
+        pool.Clear();
+        for (int i = 0; i < pieces.Count; i++)
+            pool.Add(pieces[i]);
+    }
+
     public void ReplaceFrontConveyorPiece(GameObject prefab) {
         GameObject instance = Instantiate(prefab, Vector3.zero, Quaternion.identity);
-        instance.GetComponent<FallingPieceController>().enabled = false;
+        var controller = instance.GetComponent<FallingPieceController>();
+        if (controller != null)
+            controller.enabled = false;
         conveyor.ReplaceFront(instance);
     }
 
@@ -156,24 +164,24 @@ public class PieceSpawner : Singleton<PieceSpawner> {
         bag.Clear();
 
         float totalChance = 0f;
-        foreach (var entry in availablePieces)
+        foreach (var entry in pool)
             totalChance += entry.chance;
 
         Debug.Log($"PieceSpawner: Refilling bag (bag size={bagSize}, total chance={totalChance}");
 
         int remaining = bagSize;
-        for (int i = 0; i < availablePieces.Count; i++) {
+        for (int i = 0; i < pool.Count; i++) {
             int count;
-            if (i == availablePieces.Count - 1) {
+            if (i == pool.Count - 1) {
                 // last entry takes whatever's left, avoiding rounding shortfalls
                 count = remaining;
             } else {
-                float normalizedChance = totalChance > 0f ? availablePieces[i].chance / totalChance : 0f;
+                float normalizedChance = totalChance > 0f ? pool[i].chance / totalChance : 0f;
                 count = Mathf.Clamp(Mathf.RoundToInt(bagSize * normalizedChance), 0, remaining);
             }
 
             for (int j = 0; j < count; j++)
-                bag.Add(availablePieces[i].prefab);
+                bag.Add(pool[i].prefab);
 
             remaining -= count;
         }
