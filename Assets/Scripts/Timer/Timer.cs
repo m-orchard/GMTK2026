@@ -86,6 +86,15 @@ public class Timer : MonoBehaviour
         OnTimerStopped?.Invoke();
     }
 
+    public void End()
+    {
+        timeRemaining = direction == Direction.CountDown ? 0f : duration;
+        OnTimeUpdated?.Invoke(timeRemaining);
+        isPaused = false;
+        isRunning = false;
+        OnTimerComplete?.Invoke();
+    }
+
     public void SetDuration(float newDuration) => duration = Mathf.Max(0f, newDuration);
 
     public void SetTimeScale(float scale) => timeScale = Mathf.Max(0f, scale);

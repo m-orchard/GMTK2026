@@ -16,6 +16,8 @@ public class DebugMenu : Singleton<DebugMenu> {
 
     private List<GameObject> piecePrefabs;
 
+    public Timer launchTimer;
+
     private void OnGUI() {
         if (!IsAvailable()) {
             return;
@@ -34,9 +36,43 @@ public class DebugMenu : Singleton<DebugMenu> {
 
         GUILayout.Label("Debug Menu");
 
+        DrawCountdownControls();
         DrawPieceTypeSection();
 
         GUILayout.EndArea();
+    }
+
+    private void DrawCountdownControls()
+    {
+        if (launchTimer == null || !launchTimer.IsRunning)
+        {
+            return;
+        }
+
+        GUILayout.Label("Timer");
+
+        GUILayout.BeginHorizontal();
+
+        if (launchTimer.IsPaused)
+        {
+            if (GUILayout.Button("Resume"))
+            {
+                launchTimer.Resume();
+            }
+        } else
+        {
+            if (GUILayout.Button("Pause"))
+            {
+                launchTimer.Pause();
+            }
+        }
+
+        if (GUILayout.Button("End"))
+        {
+            launchTimer.End();
+        }
+
+        GUILayout.EndHorizontal();
     }
 
     private void DrawPieceTypeSection() {
