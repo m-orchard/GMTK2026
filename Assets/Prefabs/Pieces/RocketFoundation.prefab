@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2848562934725609983, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: m_Name
-      value: RocketFoundation1
+      value: RocketFoundation
       objectReference: {fileID: 0}
     - target: {fileID: 6424228768344603949, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: m_Color.b
@@ -91,5 +91,38 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2848562934725609983, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -6949226471534691547}
   m_SourcePrefab: {fileID: 100100000, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+--- !u!1 &6909312494081972146 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2848562934725609983, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+  m_PrefabInstance: {fileID: 8677011509089836621}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-6949226471534691547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6909312494081972146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98c06951d7c5149ef9f130a0d4474c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EngineThrustEffect
+  flameColor: {r: 1, g: 0.55, b: 0.1, a: 1}
+  particleLifetime: 0.35
+  particleSpeed: 4
+  particleSize: 0.2
+  Thrust: 50
+  Phase: 1
+  thrusterFireSound: {fileID: 0}
+  OnFiringStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFiringEnd:
+    m_PersistentCalls:
+      m_Calls: []

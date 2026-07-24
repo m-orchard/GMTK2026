@@ -8,7 +8,8 @@ public class EngineThrustEffect : MonoBehaviour
     [SerializeField] private float particleSpeed = 4f;
     [SerializeField] private float particleSize = 0.2f;
     [SerializeField] public float Thrust = 20f;
-    [SerializeField] public int Phase = 1;
+    [SerializeField] public int Group = 1;
+    [SerializeField] public int PhasePriority = 1;
     [SerializeField] private AudioClip thrusterFireSound;
 
     public UnityEvent OnFiringStart;

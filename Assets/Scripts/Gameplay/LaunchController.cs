@@ -16,14 +16,31 @@ public class LaunchController : MonoBehaviour {
         launchRoutine = null;
     }
 
-    private IEnumerator BurnEngines(RocketAssembly rocket, float burnDuration, float settleTime, HashSet<EngineThrustEffect> bracedEngines)
-    {
-        var enginesByPhase = bracedEngines.GroupBy(engine => engine.Phase).OrderBy(group => group.Key);
+    private IEnumerator BurnEngines(
+        RocketAssembly rocket,
+        float burnDuration,
+        float settleTime,
+        HashSet<EngineThrustEffect> bracedEngines
+    ) {
+        var engineGroups = bracedEngines
+            .GroupBy(x => x.Group)
+            .Select(g => g.OrderBy(x => x.PhasePriority).ToList())
+            .ToList();
+
+        int numPhases = engineGroups.Max(g => g.Count);
+        var enginesByPhase = Enumerable.Range(0, numPhases)
+            .Select(i => engineGroups
+                .Where(g => i < g.Count)
+                .Select(g => g[i])
+                .ToList())
+            .ToList();
+
         ScreenShake.Instance?.Shake(2f);
-        foreach (var activeEngines in enginesByPhase)
+        for (var i = 0; i < enginesByPhase.Count(); i++)
         {
-            LogThrustVsWeight(rocket, activeEngines.Key, activeEngines);
-            yield return Burn(activeEngines.Key, activeEngines, burnDuration, settleTime);
+            var activeEngines = enginesByPhase[i];
+            LogThrustVsWeight(rocket, i, activeEngines);
+            yield return Burn(i, activeEngines, burnDuration, settleTime);
         }
     }
 

@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1303782271833640337, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
+      propertyPath: Group
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1303782271833640337, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
       propertyPath: Phase
       value: 1
       objectReference: {fileID: 0}
@@ -19,6 +23,10 @@ PrefabInstance:
     - target: {fileID: 1303782271833640337, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
       propertyPath: flameColor.g
       value: 0.54901963
+      objectReference: {fileID: 0}
+    - target: {fileID: 1303782271833640337, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
+      propertyPath: PhasePriority
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1303782271833640337, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
       propertyPath: OnFiringEnd.m_PersistentCalls.m_Calls.Array.size
