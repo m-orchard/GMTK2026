@@ -40,6 +40,24 @@ public class Conveyor : MonoBehaviour
         queue.RemoveAt(0);
     }
 
+    public void ReplaceFront(GameObject instance)
+    {
+        if (queue.Count == 0)
+            return;
+
+        Rigidbody2D outgoing = queue[0];
+        Vector2 frontPosition = outgoing != null ? outgoing.position : SlotPosition(0);
+
+        if (outgoing != null)
+            Destroy(outgoing.gameObject);
+
+        var body = instance.GetComponent<Rigidbody2D>();
+        instance.transform.SetParent(transform, worldPositionStays: true);
+        body.position = frontPosition;
+        instance.transform.position = frontPosition;
+        queue[0] = body;
+    }
+
     public void Clear()
     {
         foreach (var body in queue)

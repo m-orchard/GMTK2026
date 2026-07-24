@@ -31,6 +31,19 @@ public class PieceSpawner : Singleton<PieceSpawner> {
 
     public FallingPieceController Active { get; private set; }
 
+    public IEnumerable<GameObject> PiecePrefabs {
+        get {
+            foreach (AvailablePiece availablePiece in availablePieces)
+                yield return availablePiece.prefab;
+        }
+    }
+
+    public void ReplaceFrontConveyorPiece(GameObject prefab) {
+        GameObject instance = Instantiate(prefab, Vector3.zero, Quaternion.identity);
+        instance.GetComponent<FallingPieceController>().enabled = false;
+        conveyor.ReplaceFront(instance);
+    }
+
     public void StartBelt() {
         conveyorDispensingStopped = false;
         conveyorRig.ResetPosition();
