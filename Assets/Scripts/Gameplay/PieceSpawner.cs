@@ -16,7 +16,7 @@ public class PieceSpawner : Singleton<PieceSpawner> {
     [SerializeField] private List<AvailablePiece> availablePieces;
     [SerializeField] private GameObject cargoPrefab;
 
-    [SerializeField] private int bagSize = 7;
+    [SerializeField] private int bagSize = 20;
     [SerializeField] private float wellMinX = -2f;
     [SerializeField] private float wellMaxX = 2f;
 
@@ -92,6 +92,8 @@ public class PieceSpawner : Singleton<PieceSpawner> {
         float totalChance = 0f;
         foreach (var entry in availablePieces)
             totalChance += entry.chance;
+
+        Debug.Log($"PieceSpawner: Refilling bag (bag size={bagSize}, total chance={totalChance}");
 
         int remaining = bagSize;
         for (int i = 0; i < availablePieces.Count; i++) {
