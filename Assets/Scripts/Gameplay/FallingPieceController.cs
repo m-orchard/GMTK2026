@@ -16,9 +16,12 @@ public class FallingPieceController : MonoBehaviour
     [SerializeField] private float settleDuration = 1f;
     [SerializeField] private float settleLinearSpeedThreshold = 0.3f;
     [SerializeField] private float settleAngularSpeedThreshold = 15f;
+    [SerializeField] private float settleDecayRate = 0.5f;
+    [SerializeField] private Color lockedTint = new Color(0.5f, 0.5f, 0.5f, 1f);
 
     private Rigidbody2D body2D;
     private Collider2D collider2D;
+    private SpriteRenderer spriteRenderer;
     private Piece piece;
     private RocketAssembly rocket;
     private float minX = float.NegativeInfinity;
@@ -36,6 +39,7 @@ public class FallingPieceController : MonoBehaviour
     {
         body2D = GetComponent<Rigidbody2D>();
         collider2D = GetComponent<Collider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         piece = GetComponent<Piece>();
         body2D.bodyType = RigidbodyType2D.Kinematic;
         body2D.useFullKinematicContacts = true;
@@ -125,7 +129,9 @@ public class FallingPieceController : MonoBehaviour
                      && body2D.linearVelocity.sqrMagnitude <= settleLinearSpeedThreshold * settleLinearSpeedThreshold
                      && Mathf.Abs(body2D.angularVelocity) <= settleAngularSpeedThreshold;
 
-        settleTimer = settled ? settleTimer + Time.fixedDeltaTime : 0f;
+        settleTimer = settled
+            ? Mathf.Min(settleDuration, settleTimer + Time.fixedDeltaTime)
+            : Mathf.Max(0f, settleTimer - Time.fixedDeltaTime * settleDecayRate);
 
         if (settleTimer >= settleDuration) FinalizeLock();
     }
@@ -137,12 +143,24 @@ public class FallingPieceController : MonoBehaviour
         FinalizeLock();
     }
 
+    public void LockIfAtRest()
+    {
+        if (piece.IsLocked || !released) return;
+
+        bool atRest = collider2D.IsTouchingLayers(landingMask)
+                    && body2D.linearVelocity.sqrMagnitude <= settleLinearSpeedThreshold * settleLinearSpeedThreshold
+                    && Mathf.Abs(body2D.angularVelocity) <= settleAngularSpeedThreshold;
+
+        if (atRest) FinalizeLock();
+    }
+
     private void FinalizeLock()
     {
         if (piece.IsLocked) return;
         piece.Lock();
         WeldToContacts();
         enabled = false;
+        if (spriteRenderer != null) spriteRenderer.color *= lockedTint;
         OnLocked?.Invoke();
     }
 

@@ -53,6 +53,15 @@ public class RocketAssembly : MonoBehaviour
         CargoPiece = piece;
     }
 
+    public void LockSettledPieces()
+    {
+        foreach (var p in Pieces)
+        {
+            if (p.IsLocked) continue;
+            if (p.TryGetComponent<FallingPieceController>(out var controller)) controller.LockIfAtRest();
+        }
+    }
+
     public void ReleasePad()
     {
         if (padJoint != null) Destroy(padJoint);

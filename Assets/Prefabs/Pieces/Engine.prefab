@@ -206,6 +206,8 @@ MonoBehaviour:
   settleDuration: 1
   settleLinearSpeedThreshold: 0.3
   settleAngularSpeedThreshold: 15
+  settleDecayRate: 0.5
+  lockedTint: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
 --- !u!114 &6141669203600731435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,4 +224,4 @@ MonoBehaviour:
   particleLifetime: 0.35
   particleSpeed: 4
   particleSize: 0.2
-  thrust: 20
+  thrust: 100
