@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EngineThrustEffect : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class EngineThrustEffect : MonoBehaviour
     [SerializeField] private float particleSize = 0.2f;
     [SerializeField] private float thrust = 20f;
     public float Thrust => thrust;
+
+    public UnityEvent OnFiringStart;
+
+    public UnityEvent OnFiringEnd;
 
     private ParticleSystem.EmissionModule emission;
 
@@ -21,7 +26,16 @@ public class EngineThrustEffect : MonoBehaviour
 
     public void SetFiring(bool firing)
     {
+        var wasFiring = emission.enabled;
         emission.enabled = firing;
+
+        if (!wasFiring && firing)
+        {
+            OnFiringStart?.Invoke();
+        } else if (wasFiring && !firing)
+        {
+            OnFiringEnd?.Invoke();
+        }
     }
 
     private static Material sharedMaterial;

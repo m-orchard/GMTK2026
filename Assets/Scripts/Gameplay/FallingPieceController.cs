@@ -188,22 +188,17 @@ public class FallingPieceController : MonoBehaviour
             }
             if (other == body2D) continue;
             if (!welded.Add(other)) continue;
-            WeldTo(other);
+            if (other.TryGetComponent<Piece>(out var otherPiece))
+            {
+                piece.WeldTo(otherPiece);
+            }
         }
 
         if (touchedGround && rocket != null && rocket.PadPiece == null)
         {
-            var padJoint = WeldTo(null);
+            Rigidbody2D padWeldTarget = null;
+            var padJoint = piece.WeldTo(padWeldTarget);
             rocket.SetPadPiece(piece, padJoint);
         }
-    }
-
-    private FixedJoint2D WeldTo(Rigidbody2D other)
-    {
-        var weld = gameObject.AddComponent<FixedJoint2D>();
-        weld.autoConfigureConnectedAnchor = true;
-        weld.connectedBody = other;
-        weld.frequency = 0f;
-        return weld;
     }
 }
