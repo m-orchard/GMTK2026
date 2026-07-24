@@ -8,6 +8,7 @@ public class EngineThrustEffect : MonoBehaviour
     [SerializeField] private float particleSpeed = 4f;
     [SerializeField] private float particleSize = 0.2f;
     [SerializeField] public float Thrust = 20f;
+    [SerializeField] public int Phase = 1;
     [SerializeField] private AudioClip thrusterFireSound;
     [SerializeField] private Color poweredColor = new Color(0.2f, 1f, 0.3f, 1f);
     [SerializeField] private Color unpoweredColor = new Color(0.6f, 0.1f, 0.1f, 1f);

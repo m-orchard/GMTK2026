@@ -86,13 +86,12 @@ public class GameManager : MonoBehaviour
         rocket.ReleaseFoundation();
         heightTracker.BeginTracking();
         CameraManager.Instance.StartFollowing();
-        launchController.Launch(rocket, burnDuration);
-        StartCoroutine(WaitAndEvaluate());
+        StartCoroutine(Launch());
     }
 
-    private IEnumerator WaitAndEvaluate()
+    private IEnumerator Launch()
     {
-        yield return new WaitForSeconds(burnDuration + settleTime);
+        yield return launchController.Launch(rocket, burnDuration, settleTime);
         EnterResult();
     }
 

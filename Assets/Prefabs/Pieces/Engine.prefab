@@ -168,6 +168,7 @@ MonoBehaviour:
   particleSpeed: 4
   particleSize: 0.2
   Thrust: 100
+  Phase: 2
   thrusterFireSound: {fileID: 8300000, guid: 2415ca91de2381b46b763ace0c60f991, type: 3}
   OnFiringStart:
     m_PersistentCalls:
