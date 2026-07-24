@@ -9,11 +9,15 @@ public class LevelManager : Singleton<LevelManager> {
     [SerializeField] private float startingTargetHeight = 8f;
     [SerializeField] private float targetHeightIncrement = 4f;
 
+    [SerializeField] private float startingBuildDuration = 60f;
+    [SerializeField] private float buildDurationIncrement = 5f;
+
     private readonly List<AvailablePiece> currentPool = new List<AvailablePiece>();
     private readonly List<AvailablePiece> unusedAddablePieces = new List<AvailablePiece>();
 
     public int CurrentLevel { get; private set; }
     public float TargetHeight { get; private set; }
+    public float BuildDuration { get; private set; }
     public IReadOnlyList<AvailablePiece> CurrentPool => currentPool;
 
     public event Action<int> OnLevelChanged;
@@ -21,6 +25,7 @@ public class LevelManager : Singleton<LevelManager> {
     public void ResetToFirstLevel() {
         CurrentLevel = 1;
         TargetHeight = startingTargetHeight;
+        BuildDuration = startingBuildDuration;
 
         currentPool.Clear();
         currentPool.AddRange(startingPieces);
@@ -34,6 +39,7 @@ public class LevelManager : Singleton<LevelManager> {
     public void AdvanceLevel() {
         CurrentLevel++;
         TargetHeight += targetHeightIncrement;
+        BuildDuration += buildDurationIncrement;
         AddRandomUnusedPieceToPool();
         OnLevelChanged?.Invoke(CurrentLevel);
     }

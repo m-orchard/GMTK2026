@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour
         CameraManager.Instance.ResetToBuildFraming();
         spawner.SetPool(LevelManager.Instance.CurrentPool);
         spawner.StartBelt();
+        buildTimer.SetDuration(LevelManager.Instance.BuildDuration);
         buildTimer.StartTimer();
         OnBuildingStarted?.Invoke();
         OnTargetHeightChanged?.Invoke(LevelManager.Instance.TargetHeight);
