@@ -110,6 +110,10 @@ public class FallingPieceController : MonoBehaviour
         released = true;
         body2D.bodyType = RigidbodyType2D.Dynamic;
         settleTimer = 0f;
+
+        int lockedLayer = LayerMask.NameToLayer(lockedLayerName);
+        if (lockedLayer >= 0) gameObject.layer = lockedLayer;
+
         OnReleased?.Invoke();
     }
 
@@ -138,13 +142,6 @@ public class FallingPieceController : MonoBehaviour
         if (piece.IsLocked) return;
         piece.Lock();
         WeldToContacts();
-
-        if (piece.IsConnected)
-        {
-            int lockedLayer = LayerMask.NameToLayer(lockedLayerName);
-            if (lockedLayer >= 0) gameObject.layer = lockedLayer;
-        }
-
         enabled = false;
         OnLocked?.Invoke();
     }
