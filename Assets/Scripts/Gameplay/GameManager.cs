@@ -12,16 +12,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LaunchController launchController;
     [SerializeField] private HeightTracker heightTracker;
 
-    [SerializeField] private float startingTargetHeight = 8f;
-    [SerializeField] private float targetHeightIncrement = 4f;
     [SerializeField] private float burnDuration = 2.5f;
     [SerializeField] private float settleTime = 2f;
     [SerializeField] private float conveyorExitAtSecondsRemaining = 3f;
     [SerializeField] private float conveyorOffScreenAtSecondsRemaining = 1f;
 
     private State state;
-    private float targetHeight;
     private bool conveyorExitTriggered;
+    private bool lastRoundSucceeded;
 
     public event System.Action<float, float, bool> OnRoundResult;
     public event System.Action OnBuildingStarted;
@@ -39,7 +37,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        targetHeight = startingTargetHeight;
+        LevelManager.Instance.ResetToFirstLevel();
         EnterBuilding();
     }
 
@@ -77,10 +75,11 @@ public class GameManager : MonoBehaviour
         rocket.ClearAll();
         spawner.ResetCargo();
         CameraManager.Instance.ResetToBuildFraming();
+        spawner.SetPool(LevelManager.Instance.CurrentPool);
         spawner.StartBelt();
         buildTimer.StartTimer();
         OnBuildingStarted?.Invoke();
-        OnTargetHeightChanged?.Invoke(targetHeight);
+        OnTargetHeightChanged?.Invoke(LevelManager.Instance.TargetHeight);
     }
 
     private void HandleBuildTimerComplete()
@@ -112,15 +111,24 @@ public class GameManager : MonoBehaviour
         heightTracker.StopTracking();
 
         float apex = heightTracker.ApexHeight;
-        bool success = apex >= targetHeight;
-        OnRoundResult?.Invoke(apex, targetHeight, success);
-
-        if (success) targetHeight += targetHeightIncrement;
+        float targetHeight = LevelManager.Instance.TargetHeight;
+        lastRoundSucceeded = apex >= targetHeight;
+        OnRoundResult?.Invoke(apex, targetHeight, lastRoundSucceeded);
     }
 
     public void Continue()
     {
         if (state != State.Result) return;
+
+        if (lastRoundSucceeded)
+            GoToNextLevel();
+        else
+            EnterBuilding();
+    }
+
+    public void GoToNextLevel()
+    {
+        LevelManager.Instance.AdvanceLevel();
         EnterBuilding();
     }
 }
