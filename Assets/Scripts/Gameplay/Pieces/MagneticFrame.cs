@@ -21,6 +21,18 @@ public class MagneticFrame : MonoBehaviour
             return;
         }
 
+        if (activeController.gameObject == piece.gameObject)
+        {
+            // this magnetic frame is itself the falling piece - it should snap to
+            // anything it touches instantly, skipping the normal wiggle/settle flow.
+            if (activeController.CheckContacts() > 0)
+            {
+                Debug.Log("Magnetic Frame: Falling piece is magnetic; locking instantly");
+                activeController.ForceLock();
+            }
+            return;
+        }
+
         var activeCollider = activeController.GetComponent<Collider2D>();
         if (!Physics2D.Distance(collider, activeCollider).isOverlapped)
         {

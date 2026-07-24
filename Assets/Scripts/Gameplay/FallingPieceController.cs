@@ -18,6 +18,8 @@ public class FallingPieceController : MonoBehaviour
     [SerializeField] private float settleAngularSpeedThreshold = 15f;
     [SerializeField] private float settleDecayRate = 0.5f;
     [SerializeField] private Color lockedTint = new Color(0.5f, 0.5f, 0.5f, 1f);
+    [SerializeField] private float wiggleGraceDuration = 0.3f;
+    [SerializeField] private float pieceFriction = 0.6f;
 
     private Rigidbody2D body2D;
     private Collider2D collider2D;
@@ -29,6 +31,7 @@ public class FallingPieceController : MonoBehaviour
     private float nextRotateTime;
     private bool released;
     private float settleTimer;
+    private float wiggleTimer;
     private static readonly Collider2D[] OverlapBuffer = new Collider2D[8];
 
     public System.Action OnReleased;
@@ -42,6 +45,7 @@ public class FallingPieceController : MonoBehaviour
         piece = GetComponent<Piece>();
         body2D.bodyType = RigidbodyType2D.Kinematic;
         body2D.useFullKinematicContacts = true;
+        collider2D.sharedMaterial = new PhysicsMaterial2D("PieceFriction") { friction = pieceFriction };
     }
 
     public void SetBounds(float min, float max)
@@ -78,10 +82,20 @@ public class FallingPieceController : MonoBehaviour
             return;
         }
 
-        if (body2D.position.y < lockCeilingY && collider2D.IsTouchingLayers(landingMask))
+        bool touchingNow = body2D.position.y < lockCeilingY && CheckContacts() > 0;
+
+        if (touchingNow)
         {
-            Release();
-            return;
+            wiggleTimer += Time.fixedDeltaTime;
+            if (wiggleTimer >= wiggleGraceDuration)
+            {
+                Release();
+                return;
+            }
+        }
+        else
+        {
+            wiggleTimer = 0f;
         }
 
         var keyboard = Keyboard.current;
@@ -95,7 +109,7 @@ public class FallingPieceController : MonoBehaviour
             softDrop = keyboard.downArrowKey.isPressed || keyboard.sKey.isPressed;
         }
 
-        float fallSpeed = softDrop ? softDropSpeed : dropSpeed;
+        float fallSpeed = touchingNow ? 0f : (softDrop ? softDropSpeed : dropSpeed);
         Vector2 delta = new Vector2(horizontal * horizontalSpeed, -fallSpeed) * Time.fixedDeltaTime;
         Vector2 target = body2D.position + delta;
         target.x = Mathf.Clamp(target.x, minX, maxX);
