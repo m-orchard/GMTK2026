@@ -8,6 +8,7 @@ public class EngineThrustEffect : MonoBehaviour
     [SerializeField] private float particleSpeed = 4f;
     [SerializeField] private float particleSize = 0.2f;
     [SerializeField] public float Thrust = 20f;
+    [SerializeField] private AudioClip thrusterFireSound;
 
     public UnityEvent OnFiringStart;
 
@@ -30,11 +31,22 @@ public class EngineThrustEffect : MonoBehaviour
 
         if (!wasFiring && firing)
         {
+            PlayThrusterFireSound();
             OnFiringStart?.Invoke();
         } else if (wasFiring && !firing)
         {
             OnFiringEnd?.Invoke();
         }
+    }
+
+    private void PlayThrusterFireSound()
+    {
+        if (AudioManager.Instance == null)
+        {
+            return;
+        }
+
+        AudioManager.Instance.PlaySound(thrusterFireSound, transform);
     }
 
     private static Material sharedMaterial;
