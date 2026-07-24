@@ -82,15 +82,6 @@ public class RocketAssembly : MonoBehaviour
         return braced;
     }
 
-    private void Update()
-    {
-        var braced = GetBracedEngines();
-        foreach (var engine in GetComponentsInChildren<EngineThrustEffect>())
-        {
-            engine.SetPowered(braced.Contains(engine));
-        }
-    }
-
     public void LockSettledPieces()
     {
         foreach (var p in Pieces)
