@@ -44,5 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa96f625fe2e04479b1d2c261f2bbd7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RocketAssembly
-  rocketFoundationPrefab: {fileID: 6909312494081972146, guid: 96fdbe180f92e9a4c973f94dbff6becb, type: 3}
+  _isGlobal: 0
+  rocketFoundationPrefab: {fileID: 1715544375607837546, guid: 191fe16864e9df14d8560f811b55e921, type: 3}
   requireEngineBracing: 0

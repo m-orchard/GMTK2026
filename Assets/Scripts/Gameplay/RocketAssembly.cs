@@ -7,7 +7,7 @@ public class RocketAssembly : Singleton<RocketAssembly>
     [SerializeField] private bool requireEngineBracing = false;
 
     public float PadY { get; private set; }
-    public Piece PadPiece { get; private set; }
+    public readonly List<Piece> PadPieces = new();
     public Piece CargoPiece { get; private set; }
 
     private void Awake()
@@ -95,8 +95,11 @@ public class RocketAssembly : Singleton<RocketAssembly>
     {
         var result = new HashSet<Piece>();
 
-        Piece root = PadPiece;
-        if (root == null)
+        Piece root = null;
+        if (PadPieces.Count > 0)
+        {
+            root = PadPieces[0];
+        } else
         {
             // No foundation piece was spawned this round (prefab not assigned yet) -
             // fall back to any locked piece so connectivity/camera framing still works.
@@ -106,8 +109,8 @@ public class RocketAssembly : Singleton<RocketAssembly>
                 root = p;
                 break;
             }
+            if (root == null) return result;
         }
-        if (root == null) return result;
 
         var adjacency = new Dictionary<Rigidbody2D, List<Rigidbody2D>>();
         foreach (var p in Pieces)
@@ -154,7 +157,7 @@ public class RocketAssembly : Singleton<RocketAssembly>
 
     public void ClearAll()
     {
-        PadPiece = null;
+        PadPieces.Clear();
         CargoPiece = null;
         for (int i = transform.childCount - 1; i >= 0; i--)
         {
@@ -167,19 +170,30 @@ public class RocketAssembly : Singleton<RocketAssembly>
     {
         if (rocketFoundationPrefab == null) return;
 
-        var instance = Instantiate(rocketFoundationPrefab, new Vector3(transform.position.x, PadY, 0f), Quaternion.identity, transform);
+        var instance = Instantiate(rocketFoundationPrefab, new Vector3(transform.position.x, PadY + 1f, 0f), Quaternion.identity, transform);
 
         int lockedLayer = LayerMask.NameToLayer("Locked");
         if (lockedLayer >= 0) instance.layer = lockedLayer;
 
-        if (instance.TryGetComponent<FallingPieceController>(out var controller)) controller.ForceLock();
+        var controllers = instance.GetComponents<FallingPieceController>();
+        foreach (var controller in controllers)
+        {
+            controller.ForceLock();
+        }
 
-        PadPiece = instance.GetComponent<Piece>();
-        if (PadPiece != null) PadPiece.Body2D.bodyType = RigidbodyType2D.Kinematic;
+        PadPieces.AddRange(instance.GetComponents<Piece>());
+
+        foreach (var piece in PadPieces)
+        {
+            piece.Body2D.bodyType = RigidbodyType2D.Kinematic;
+        }
     }
 
     public void ReleaseFoundation()
     {
-        if (PadPiece != null) PadPiece.Body2D.bodyType = RigidbodyType2D.Dynamic;
+        foreach (var piece in PadPieces)
+        {
+            piece.Body2D.bodyType = RigidbodyType2D.Dynamic;
+        }
     }
 }
