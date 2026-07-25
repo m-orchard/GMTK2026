@@ -207,16 +207,17 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   lockedLayerName: Locked
-  settleDuration: 3
-  settleLinearSpeedThreshold: 0.3
-  settleAngularSpeedThreshold: 15
-  settleDecayRate: 0.5
   lockedTint: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
   wiggleGraceDuration: 0
   pieceFriction: 0.6
+  settleDuration: 4
+  settleLinearSpeedThreshold: 1
+  settleAngularSpeedThreshold: 15
+  settleDecayRate: 0.5
   tapToMoveHorizontally: 1
   blockSize: 1
   tapMoveStepInBlocks: 0.5
+  stepMoveTweenDuration: 0.12
   acceleratingSoftDrop: 1
   normalDropSpeed: 1
   maxDropSpeed: 16

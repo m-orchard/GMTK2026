@@ -12,16 +12,48 @@ PrefabInstance:
       propertyPath: Value
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1282262165830736093, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.88023114
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282262165830736093, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282262165830736093, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.031
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282262165830736093, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.0204
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282262165830736093, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282262165830736093, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1282262165830736093, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1367561700370737992, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_Size.y
+      value: 0.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 2559440311687974715, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 6308648108782177277, guid: 321f91448c589c0429c2fe16d6f07bec, type: 3}
     - target: {fileID: 3043429153780255533, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
       propertyPath: m_Name
-      value: BodyLong
+      value: FuelLong
       objectReference: {fileID: 0}
     - target: {fileID: 4087524877325758583, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
       propertyPath: m_Mass
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5817238846332936385, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
-      propertyPath: m_LocalScale.x
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5817238846332936385, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}

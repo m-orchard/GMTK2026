@@ -34,6 +34,7 @@ public class FallingPieceController : MonoBehaviour
     [SerializeField] private bool tapToMoveHorizontally = false;
     [SerializeField] private float blockSize = 1f;
     [SerializeField] private float tapMoveStepInBlocks = 0.5f;
+    [SerializeField] private float stepMoveTweenDuration = 0.05f;
 
     private float TapMoveStepDistance => blockSize * tapMoveStepInBlocks;
 
@@ -60,7 +61,9 @@ public class FallingPieceController : MonoBehaviour
     private bool released;
     private float settleTimer;
     private float wiggleTimer;
-    private int pendingHorizontalSteps;
+    private float currentPositionX;
+    private float targetPositionX;
+    private Tween horizontalTween;
     private float currentDropSpeed;
     private static readonly Collider2D[] OverlapBuffer = new Collider2D[8];
 
@@ -83,6 +86,8 @@ public class FallingPieceController : MonoBehaviour
         currentRotationZ = transform.eulerAngles.z;
         targetRotationZ = currentRotationZ;
         currentDropSpeed = normalDropSpeed;
+        currentPositionX = transform.position.x;
+        targetPositionX = currentPositionX;
     }
 
     public void SetBounds(float min, float max)
@@ -103,10 +108,17 @@ public class FallingPieceController : MonoBehaviour
         float step = TapMoveStepDistance;
         if (step <= 0f) return;
 
-        Vector2 position = body2D.position;
-        position.x = SnapToStepGrid(position.x, step);
-        position.x = Mathf.Clamp(position.x, minX, maxX);
-        body2D.position = position;
+        currentPositionX = body2D.position.x;
+        TweenHorizontalTo(SnapToStepGrid(body2D.position.x, step));
+    }
+
+    private void TweenHorizontalTo(float destinationX)
+    {
+        targetPositionX = Mathf.Clamp(destinationX, minX, maxX);
+        horizontalTween?.Kill();
+        horizontalTween = DOTween
+            .To(() => currentPositionX, positionX => currentPositionX = positionX, targetPositionX, stepMoveTweenDuration)
+            .SetEase(Ease.OutQuad);
     }
 
     private float SnapToStepGrid(float value, float step)
@@ -133,8 +145,10 @@ public class FallingPieceController : MonoBehaviour
 
         if (tapToMoveHorizontally)
         {
-            if (keyboard.leftArrowKey.wasPressedThisFrame || keyboard.aKey.wasPressedThisFrame) pendingHorizontalSteps -= 1;
-            if (keyboard.rightArrowKey.wasPressedThisFrame || keyboard.dKey.wasPressedThisFrame) pendingHorizontalSteps += 1;
+            int stepDirection = 0;
+            if (keyboard.leftArrowKey.wasPressedThisFrame || keyboard.aKey.wasPressedThisFrame) stepDirection -= 1;
+            if (keyboard.rightArrowKey.wasPressedThisFrame || keyboard.dKey.wasPressedThisFrame) stepDirection += 1;
+            if (stepDirection != 0) TweenHorizontalTo(targetPositionX + stepDirection * TapMoveStepDistance);
         }
     }
 
@@ -180,23 +194,16 @@ public class FallingPieceController : MonoBehaviour
         var keyboard = Keyboard.current;
         bool softDrop = keyboard != null && (keyboard.downArrowKey.isPressed || keyboard.sKey.isPressed);
 
-        float horizontalDelta = tapToMoveHorizontally
-            ? ConsumePendingHorizontalDelta()
-            : ReadContinuousHorizontalDelta(keyboard);
-
         float fallSpeed = ResolveDropSpeed(softDrop, touchingNow);
-        Vector2 delta = new Vector2(horizontalDelta, -fallSpeed * Time.fixedDeltaTime);
-        Vector2 target = body2D.position + delta;
+
+        Vector2 target = body2D.position;
+        target.y -= fallSpeed * Time.fixedDeltaTime;
+        target.x = tapToMoveHorizontally
+            ? currentPositionX
+            : target.x + ReadContinuousHorizontalDelta(keyboard);
         target.x = Mathf.Clamp(target.x, minX, maxX);
 
         body2D.MovePosition(target);
-    }
-
-    private float ConsumePendingHorizontalDelta()
-    {
-        float distance = pendingHorizontalSteps * TapMoveStepDistance;
-        pendingHorizontalSteps = 0;
-        return distance;
     }
 
     private float ResolveDropSpeed(bool softDropHeld, bool touchingNow)
@@ -230,6 +237,7 @@ public class FallingPieceController : MonoBehaviour
     {
         released = true;
         rotateTween?.Kill();
+        horizontalTween?.Kill();
         body2D.bodyType = RigidbodyType2D.Dynamic;
         settleTimer = 0f;
 
@@ -285,6 +293,7 @@ public class FallingPieceController : MonoBehaviour
     private void OnDestroy()
     {
         rotateTween?.Kill();
+        horizontalTween?.Kill();
     }
 
     public int CheckContacts()
