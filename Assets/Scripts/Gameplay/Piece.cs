@@ -9,6 +9,8 @@ public struct PieceWeld
     public Piece child;
 
     public FixedJoint2D joint;
+
+    public GameObject weldMarker;
 }
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -59,10 +61,33 @@ public class Piece : MonoBehaviour
     public FixedJoint2D WeldTo(Piece other)
     {
         var weld = WeldTo(other.GetComponent<Rigidbody2D>());
-        var pieceWeld = new PieceWeld { parent = this, child = other, joint = weld };
+        var weldMarker = CreateWeldMarker(other);
+        var pieceWeld = new PieceWeld { parent = this, child = other, joint = weld, weldMarker = weldMarker };
         WeldAsParent(pieceWeld);
         other.WeldAsChild(pieceWeld);
         return weld;
+    }
+
+    private GameObject CreateWeldMarker(Piece other)
+    {
+        var weldMarkerPrefab = RocketAssembly.Instance.WeldMarkerPrefab;
+        if (weldMarkerPrefab == null) return null;
+
+        var weldPosition = ResolveContactPoint(other);
+        return Instantiate(weldMarkerPrefab, weldPosition, Quaternion.identity, transform);
+    }
+
+    private Vector3 ResolveContactPoint(Piece other)
+    {
+        var ownCollider = GetComponentInChildren<Collider2D>();
+        var otherCollider = other.GetComponentInChildren<Collider2D>();
+        if (ownCollider == null || otherCollider == null)
+        {
+            return (transform.position + other.transform.position) * 0.5f;
+        }
+
+        var distance = Physics2D.Distance(ownCollider, otherCollider);
+        return (Vector3)(distance.pointA + distance.pointB) * 0.5f;
     }
 
     public void WeldAsParent(PieceWeld weld)
@@ -82,6 +107,7 @@ public class Piece : MonoBehaviour
     {
         childPieceWelds.Remove(weld);
         Destroy(weld.joint);
+        if (weld.weldMarker != null) Destroy(weld.weldMarker);
         RocketAssembly.Instance.UpdateRocket();
     }
 
@@ -96,6 +122,7 @@ public class Piece : MonoBehaviour
         {
             weld.child.DetachAsChild(weld);
             Destroy(weld.joint);
+            if (weld.weldMarker != null) Destroy(weld.weldMarker);
         }
 
         childPieceWelds.Clear();

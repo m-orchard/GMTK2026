@@ -80,7 +80,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 4329996632943711016, guid: 564eeeb52af9771429c021c67e5ef4b4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84bbe76abd778e748965392a48cff4d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cloud
-  cloudSprites:
+  sprites:
   - {fileID: 4329996632943711016, guid: 564eeeb52af9771429c021c67e5ef4b4, type: 3}
   - {fileID: 3912905497610517301, guid: 564eeeb52af9771429c021c67e5ef4b4, type: 3}
   - {fileID: -4530256034037004322, guid: 564eeeb52af9771429c021c67e5ef4b4, type: 3}
@@ -119,6 +119,8 @@ MonoBehaviour:
   - {fileID: 5769072779470155654, guid: 564eeeb52af9771429c021c67e5ef4b4, type: 3}
   minScale: 0.75
   maxScale: 1.5
+  randomiseFacing: 1
+  drifts: 1
   minDriftDistance: 2
   maxDriftDistance: 6
   minDriftDuration: 25

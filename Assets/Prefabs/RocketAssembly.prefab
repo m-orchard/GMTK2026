@@ -46,4 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RocketAssembly
   _isGlobal: 0
   rocketFoundationPrefab: {fileID: 1715544375607837546, guid: 191fe16864e9df14d8560f811b55e921, type: 3}
+  weldMarkerPrefab: {fileID: 3527902210969132497, guid: 9e8645fed9ef1004ea77501fdbeec778, type: 3}
   requireEngineBracing: 0

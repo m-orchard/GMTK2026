@@ -5,7 +5,10 @@ using UnityEngine;
 public class RocketAssembly : Singleton<RocketAssembly>
 {
     [SerializeField] private GameObject rocketFoundationPrefab;
+    [SerializeField] private GameObject weldMarkerPrefab;
     [SerializeField] private bool requireEngineBracing = false;
+
+    public GameObject WeldMarkerPrefab => weldMarkerPrefab;
 
     public float PadY { get; private set; }
     public readonly List<Piece> PadPieces = new();
