@@ -35,6 +35,7 @@ public class FallingPieceController : MonoBehaviour
     [SerializeField] private float blockSize = 1f;
     [SerializeField] private float tapMoveStepInBlocks = 0.5f;
     [SerializeField] private float stepMoveTweenDuration = 0.05f;
+    [SerializeField] private bool autoLockOnSettle = true;
 
     private float TapMoveStepDistance => blockSize * tapMoveStepInBlocks;
 
@@ -250,6 +251,7 @@ public class FallingPieceController : MonoBehaviour
     private void TickSettle()
     {
         if (piece.IsLocked) return;
+        if (!autoLockOnSettle) return;
 
         bool settled = collider2D.IsTouchingLayers(landingMask)
                      && body2D.linearVelocity.sqrMagnitude <= settleLinearSpeedThreshold * settleLinearSpeedThreshold
