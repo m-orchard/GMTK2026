@@ -57,8 +57,8 @@ Transform:
   m_GameObject: {fileID: 3302459783592588993}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 23.5405, y: 6.6247, z: 0}
-  m_LocalScale: {x: 6.6254325, y: 23.484669, z: 1}
+  m_LocalPosition: {x: 23.5405, y: -26.6269, z: 0}
+  m_LocalScale: {x: 6.6254325, y: 89.98533, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1237447041302621806}
@@ -446,6 +446,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::OffScreenSlider
   exitTargetX: 25
   exitEase: 5
+  minimumDistanceAboveRocketTop: 0
+  rocketFollowThreshold: 0.1
+  rocketFollowDuration: 0.12
+  rocketFollowEase: 6
 --- !u!1 &7421952027282901582
 GameObject:
   m_ObjectHideFlags: 0

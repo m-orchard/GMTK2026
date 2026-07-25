@@ -29,9 +29,15 @@ public class RocketAssembly : Singleton<RocketAssembly>
         float highest = PadY;
         foreach (var piece in Pieces)
         {
+            if (IsUnderPlayerControl(piece)) continue;
             if (piece.transform.position.y > highest) highest = piece.transform.position.y;
         }
         return highest;
+    }
+
+    private static bool IsUnderPlayerControl(Piece piece)
+    {
+        return piece.TryGetComponent<FallingPieceController>(out var controller) && !controller.Released;
     }
 
     public Bounds GetBounds(IEnumerable<Piece> subset)

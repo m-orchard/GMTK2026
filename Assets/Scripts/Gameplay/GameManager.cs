@@ -49,6 +49,7 @@ public class GameManager : Singleton<GameManager>
         {
             conveyorExitTriggered = true;
             spawner.BeginBuildEndExit(conveyorExitAtSecondsRemaining - conveyorOffScreenAtSecondsRemaining);
+            CameraManager.Instance.FreezeBuildFraming();
         }
 
         if (Keyboard.current == null) return;

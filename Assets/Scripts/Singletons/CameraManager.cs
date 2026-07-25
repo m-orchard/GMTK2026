@@ -17,6 +17,15 @@ public class CameraManager : Singleton<CameraManager> {
     private CinemachineTargetGroup launchTargetGroup;
 
     [SerializeField]
+    private CinemachineTargetGroup buildTargetGroup;
+
+    [SerializeField]
+    private Transform craneRig;
+
+    [SerializeField]
+    private Transform conveyorRig;
+
+    [SerializeField]
     private int activeCameraPriority = 20;
 
     [SerializeField]
@@ -28,13 +37,25 @@ public class CameraManager : Singleton<CameraManager> {
     [SerializeField]
     private float padAnchorFramingRadius = 0.5f;
 
+    [SerializeField]
+    private float rigFramingRadius = 2f;
+
+    [SerializeField]
+    private float buildTopHeadroom = 7f;
+
+    [SerializeField]
+    private float buildTopFramingRadius = 1f;
+
     private bool following;
+    private bool buildFraming;
     private Transform padAnchor;
+    private Transform buildTopAnchor;
     private readonly HashSet<Piece> trackedPieces = new HashSet<Piece>();
     private readonly List<Piece> piecesToRemove = new List<Piece>();
 
     public void StartFollowing() {
         following = true;
+        buildFraming = false;
         ResetLaunchTargetGroup();
         ActivateCamera(launchCamera);
     }
@@ -42,16 +63,31 @@ public class CameraManager : Singleton<CameraManager> {
     public void ResetToBuildFraming() {
         following = false;
         ResetLaunchTargetGroup();
+        ResetBuildTargetGroup();
+        buildFraming = true;
         ActivateCamera(buildCamera);
     }
 
+    public void FreezeBuildFraming() {
+        if (craneRig != null) {
+            buildTargetGroup.RemoveMember(craneRig);
+        }
+
+        if (conveyorRig != null) {
+            buildTargetGroup.RemoveMember(conveyorRig);
+        }
+    }
+
     private void LateUpdate() {
-        if (!following) {
+        if (following) {
+            UpdatePadAnchor();
+            SyncTrackedPiecesWithRocket();
             return;
         }
 
-        UpdatePadAnchor();
-        SyncTrackedPiecesWithRocket();
+        if (buildFraming) {
+            UpdateBuildTopAnchor();
+        }
     }
 
     private void ActivateCamera(CinemachineCamera cameraToActivate) {
@@ -67,8 +103,30 @@ public class CameraManager : Singleton<CameraManager> {
         launchTargetGroup.AddMember(GetPadAnchor(), 1f, padAnchorFramingRadius);
     }
 
+    private void ResetBuildTargetGroup() {
+        buildTargetGroup.Targets.Clear();
+
+        UpdatePadAnchor();
+        UpdateBuildTopAnchor();
+
+        buildTargetGroup.AddMember(GetPadAnchor(), 1f, padAnchorFramingRadius);
+        buildTargetGroup.AddMember(GetBuildTopAnchor(), 1f, buildTopFramingRadius);
+
+        if (craneRig != null) {
+            buildTargetGroup.AddMember(craneRig, 1f, rigFramingRadius);
+        }
+
+        if (conveyorRig != null) {
+            buildTargetGroup.AddMember(conveyorRig, 1f, rigFramingRadius);
+        }
+    }
+
     private void UpdatePadAnchor() {
         GetPadAnchor().position = new Vector3(rocket.transform.position.x, rocket.PadY, 0f);
+    }
+
+    private void UpdateBuildTopAnchor() {
+        GetBuildTopAnchor().position = new Vector3(rocket.transform.position.x, rocket.HighestPointY() + buildTopHeadroom, 0f);
     }
 
     private Transform GetPadAnchor() {
@@ -78,6 +136,15 @@ public class CameraManager : Singleton<CameraManager> {
         }
 
         return padAnchor;
+    }
+
+    private Transform GetBuildTopAnchor() {
+        if (buildTopAnchor == null) {
+            buildTopAnchor = new GameObject("Camera Build Top Anchor").transform;
+            buildTopAnchor.SetParent(transform, false);
+        }
+
+        return buildTopAnchor;
     }
 
     private void SyncTrackedPiecesWithRocket() {

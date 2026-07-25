@@ -55,6 +55,7 @@ public class PieceSpawner : Singleton<PieceSpawner> {
     public void StartBelt() {
         conveyorDispensingStopped = false;
         conveyorRig.ResetPosition();
+        conveyorRig.BeginFollowingRocketTop();
         conveyor.OnPieceReachedDrop -= HandlePieceReachedDrop;
         conveyor.OnPieceReachedDrop += HandlePieceReachedDrop;
         conveyor.Clear();
@@ -95,6 +96,7 @@ public class PieceSpawner : Singleton<PieceSpawner> {
         nextCargoIndex = 0;
         craneBlocked = false;
         craneRig.ResetPosition();
+        craneRig.BeginFollowingRocketTop();
         crane.ResetCrane();
         FetchNextCargo();
     }
