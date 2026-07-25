@@ -82,6 +82,17 @@ public class RocketAssembly : Singleton<RocketAssembly>
         return braced;
     }
 
+    public IEnumerable<Fuel> GetFuel()
+    {
+        var connectedPieces = GetConnectedPieces();
+        List<Fuel> fuel = new();
+        foreach (Piece piece in connectedPieces)
+        {
+            fuel.AddRange(piece.GetComponentsInChildren<Fuel>());
+        }
+        return fuel;
+    }
+
     public void LockSettledPieces()
     {
         foreach (var p in Pieces)

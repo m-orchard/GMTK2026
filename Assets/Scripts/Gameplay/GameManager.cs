@@ -12,7 +12,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private LaunchController launchController;
     [SerializeField] private HeightTracker heightTracker;
 
-    [SerializeField] private float burnDuration = 2.5f;
+    [SerializeField] private float baseBurnDuration = 2.5f;
     [SerializeField] private float settleTime = 2f;
     [SerializeField] private float conveyorExitAtSecondsRemaining = 3f;
     [SerializeField] private float conveyorOffScreenAtSecondsRemaining = 1f;
@@ -104,7 +104,7 @@ public class GameManager : Singleton<GameManager>
 
     private IEnumerator Launch()
     {
-        yield return launchController.Launch(rocket, burnDuration, settleTime);
+        yield return launchController.Launch(rocket, baseBurnDuration, settleTime);
         yield return new WaitUntil(() => !heightTracker.IsTracking);
         EnterResult();
     }
