@@ -28,7 +28,13 @@ public class HeightTracker : Singleton<HeightTracker>
 
     private void FixedUpdate()
     {
-        if (!IsTracking || rocket.CargoPiece == null) return;
+        if (!IsTracking) return;
+
+        if (rocket.CargoPiece == null)
+        {
+            StopTracking();
+            return;
+        }
 
         elapsedTracking += Time.fixedDeltaTime;
         if (elapsedTracking >= maxTrackingDuration)
