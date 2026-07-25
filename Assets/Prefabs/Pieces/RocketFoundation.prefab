@@ -49,10 +49,6 @@ PrefabInstance:
       value: 85
       objectReference: {fileID: 0}
     - target: {fileID: 2694377721295305822, guid: 96fdbe180f92e9a4c973f94dbff6becb, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2694377721295305822, guid: 96fdbe180f92e9a4c973f94dbff6becb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2
       objectReference: {fileID: 0}
@@ -117,10 +113,6 @@ PrefabInstance:
     - target: {fileID: -6949226471534691547, guid: 96fdbe180f92e9a4c973f94dbff6becb, type: 3}
       propertyPath: Thrust
       value: 85
-      objectReference: {fileID: 0}
-    - target: {fileID: 2694377721295305822, guid: 96fdbe180f92e9a4c973f94dbff6becb, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2694377721295305822, guid: 96fdbe180f92e9a4c973f94dbff6becb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -189,10 +181,6 @@ PrefabInstance:
       value: 85
       objectReference: {fileID: 0}
     - target: {fileID: 2694377721295305822, guid: 96fdbe180f92e9a4c973f94dbff6becb, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2694377721295305822, guid: 96fdbe180f92e9a4c973f94dbff6becb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1
       objectReference: {fileID: 0}
@@ -259,10 +247,6 @@ PrefabInstance:
       value: 85
       objectReference: {fileID: 0}
     - target: {fileID: 2694377721295305822, guid: 96fdbe180f92e9a4c973f94dbff6becb, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2694377721295305822, guid: 96fdbe180f92e9a4c973f94dbff6becb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1
       objectReference: {fileID: 0}
@@ -327,10 +311,6 @@ PrefabInstance:
     - target: {fileID: -6949226471534691547, guid: 96fdbe180f92e9a4c973f94dbff6becb, type: 3}
       propertyPath: Thrust
       value: 85
-      objectReference: {fileID: 0}
-    - target: {fileID: 2694377721295305822, guid: 96fdbe180f92e9a4c973f94dbff6becb, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2694377721295305822, guid: 96fdbe180f92e9a4c973f94dbff6becb, type: 3}
       propertyPath: m_LocalPosition.x
