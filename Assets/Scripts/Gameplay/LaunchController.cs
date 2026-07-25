@@ -22,16 +22,20 @@ public class LaunchController : MonoBehaviour {
         float settleTime,
         HashSet<EngineThrustEffect> bracedEngines
     ) {
-        var engineGroups = bracedEngines
+        var priorityGroups = bracedEngines
             .GroupBy(x => x.Group)
-            .Select(g => g.OrderBy(x => x.PhasePriority).ToList())
+            .Select(g => g
+                .GroupBy(x => x.PhasePriority)
+                .OrderBy(pg => pg.Key)
+                .Select(pg => pg.ToList())
+                .ToList())
             .ToList();
 
-        int numPhases = engineGroups.Max(g => g.Count);
+        int numPhases = priorityGroups.Max(g => g.Count);
         var enginesByPhase = Enumerable.Range(0, numPhases)
-            .Select(i => engineGroups
-                .Where(g => i < g.Count)
-                .Select(g => g[i])
+            .Select(depth => priorityGroups
+                .Where(g => depth < g.Count)
+                .SelectMany(g => g[depth])
                 .ToList())
             .ToList();
 
