@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelManager : Singleton<LevelManager> {
-    [SerializeField] private List<AvailablePiece> startingPieces = new List<AvailablePiece>();
-    [SerializeField] private List<AvailablePiece> addablePieces = new List<AvailablePiece>();
+    [SerializeField] private int initialLevel = 1;
+    [SerializeField] private List<PiecePool> levelPools = new();
 
     [SerializeField] private float startingTargetHeight = 8f;
     [SerializeField] private float targetHeightIncrement = 4f;
@@ -12,58 +12,32 @@ public class LevelManager : Singleton<LevelManager> {
     [SerializeField] private float startingBuildDuration = 60f;
     [SerializeField] private float buildDurationIncrement = 5f;
 
-    private readonly List<AvailablePiece> currentPool = new List<AvailablePiece>();
-    private readonly List<AvailablePiece> unusedAddablePieces = new List<AvailablePiece>();
+    private PiecePool currentPool;
 
     public int CurrentLevel { get; private set; }
     public float TargetHeight { get; private set; }
     public float BuildDuration { get; private set; }
-    public IReadOnlyList<AvailablePiece> CurrentPool => currentPool;
+    public PiecePool CurrentPool => currentPool;
 
     public event Action<int> OnLevelChanged;
 
     public void ResetToFirstLevel() {
-        CurrentLevel = 1;
-        TargetHeight = startingTargetHeight;
-        BuildDuration = startingBuildDuration;
-
-        currentPool.Clear();
-        currentPool.AddRange(startingPieces);
-
-        unusedAddablePieces.Clear();
-        unusedAddablePieces.AddRange(addablePieces);
-
-        OnLevelChanged?.Invoke(CurrentLevel);
+        SetLevel(initialLevel);
     }
 
     public void AdvanceLevel() {
-        CurrentLevel++;
-        TargetHeight += targetHeightIncrement;
-        BuildDuration += buildDurationIncrement;
-        AddRandomUnusedPieceToPool();
+        SetLevel(CurrentLevel + 1);
+    }
+
+    private void SetLevel(int level)
+    {
+        CurrentLevel = level;
+        TargetHeight = startingTargetHeight + ((level - 1) * targetHeightIncrement);
+        BuildDuration = startingBuildDuration + ((level - 1) * buildDurationIncrement);
+        int poolIndex = Math.Min(CurrentLevel - 1, levelPools.Count - 1);
+        currentPool = levelPools[poolIndex];
+        Debug.Log($"[LevelManager] {CurrentLevel-1}, {levelPools.Count - 1}, {Math.Min(CurrentLevel - 1, levelPools.Count - 1)}");
+        Debug.Log($"[LevelManager] Setting level to {CurrentLevel} (target height={TargetHeight}, build duration={BuildDuration}, pool index={poolIndex}, pool={CurrentPool.poolName})");
         OnLevelChanged?.Invoke(CurrentLevel);
-    }
-
-    private void AddRandomUnusedPieceToPool() {
-        while (unusedAddablePieces.Count > 0) {
-            int index = UnityEngine.Random.Range(0, unusedAddablePieces.Count);
-            AvailablePiece candidate = unusedAddablePieces[index];
-            unusedAddablePieces.RemoveAt(index);
-
-            if (PoolContainsPrefab(candidate.prefab))
-                continue;
-
-            currentPool.Add(candidate);
-            return;
-        }
-    }
-
-    private bool PoolContainsPrefab(GameObject prefab) {
-        foreach (AvailablePiece pooledPiece in currentPool) {
-            if (pooledPiece.prefab == prefab)
-                return true;
-        }
-
-        return false;
     }
 }

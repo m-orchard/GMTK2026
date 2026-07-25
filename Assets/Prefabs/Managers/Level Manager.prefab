@@ -45,28 +45,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
   _isGlobal: 0
-  startingPieces:
-  - prefab: {fileID: 3043429153780255533, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
-    chance: 0.2
-  - prefab: {fileID: 4348509434015854766, guid: 51a52faa39b7c51449154b0c5eb8f330, type: 3}
-    chance: 0.2
-  - prefab: {fileID: 7610202894727582270, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
-    chance: 0.4
-  - prefab: {fileID: 8265909787928782443, guid: 6c017c7af4658474eb7d09cdb5618b2c, type: 3}
-    chance: 0.2
-  - prefab: {fileID: 5214020119653457056, guid: e9e6a349388890f429a0d86280bd4716, type: 3}
-    chance: 0.2
-  addablePieces:
-  - prefab: {fileID: 6128414855633721778, guid: 19028579c919ac34e8d6f8ff2fc2c249, type: 3}
-    chance: 0.1
-  - prefab: {fileID: 4250123244721277833, guid: 7a3fef3f41928964fbcad258057827e1, type: 3}
-    chance: 0.3
-  - prefab: {fileID: 2959881588920163696, guid: 91dd64b0e90727748bd7addbc3ffc231, type: 3}
-    chance: 0.15
-  - prefab: {fileID: 8750320709873316647, guid: 3b692067be01b7a428037f52ff79c8ec, type: 3}
-    chance: 0.15
-  - prefab: {fileID: 8265909787928782443, guid: 05821299b69631841b55a69697efe859, type: 3}
-    chance: 0.1
+  initialLevel: 1
+  levelPools:
+  - {fileID: 11400000, guid: 733dd9f6b35ef714c8e0872db4159853, type: 2}
+  - {fileID: 11400000, guid: 38d8d9ef7565e694b89833089e0c83b1, type: 2}
+  - {fileID: 11400000, guid: 951383e04fcd0ec42b0055c6107be480, type: 2}
   startingTargetHeight: 16
   targetHeightIncrement: 4
   startingBuildDuration: 20

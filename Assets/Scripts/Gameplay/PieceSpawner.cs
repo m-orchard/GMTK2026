@@ -1,16 +1,9 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-[System.Serializable]
-public struct AvailablePiece
+public class PieceSpawner : Singleton<PieceSpawner>
 {
-    public GameObject prefab;
-
-    [Range(0f, 1f)]
-    public float chance;
-}
-
-public class PieceSpawner : Singleton<PieceSpawner> {
     [SerializeField] private RocketAssembly rocket;
     [SerializeField] private Conveyor conveyor;
     [SerializeField] private OffScreenSlider conveyorRig;
@@ -18,12 +11,11 @@ public class PieceSpawner : Singleton<PieceSpawner> {
     [SerializeField] private OffScreenSlider craneRig;
     [SerializeField] private List<GameObject> cargoPrefabs;
 
-    [SerializeField] private int bagSize = 20;
     [SerializeField] private float wellMinX = -4.5f;
     [SerializeField] private float wellMaxX = 4.5f;
 
     private readonly List<GameObject> bag = new List<GameObject>();
-    private readonly List<AvailablePiece> pool = new List<AvailablePiece>();
+    private PiecePool pool;
 
     private bool conveyorDispensingStopped;
     private bool craneBlocked;
@@ -31,20 +23,13 @@ public class PieceSpawner : Singleton<PieceSpawner> {
 
     public FallingPieceController Active { get; private set; }
 
-    public IEnumerable<GameObject> PiecePrefabs {
-        get {
-            foreach (AvailablePiece availablePiece in pool)
-                yield return availablePiece.prefab;
-        }
+    public void SetPool(PiecePool pool)
+    {
+        this.pool = pool;
     }
 
-    public void SetPool(IReadOnlyList<AvailablePiece> pieces) {
-        pool.Clear();
-        for (int i = 0; i < pieces.Count; i++)
-            pool.Add(pieces[i]);
-    }
-
-    public void ReplaceFrontConveyorPiece(GameObject prefab) {
+    public void ReplaceFrontConveyorPiece(GameObject prefab)
+    {
         GameObject instance = Instantiate(prefab, Vector3.zero, Quaternion.identity);
         var controller = instance.GetComponent<FallingPieceController>();
         if (controller != null)
@@ -52,7 +37,8 @@ public class PieceSpawner : Singleton<PieceSpawner> {
         conveyor.ReplaceFront(instance);
     }
 
-    public void StartBelt() {
+    public void StartBelt()
+    {
         conveyorDispensingStopped = false;
         conveyorRig.ResetPosition();
         conveyorRig.BeginFollowingRocketTop();
@@ -63,11 +49,13 @@ public class PieceSpawner : Singleton<PieceSpawner> {
             AddPieceToConveyor(NextFromBag());
     }
 
-    public void ReleaseFirstPiece() {
+    public void ReleaseFirstPiece()
+    {
         conveyor.ReleaseFront();
     }
 
-    public void BeginBuildEndExit(float exitDuration) {
+    public void BeginBuildEndExit(float exitDuration)
+    {
         conveyorDispensingStopped = true;
         conveyorRig.ExitOffScreen(exitDuration);
 
@@ -76,7 +64,8 @@ public class PieceSpawner : Singleton<PieceSpawner> {
         craneRig.ExitOffScreen(exitDuration);
     }
 
-    public void SpawnCargo(bool controllable = true) {
+    public void SpawnCargo(bool controllable = true)
+    {
         if (craneBlocked || !crane.IsReady)
             return;
         if (Active != null)
@@ -89,13 +78,15 @@ public class PieceSpawner : Singleton<PieceSpawner> {
         FetchNextCargo();
     }
 
-    private void DiscardActive() {
+    private void DiscardActive()
+    {
         Active.OnReleased -= HandleReleased;
         Destroy(Active.gameObject);
         Active = null;
     }
 
-    public void ResetCargo() {
+    public void ResetCargo()
+    {
         nextCargoIndex = 0;
         craneBlocked = false;
         craneRig.ResetPosition();
@@ -104,7 +95,8 @@ public class PieceSpawner : Singleton<PieceSpawner> {
         FetchNextCargo();
     }
 
-    private void FetchNextCargo() {
+    private void FetchNextCargo()
+    {
         if (nextCargoIndex >= cargoPrefabs.Count)
             return;
 
@@ -116,13 +108,15 @@ public class PieceSpawner : Singleton<PieceSpawner> {
         crane.Fetch(instance);
     }
 
-    private void AddPieceToConveyor(GameObject prefab) {
+    private void AddPieceToConveyor(GameObject prefab)
+    {
         GameObject instance = Instantiate(prefab, Vector3.zero, Quaternion.identity);
         instance.GetComponent<FallingPieceController>().enabled = false;
         conveyor.Enqueue(instance);
     }
 
-    private void BecomeActiveFallingPiece(GameObject instance, bool controllable = true) {
+    private void BecomeActiveFallingPiece(GameObject instance, bool controllable = true)
+    {
         instance.transform.SetParent(rocket.transform, worldPositionStays: true);
 
         var controller = instance.GetComponent<FallingPieceController>();
@@ -135,21 +129,24 @@ public class PieceSpawner : Singleton<PieceSpawner> {
         Active = controller;
     }
 
-    private void HandlePieceReachedDrop(GameObject instance) {
+    private void HandlePieceReachedDrop(GameObject instance)
+    {
         BecomeActiveFallingPiece(instance);
 
         if (!conveyorDispensingStopped)
             AddPieceToConveyor(NextFromBag());
     }
 
-    private void HandleReleased() {
+    private void HandleReleased()
+    {
         Active.OnReleased -= HandleReleased;
         Active = null;
         if (!conveyorDispensingStopped)
             conveyor.ReleaseFront();
     }
 
-    public void ForceLockActive() {
+    public void ForceLockActive()
+    {
         if (Active == null)
             return;
         Active.OnReleased -= HandleReleased;
@@ -157,7 +154,8 @@ public class PieceSpawner : Singleton<PieceSpawner> {
         Active = null;
     }
 
-    private GameObject NextFromBag() {
+    private GameObject NextFromBag()
+    {
         if (bag.Count == 0)
             RefillBag();
 
@@ -166,36 +164,107 @@ public class PieceSpawner : Singleton<PieceSpawner> {
         bag.RemoveAt(lastIndex);
         return prefab;
     }
-
-    private void RefillBag() {
+    private void RefillBag()
+    {
         bag.Clear();
 
-        float totalChance = 0f;
-        foreach (var entry in pool)
-            totalChance += entry.chance;
+        var groups = new List<(int group, List<AvailablePiece> members)>();
+        var groupIndex = new Dictionary<int, int>();
 
-        Debug.Log($"PieceSpawner: Refilling bag (bag size={bagSize}, total chance={totalChance}");
-
-        int remaining = bagSize;
-        for (int i = 0; i < pool.Count; i++) {
-            int count;
-            if (i == pool.Count - 1) {
-                // last entry takes whatever's left, avoiding rounding shortfalls
-                count = remaining;
-            } else {
-                float normalizedChance = totalChance > 0f ? pool[i].chance / totalChance : 0f;
-                count = Mathf.Clamp(Mathf.RoundToInt(bagSize * normalizedChance), 0, remaining);
+        foreach (var entry in pool.members)
+        {
+            if (!groupIndex.TryGetValue(entry.group, out int idx))
+            {
+                idx = groups.Count;
+                groupIndex[entry.group] = idx;
+                groups.Add((entry.group, new List<AvailablePiece>()));
             }
-
-            for (int j = 0; j < count; j++)
-                bag.Add(pool[i].prefab);
-
-            remaining -= count;
+            groups[idx].members.Add(entry);
         }
 
-        for (int i = bag.Count - 1; i > 0; i--) {
+        var groupWeights = groups.Select(g => g.members.Sum(m => m.chance)).ToList();
+        var groupCounts = AllocateCounts(pool.bagSize, groupWeights);
+
+        Debug.Log($"[PieceSpawner]: Refilling bag (bag size={pool.bagSize}, groups={groups.Count})");
+
+        for (int g = 0; g < groups.Count; g++)
+        {
+            int groupCount = groupCounts[g];
+            if (groupCount <= 0) continue;
+
+            var members = groups[g].members;
+            var memberWeights = members.Select(m => m.chance).ToList();
+            var memberCounts = AllocateCounts(groupCount, memberWeights);
+
+            for (int m = 0; m < members.Count; m++)
+            {
+                for (int j = 0; j < memberCounts[m]; j++)
+                    bag.Add(members[m].prefab);
+            }
+        }
+
+        for (int i = bag.Count - 1; i > 0; i--)
+        {
             int j = Random.Range(0, i + 1);
             (bag[i], bag[j]) = (bag[j], bag[i]);
         }
+
+        Debug.Log($"[PieceSpawner]: Refilled bag (count={bag.Count()})");
+    }
+
+    // Splits `total` across `weights` using exact floors, then randomly distributes
+    // the leftover remainder (weighted by fractional share), so proportional splits
+    // stay exact but rounding ties resolve differently each call.
+    private int[] AllocateCounts(int total, List<float> weights)
+    {
+        int n = weights.Count;
+        var counts = new int[n];
+        float totalWeight = weights.Sum();
+
+        if (totalWeight <= 0f)
+        {
+            counts[n - 1] = total;
+            return counts;
+        }
+
+        var fractions = new float[n];
+        int assigned = 0;
+
+        for (int i = 0; i < n; i++)
+        {
+            float exact = total * (weights[i] / totalWeight);
+            counts[i] = Mathf.FloorToInt(exact);
+            fractions[i] = exact - counts[i];
+            assigned += counts[i];
+        }
+
+        int remainder = total - assigned;
+        var indices = Enumerable.Range(0, n).ToList();
+
+        for (int r = 0; r < remainder; r++)
+        {
+            float totalFrac = indices.Sum(i => fractions[i]);
+            int chosen;
+            if (totalFrac <= 0f)
+            {
+                chosen = indices[Random.Range(0, indices.Count)];
+            }
+            else
+            {
+                float roll = Random.Range(0f, totalFrac);
+                float cumulative = 0f;
+                chosen = indices[indices.Count - 1];
+                foreach (int i in indices)
+                {
+                    cumulative += fractions[i];
+                    if (roll <= cumulative) { chosen = i; break; }
+                }
+            }
+            counts[chosen]++;
+            fractions[chosen] = 0f;
+            indices.Remove(chosen);
+        }
+
+        return counts;
     }
 }

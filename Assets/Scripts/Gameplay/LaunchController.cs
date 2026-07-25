@@ -27,6 +27,7 @@ public class LaunchController : MonoBehaviour {
         float burnDuration = baseBurnDuration + (rocket.AvailableFuel * fuelBurnRatio / (1 + totalEngines));
 
         Debug.Log($"[LaunchController] Calculated burn duration: base={baseBurnDuration}, fuel={rocket.AvailableFuel}, burnRatio={fuelBurnRatio}, totalEngines={totalEngines}, burnDuration={burnDuration}");
+        Debug.Log($"[LaunchController] Burning {engineGroups.Count()} engine groups");
 
         ScreenShake.Instance?.Shake(2f);
         for (var i = 0; i < engineGroups.Count(); i++)
