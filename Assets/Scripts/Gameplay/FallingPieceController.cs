@@ -52,6 +52,7 @@ public class FallingPieceController : MonoBehaviour
     private Collider2D collider2D;
     private SpriteRenderer spriteRenderer;
     private Piece piece;
+    private bool controllable = true;
     private float minX = float.NegativeInfinity;
     private float maxX = float.PositiveInfinity;
     private float lockCeilingY = float.PositiveInfinity;
@@ -89,6 +90,11 @@ public class FallingPieceController : MonoBehaviour
         currentDropSpeed = normalDropSpeed;
         currentPositionX = transform.position.x;
         targetPositionX = currentPositionX;
+    }
+
+    public void SetControllable(bool value)
+    {
+        controllable = value;
     }
 
     public void SetBounds(float min, float max)
@@ -133,6 +139,7 @@ public class FallingPieceController : MonoBehaviour
     private void Update()
     {
         if (released) return;
+        if (!controllable) return;
 
         var keyboard = Keyboard.current;
         if (keyboard == null) return;
@@ -192,7 +199,7 @@ public class FallingPieceController : MonoBehaviour
             wiggleTimer = 0f;
         }
 
-        var keyboard = Keyboard.current;
+        var keyboard = controllable ? Keyboard.current : null;
         bool softDrop = keyboard != null && (keyboard.downArrowKey.isPressed || keyboard.sKey.isPressed);
 
         float fallSpeed = ResolveDropSpeed(softDrop, touchingNow);

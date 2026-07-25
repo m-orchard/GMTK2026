@@ -73,14 +73,14 @@ public class PieceSpawner : Singleton<PieceSpawner> {
         craneRig.ExitOffScreen(exitDuration);
     }
 
-    public void SpawnCargo() {
+    public void SpawnCargo(bool controllable = true) {
         if (craneBlocked || !crane.IsReady)
             return;
         if (Active != null)
             DiscardActive();
 
         GameObject cargo = crane.ReleaseHeld();
-        BecomeActiveFallingPiece(cargo);
+        BecomeActiveFallingPiece(cargo, controllable);
         rocket.SetCargoPiece(cargo.GetComponent<Piece>());
 
         FetchNextCargo();
@@ -119,11 +119,12 @@ public class PieceSpawner : Singleton<PieceSpawner> {
         conveyor.Enqueue(instance);
     }
 
-    private void BecomeActiveFallingPiece(GameObject instance) {
+    private void BecomeActiveFallingPiece(GameObject instance, bool controllable = true) {
         instance.transform.SetParent(rocket.transform, worldPositionStays: true);
 
         var controller = instance.GetComponent<FallingPieceController>();
         controller.enabled = true;
+        controller.SetControllable(controllable);
         controller.SetBounds(wellMinX, wellMaxX);
         controller.SetLockCeiling(instance.transform.position.y);
         controller.SnapToMovementStep();

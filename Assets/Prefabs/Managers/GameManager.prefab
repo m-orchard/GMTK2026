@@ -54,3 +54,5 @@ MonoBehaviour:
   settleTime: 2
   conveyorExitAtSecondsRemaining: 1
   conveyorOffScreenAtSecondsRemaining: 0
+  autoDropCraneCargoEnabled: 1
+  autoDropCraneCargoAtSecondsRemaining: 3

@@ -1,5 +1,72 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3551128625273309805
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2694377721295305822}
+    m_Modifications:
+    - target: {fileID: 7060578285051738471, guid: 9f30140e1a5a48e45ae7fd93ef8abb92, type: 3}
+      propertyPath: m_Name
+      value: Thrust Emitter
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160069818364328392, guid: 9f30140e1a5a48e45ae7fd93ef8abb92, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160069818364328392, guid: 9f30140e1a5a48e45ae7fd93ef8abb92, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160069818364328392, guid: 9f30140e1a5a48e45ae7fd93ef8abb92, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160069818364328392, guid: 9f30140e1a5a48e45ae7fd93ef8abb92, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160069818364328392, guid: 9f30140e1a5a48e45ae7fd93ef8abb92, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160069818364328392, guid: 9f30140e1a5a48e45ae7fd93ef8abb92, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160069818364328392, guid: 9f30140e1a5a48e45ae7fd93ef8abb92, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160069818364328392, guid: 9f30140e1a5a48e45ae7fd93ef8abb92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160069818364328392, guid: 9f30140e1a5a48e45ae7fd93ef8abb92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160069818364328392, guid: 9f30140e1a5a48e45ae7fd93ef8abb92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9f30140e1a5a48e45ae7fd93ef8abb92, type: 3}
+--- !u!198 &2990591107543364334 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1785838261931047043, guid: 9f30140e1a5a48e45ae7fd93ef8abb92, type: 3}
+  m_PrefabInstance: {fileID: 3551128625273309805}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4644971463418246053 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8160069818364328392, guid: 9f30140e1a5a48e45ae7fd93ef8abb92, type: 3}
+  m_PrefabInstance: {fileID: 3551128625273309805}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8677011509089836621
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -94,12 +161,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 6705496721772700179, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4644971463418246053}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2848562934725609983, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       insertIndex: -1
       addedObject: {fileID: -6949226471534691547}
   m_SourcePrefab: {fileID: 100100000, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+--- !u!4 &2694377721295305822 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6705496721772700179, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+  m_PrefabInstance: {fileID: 8677011509089836621}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6909312494081972146 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2848562934725609983, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
@@ -117,10 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98c06951d7c5149ef9f130a0d4474c1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EngineThrustEffect
-  flameColor: {r: 1, g: 0.55, b: 0.1, a: 1}
-  particleLifetime: 0.35
-  particleSpeed: 4
-  particleSize: 0.2
+  thrustParticles: {fileID: 2990591107543364334}
   Thrust: 125
   Group: 1
   PhasePriority: 1

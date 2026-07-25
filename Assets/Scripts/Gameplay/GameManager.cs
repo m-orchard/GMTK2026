@@ -17,8 +17,14 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private float conveyorExitAtSecondsRemaining = 1f;
     [SerializeField] private float conveyorOffScreenAtSecondsRemaining = 0f;
 
+    [Header("Crane Auto Drop")]
+    [SerializeField] private bool autoDropCraneCargoEnabled;
+    [SerializeField, Range(1, 5)] private int autoDropCraneCargoAtSecondsRemaining = 3;
+    [SerializeField] private bool autoDroppedCargoIsControllable = false;
+
     private State state;
     private bool conveyorExitTriggered;
+    private bool craneCargoAutoDropTriggered;
     private bool lastRoundSucceeded;
 
     public event System.Action<float, float, bool> OnRoundResult;
@@ -51,6 +57,13 @@ public class GameManager : Singleton<GameManager>
             spawner.BeginBuildEndExit(conveyorExitAtSecondsRemaining - conveyorOffScreenAtSecondsRemaining);
         }
 
+        if (state == State.Building && autoDropCraneCargoEnabled && !craneCargoAutoDropTriggered &&
+            buildTimer.TimeRemaining <= autoDropCraneCargoAtSecondsRemaining)
+        {
+            craneCargoAutoDropTriggered = true;
+            spawner.SpawnCargo(autoDroppedCargoIsControllable);
+        }
+
         if (Keyboard.current == null) return;
 
         if (state == State.Result && Keyboard.current.spaceKey.wasPressedThisFrame)
@@ -73,6 +86,7 @@ public class GameManager : Singleton<GameManager>
     {
         state = State.Building;
         conveyorExitTriggered = false;
+        craneCargoAutoDropTriggered = false;
         rocket.ClearAll();
         spawner.ResetCargo();
         CameraManager.Instance.ResetToBuildFraming();
