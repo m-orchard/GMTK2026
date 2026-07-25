@@ -20,10 +20,7 @@ public class CameraManager : Singleton<CameraManager> {
     private CinemachineTargetGroup buildTargetGroup;
 
     [SerializeField]
-    private Transform craneRig;
-
-    [SerializeField]
-    private Transform conveyorRig;
+    private Transform buildTopTarget;
 
     [SerializeField]
     private int activeCameraPriority = 20;
@@ -38,17 +35,21 @@ public class CameraManager : Singleton<CameraManager> {
     private float padAnchorFramingRadius = 0.5f;
 
     [SerializeField]
-    private float rigFramingRadius = 2f;
+    private float buildFloorHeight = -8f;
 
     [SerializeField]
-    private float buildTopHeadroom = 7f;
+    private float buildTopMargin = 1f;
 
     [SerializeField]
-    private float buildTopFramingRadius = 1f;
+    private float buildFloorFramingRadius = 0.5f;
+
+    [SerializeField]
+    private float buildTopFramingRadius = 0.5f;
 
     private bool following;
     private bool buildFraming;
     private Transform padAnchor;
+    private Transform buildFloorAnchor;
     private Transform buildTopAnchor;
     private readonly HashSet<Piece> trackedPieces = new HashSet<Piece>();
     private readonly List<Piece> piecesToRemove = new List<Piece>();
@@ -68,16 +69,6 @@ public class CameraManager : Singleton<CameraManager> {
         ActivateCamera(buildCamera);
     }
 
-    public void FreezeBuildFraming() {
-        if (craneRig != null) {
-            buildTargetGroup.RemoveMember(craneRig);
-        }
-
-        if (conveyorRig != null) {
-            buildTargetGroup.RemoveMember(conveyorRig);
-        }
-    }
-
     private void LateUpdate() {
         if (following) {
             UpdatePadAnchor();
@@ -86,7 +77,7 @@ public class CameraManager : Singleton<CameraManager> {
         }
 
         if (buildFraming) {
-            UpdateBuildTopAnchor();
+            UpdateBuildAnchors();
         }
     }
 
@@ -106,27 +97,23 @@ public class CameraManager : Singleton<CameraManager> {
     private void ResetBuildTargetGroup() {
         buildTargetGroup.Targets.Clear();
 
-        UpdatePadAnchor();
-        UpdateBuildTopAnchor();
+        UpdateBuildAnchors();
 
-        buildTargetGroup.AddMember(GetPadAnchor(), 1f, padAnchorFramingRadius);
+        buildTargetGroup.AddMember(GetBuildFloorAnchor(), 1f, buildFloorFramingRadius);
         buildTargetGroup.AddMember(GetBuildTopAnchor(), 1f, buildTopFramingRadius);
-
-        if (craneRig != null) {
-            buildTargetGroup.AddMember(craneRig, 1f, rigFramingRadius);
-        }
-
-        if (conveyorRig != null) {
-            buildTargetGroup.AddMember(conveyorRig, 1f, rigFramingRadius);
-        }
     }
 
     private void UpdatePadAnchor() {
         GetPadAnchor().position = new Vector3(rocket.transform.position.x, rocket.PadY, 0f);
     }
 
-    private void UpdateBuildTopAnchor() {
-        GetBuildTopAnchor().position = new Vector3(rocket.transform.position.x, rocket.HighestPointY() + buildTopHeadroom, 0f);
+    private void UpdateBuildAnchors() {
+        float horizontalCenter = rocket.transform.position.x;
+
+        GetBuildFloorAnchor().position = new Vector3(horizontalCenter, buildFloorHeight, 0f);
+
+        float craneTop = buildTopTarget != null ? buildTopTarget.position.y : rocket.HighestPointY();
+        GetBuildTopAnchor().position = new Vector3(horizontalCenter, craneTop + buildTopMargin, 0f);
     }
 
     private Transform GetPadAnchor() {
@@ -136,6 +123,15 @@ public class CameraManager : Singleton<CameraManager> {
         }
 
         return padAnchor;
+    }
+
+    private Transform GetBuildFloorAnchor() {
+        if (buildFloorAnchor == null) {
+            buildFloorAnchor = new GameObject("Camera Build Floor Anchor").transform;
+            buildFloorAnchor.SetParent(transform, false);
+        }
+
+        return buildFloorAnchor;
     }
 
     private Transform GetBuildTopAnchor() {

@@ -52,10 +52,16 @@ MonoBehaviour:
   buildCamera: {fileID: 0}
   launchCamera: {fileID: 0}
   launchTargetGroup: {fileID: 0}
+  buildTargetGroup: {fileID: 0}
+  buildTopTarget: {fileID: 0}
   activeCameraPriority: 20
   inactiveCameraPriority: 0
   pieceFramingRadius: 0.75
   padAnchorFramingRadius: 0.5
+  buildFloorHeight: -6
+  buildTopMargin: 1
+  buildFloorFramingRadius: 0.5
+  buildTopFramingRadius: 0.5
 --- !u!114 &2667756019792127398
 MonoBehaviour:
   m_ObjectHideFlags: 0
