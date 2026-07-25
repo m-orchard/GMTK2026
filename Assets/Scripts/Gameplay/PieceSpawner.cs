@@ -61,6 +61,9 @@ public class PieceSpawner : Singleton<PieceSpawner> {
         conveyor.Clear();
         for (int i = 0; i < conveyor.SlotCount; i++)
             AddPieceToConveyor(NextFromBag());
+    }
+
+    public void ReleaseFirstPiece() {
         conveyor.ReleaseFront();
     }
 

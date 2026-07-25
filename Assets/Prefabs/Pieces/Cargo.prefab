@@ -8,6 +8,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2726803989224796958, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: pieceFriction
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726803989224796958, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: autoLockOnSettle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726803989224796958, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: weldsToNeighbors
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2848562934725609983, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: m_Name
       value: Cargo

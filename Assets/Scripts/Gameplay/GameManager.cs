@@ -17,6 +17,10 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private float conveyorExitAtSecondsRemaining = 1f;
     [SerializeField] private float conveyorOffScreenAtSecondsRemaining = 0f;
 
+    [Header("Build Start")]
+    [Tooltip("Seconds after the conveyor is fed before the build timer starts and the first piece is released. Gives the conveyor time to slide in and the scene to fade in.")]
+    [SerializeField, Min(0f)] private float buildStartDelay = 1f;
+
     [Header("Crane Auto Drop")]
     [SerializeField] private bool autoDropCraneCargoEnabled;
     [SerializeField, Range(1, 5)] private int autoDropCraneCargoAtSecondsRemaining = 3;
@@ -50,14 +54,14 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
-        if (state == State.Building && !conveyorExitTriggered &&
+        if (state == State.Building && buildTimer.IsRunning && !conveyorExitTriggered &&
             buildTimer.TimeRemaining <= conveyorExitAtSecondsRemaining)
         {
             conveyorExitTriggered = true;
             spawner.BeginBuildEndExit(conveyorExitAtSecondsRemaining - conveyorOffScreenAtSecondsRemaining);
         }
 
-        if (state == State.Building && autoDropCraneCargoEnabled && !craneCargoAutoDropTriggered &&
+        if (state == State.Building && buildTimer.IsRunning && autoDropCraneCargoEnabled && !craneCargoAutoDropTriggered &&
             buildTimer.TimeRemaining <= autoDropCraneCargoAtSecondsRemaining)
         {
             craneCargoAutoDropTriggered = true;
@@ -92,10 +96,22 @@ public class GameManager : Singleton<GameManager>
         CameraManager.Instance.ResetToBuildFraming();
         spawner.SetPool(LevelManager.Instance.CurrentPool);
         spawner.StartBelt();
-        buildTimer.SetDuration(LevelManager.Instance.BuildDuration);
-        buildTimer.StartTimer();
         OnBuildingStarted?.Invoke();
         OnTargetHeightChanged?.Invoke(LevelManager.Instance.TargetHeight);
+        StartCoroutine(StartBuildAfterDelay());
+    }
+
+    private IEnumerator StartBuildAfterDelay()
+    {
+        if (buildStartDelay > 0f)
+            yield return new WaitForSeconds(buildStartDelay);
+
+        if (state != State.Building)
+            yield break;
+
+        spawner.ReleaseFirstPiece();
+        buildTimer.SetDuration(LevelManager.Instance.BuildDuration);
+        buildTimer.StartTimer();
     }
 
     private void HandleBuildTimerComplete()

@@ -4,6 +4,7 @@ using UnityEngine.Events;
 public class EngineThrustEffect : MonoBehaviour
 {
     [SerializeField] private ParticleSystem thrustParticles;
+    [SerializeField] private ParticleSystem puffParticles;
     [SerializeField] public float Thrust = 20f;
     [SerializeField] public int Group = 1;
     [SerializeField] public int PhasePriority = 1;
@@ -43,6 +44,11 @@ public class EngineThrustEffect : MonoBehaviour
         {
             OnFiringEnd?.Invoke();
         }
+    }
+
+    public void EmitPuff()
+    {
+        puffParticles.Play();
     }
 
     private void PlayThrusterFireSound()

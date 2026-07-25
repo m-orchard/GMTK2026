@@ -30,11 +30,16 @@ public class FallingPieceController : MonoBehaviour
     [SerializeField] private float settleAngularSpeedThreshold = 15f;
     [SerializeField] private float settleDecayRate = 0.5f;
 
+    [Header("Welding")]
+    [Tooltip("When this piece locks (by any trigger), bond it with FixedJoint2D welds to the pieces it is touching so they become one rigid assembly. Turn off and this piece will never weld in either direction: it will not weld to its neighbours, and pieces that lock against it will not weld to it, so it rests freely and outside the rocket structure regardless of drop order.")]
+    [SerializeField] private bool weldsToNeighbors = true;
+
     [Header("Experimental Controls")]
     [SerializeField] private bool tapToMoveHorizontally = false;
     [SerializeField] private float blockSize = 1f;
     [SerializeField] private float tapMoveStepInBlocks = 0.5f;
     [SerializeField] private float stepMoveTweenDuration = 0.05f;
+    [Tooltip("Let this piece lock itself once it settles at rest on the landing layer for the settle duration. This is only one of the lock triggers: the spawner, a magnetic frame, or RocketAssembly can still lock the piece even when this is off.")]
     [SerializeField] private bool autoLockOnSettle = true;
 
     private float TapMoveStepDistance => blockSize * tapMoveStepInBlocks;
@@ -319,6 +324,8 @@ public class FallingPieceController : MonoBehaviour
 
     private void WeldToContacts()
     {
+        if (!weldsToNeighbors) return;
+
         int contactCount = CheckContacts();
         if (contactCount == 0) return; // never touched anything - stray piece, stays unconnected
 
@@ -329,7 +336,12 @@ public class FallingPieceController : MonoBehaviour
             Rigidbody2D other = OverlapBuffer[i].attachedRigidbody;
             if (other == null || other == body2D) continue; // bare scenery (ground/walls) - rest on it, nothing to weld to
             if (!welded.Add(other)) continue;
-            if (other.TryGetComponent<Piece>(out var otherPiece)) piece.WeldTo(otherPiece);
+            if (other.TryGetComponent<Piece>(out var otherPiece) && AcceptsWeld(otherPiece)) piece.WeldTo(otherPiece);
         }
+    }
+
+    private static bool AcceptsWeld(Piece neighbor)
+    {
+        return !neighbor.TryGetComponent<FallingPieceController>(out var neighborController) || neighborController.weldsToNeighbors;
     }
 }

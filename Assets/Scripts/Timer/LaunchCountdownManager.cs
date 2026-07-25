@@ -18,6 +18,7 @@ public class LaunchCountdownManager : Singleton<LaunchCountdownManager>
     [SerializeField] private SlammingNumber slammingNumberPrefab;
     [SerializeField] private RectTransform slammingNumberParent;
     [SerializeField] private int countdownStartSecond = 5;
+    [SerializeField] private int emitThrusterPuffAtSecond = 3;
     [FormerlySerializedAs("countdownVoices")]
     [SerializeField] private CountdownStep[] countdownSteps;
 
@@ -75,6 +76,25 @@ public class LaunchCountdownManager : Singleton<LaunchCountdownManager>
 
         SlammingNumber slammingNumber = Instantiate(slammingNumberPrefab, slammingNumberParent);
         slammingNumber.Play(numberToDisplay, voiceClip, topColor, bottomColor);
+
+        if (numberToDisplay == emitThrusterPuffAtSecond)
+        {
+            EmitThrusterPuffs();
+        }
+    }
+
+    private void EmitThrusterPuffs()
+    {
+        if (RocketAssembly.Instance == null)
+        {
+            return;
+        }
+
+        EngineThrustEffect[] thrusters = RocketAssembly.Instance.GetComponentsInChildren<EngineThrustEffect>();
+        foreach (EngineThrustEffect thruster in thrusters)
+        {
+            thruster.EmitPuff();
+        }
     }
 
     private CountdownStep FindStepForNumber(int numberToDisplay)
