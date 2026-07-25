@@ -2,8 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class MaxHeightDisplay : MonoBehaviour
-{
+public class MaxHeightDisplay : MonoBehaviour {
     [SerializeField] private Camera worldCamera;
 
     [SerializeField] private Image dottedLine;
@@ -22,58 +21,56 @@ public class MaxHeightDisplay : MonoBehaviour
     private float targetHeight;
     private bool showing;
 
-    private void Awake()
-    {
+    private void Awake() {
         bar = (RectTransform)transform;
-        if (worldCamera == null) worldCamera = Camera.main;
+        if (worldCamera == null)
+            worldCamera = Camera.main;
         BuildDottedLine();
     }
 
-    private void OnEnable()
-    {
+    private void OnEnable() {
         GameManager.Instance.OnLaunchStarted += Show;
         GameManager.Instance.OnBuildingStarted += Hide;
         GameManager.Instance.OnTargetHeightChanged += SetTargetHeight;
         Hide();
     }
 
-    private void OnDisable()
-    {
+    private void OnDisable() {
+        if (!GameManager.Instance) {
+            return;
+        }
+
         GameManager.Instance.OnLaunchStarted -= Show;
         GameManager.Instance.OnBuildingStarted -= Hide;
         GameManager.Instance.OnTargetHeightChanged -= SetTargetHeight;
     }
 
-    private void Show()
-    {
+    private void Show() {
         showing = true;
     }
 
-    private void Hide()
-    {
+    private void Hide() {
         showing = false;
         SetVisualsVisible(false);
     }
 
-    private void SetVisualsVisible(bool visible)
-    {
+    private void SetVisualsVisible(bool visible) {
         dottedLine.gameObject.SetActive(visible);
         heightLabel.gameObject.SetActive(visible);
-        if (!visible) aboveViewIndicator.SetActive(false);
+        if (!visible)
+            aboveViewIndicator.SetActive(false);
     }
 
-    private void SetTargetHeight(float newTargetHeight)
-    {
+    private void SetTargetHeight(float newTargetHeight) {
         targetHeight = newTargetHeight;
     }
 
-    private void LateUpdate()
-    {
-        if (!showing || worldCamera == null) return;
+    private void LateUpdate() {
+        if (!showing || worldCamera == null)
+            return;
 
         float maxHeight = HeightTracker.Instance.ApexHeight;
-        if (maxHeight < targetHeight)
-        {
+        if (maxHeight < targetHeight) {
             SetVisualsVisible(false);
             return;
         }
@@ -93,8 +90,7 @@ public class MaxHeightDisplay : MonoBehaviour
         heightLabel.text = string.Format(heightFormat, maxHeight, targetHeight);
     }
 
-    private void BuildDottedLine()
-    {
+    private void BuildDottedLine() {
         int dashPixels = Mathf.Max(1, Mathf.RoundToInt(dashLengthPixels));
         int gapPixels = Mathf.Max(1, Mathf.RoundToInt(gapLengthPixels));
         int patternWidth = dashPixels + gapPixels;
@@ -102,8 +98,7 @@ public class MaxHeightDisplay : MonoBehaviour
         var texture = new Texture2D(patternWidth, 1);
         texture.wrapMode = TextureWrapMode.Repeat;
         texture.filterMode = FilterMode.Point;
-        for (int column = 0; column < patternWidth; column++)
-        {
+        for (int column = 0; column < patternWidth; column++) {
             texture.SetPixel(column, 0, column < dashPixels ? Color.white : Color.clear);
         }
         texture.Apply();

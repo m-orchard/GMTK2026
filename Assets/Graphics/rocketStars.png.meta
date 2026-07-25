@@ -1,0 +1,1055 @@
+fileFormatVersion: 2
+guid: c41e696c53bc9734d8f572703c28557c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1271224745667065795
+    second: rocketStars_0
+  - first:
+      213: 7216161100162525906
+    second: rocketStars_1
+  - first:
+      213: -4090527487106700195
+    second: rocketStars_2
+  - first:
+      213: -6607015992872176119
+    second: rocketStars_3
+  - first:
+      213: 4085125908542943616
+    second: rocketStars_4
+  - first:
+      213: -7897956554486894736
+    second: rocketStars_5
+  - first:
+      213: 6913990298968283642
+    second: rocketStars_6
+  - first:
+      213: 47685911020101175
+    second: rocketStars_7
+  - first:
+      213: -7697022448202703174
+    second: rocketStars_8
+  - first:
+      213: 5114162807627124461
+    second: rocketStars_9
+  - first:
+      213: -3126478625478924237
+    second: rocketStars_10
+  - first:
+      213: -8146420883545280965
+    second: rocketStars_11
+  - first:
+      213: -8154231238125230539
+    second: rocketStars_12
+  - first:
+      213: -7592166589240471888
+    second: rocketStars_13
+  - first:
+      213: -2304129205124955775
+    second: rocketStars_14
+  - first:
+      213: -2034139961251037948
+    second: rocketStars_15
+  - first:
+      213: -8255362856013428972
+    second: rocketStars_16
+  - first:
+      213: 7712686612478629110
+    second: rocketStars_17
+  - first:
+      213: -8946801381084314846
+    second: rocketStars_18
+  - first:
+      213: -6608490294844939048
+    second: rocketStars_19
+  - first:
+      213: 3741667696831164039
+    second: rocketStars_20
+  - first:
+      213: 4174340627811672615
+    second: rocketStars_21
+  - first:
+      213: -6681158102532341072
+    second: rocketStars_22
+  - first:
+      213: -7049090203608706777
+    second: rocketStars_23
+  - first:
+      213: -6026850428650470269
+    second: rocketStars_24
+  - first:
+      213: 2703699208116762934
+    second: rocketStars_25
+  - first:
+      213: -3671421403144641380
+    second: rocketStars_26
+  - first:
+      213: -3748600323268788746
+    second: rocketStars_27
+  - first:
+      213: -3745962505572819582
+    second: rocketStars_28
+  - first:
+      213: 387682050334923149
+    second: rocketStars_29
+  - first:
+      213: 3015717214725129874
+    second: rocketStars_30
+  - first:
+      213: -1938045816066400917
+    second: rocketStars_31
+  - first:
+      213: 3202993217902408151
+    second: rocketStars_32
+  - first:
+      213: -3411855855704567731
+    second: rocketStars_33
+  - first:
+      213: 4921843144111574620
+    second: rocketStars_34
+  - first:
+      213: 8442891712182369228
+    second: rocketStars_35
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 400
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: rocketStars_0
+      rect:
+        serializedVersion: 2
+        x: 1945
+        y: 3720
+        width: 190
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c7fb23cb2c44a110800000000000000
+      internalID: 1271224745667065795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_1
+      rect:
+        serializedVersion: 2
+        x: 2689
+        y: 3822
+        width: 191
+        height: 195
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2daed29a944f42460800000000000000
+      internalID: 7216161100162525906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_2
+      rect:
+        serializedVersion: 2
+        x: 6224
+        y: 3625
+        width: 275
+        height: 275
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5ca80b4ce68b37c0800000000000000
+      internalID: -4090527487106700195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_3
+      rect:
+        serializedVersion: 2
+        x: 2929
+        y: 3537
+        width: 270
+        height: 271
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 906778fb5f92f44a0800000000000000
+      internalID: -6607015992872176119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_4
+      rect:
+        serializedVersion: 2
+        x: 590
+        y: 3142
+        width: 203
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0817271be5841b830800000000000000
+      internalID: 4085125908542943616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_5
+      rect:
+        serializedVersion: 2
+        x: 1667
+        y: 3151
+        width: 190
+        height: 195
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07f275edb52d46290800000000000000
+      internalID: -7897956554486894736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_6
+      rect:
+        serializedVersion: 2
+        x: 2044
+        y: 3333
+        width: 197
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af950868b8d63ff50800000000000000
+      internalID: 6913990298968283642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_7
+      rect:
+        serializedVersion: 2
+        x: 3767
+        y: 3254
+        width: 271
+        height: 272
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73ed42b551a69a000800000000000000
+      internalID: 47685911020101175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_8
+      rect:
+        serializedVersion: 2
+        x: 5517
+        y: 3326
+        width: 193
+        height: 197
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abe9baa2ddeae2590800000000000000
+      internalID: -7697022448202703174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_9
+      rect:
+        serializedVersion: 2
+        x: 4535
+        y: 3081
+        width: 203
+        height: 204
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dee01204af729f640800000000000000
+      internalID: 5114162807627124461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_10
+      rect:
+        serializedVersion: 2
+        x: 5360
+        y: 2945
+        width: 204
+        height: 207
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3382a7241448c94d0800000000000000
+      internalID: -3126478625478924237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_11
+      rect:
+        serializedVersion: 2
+        x: 617
+        y: 2687
+        width: 272
+        height: 275
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3ea5753e5912fe80800000000000000
+      internalID: -8146420883545280965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_12
+      rect:
+        serializedVersion: 2
+        x: 2613
+        y: 2769
+        width: 270
+        height: 275
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 536e62354e956de80800000000000000
+      internalID: -8154231238125230539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_13
+      rect:
+        serializedVersion: 2
+        x: 4402
+        y: 2565
+        width: 275
+        height: 277
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0be8bbc46b433a690800000000000000
+      internalID: -7592166589240471888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_14
+      rect:
+        serializedVersion: 2
+        x: 5738
+        y: 2547
+        width: 271
+        height: 272
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1818ceb12b61600e0800000000000000
+      internalID: -2304129205124955775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_15
+      rect:
+        serializedVersion: 2
+        x: 1476
+        y: 2283
+        width: 272
+        height: 275
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40d743a8b7845c3e0800000000000000
+      internalID: -2034139961251037948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_16
+      rect:
+        serializedVersion: 2
+        x: 2289
+        y: 2316
+        width: 275
+        height: 276
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4178d53a83f0f6d80800000000000000
+      internalID: -8255362856013428972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_17
+      rect:
+        serializedVersion: 2
+        x: 2927
+        y: 2157
+        width: 275
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f413b84c97f80b60800000000000000
+      internalID: 7712686612478629110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_18
+      rect:
+        serializedVersion: 2
+        x: 3709
+        y: 2265
+        width: 204
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 223ce7ccb8396d380800000000000000
+      internalID: -8946801381084314846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_19
+      rect:
+        serializedVersion: 2
+        x: 2234
+        y: 1858
+        width: 204
+        height: 207
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d4a622171de944a0800000000000000
+      internalID: -6608490294844939048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_20
+      rect:
+        serializedVersion: 2
+        x: 3553
+        y: 1807
+        width: 271
+        height: 275
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78eec2132f21de330800000000000000
+      internalID: 3741667696831164039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_21
+      rect:
+        serializedVersion: 2
+        x: 4840
+        y: 1993
+        width: 201
+        height: 204
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72222343fac3ee930800000000000000
+      internalID: 4174340627811672615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_22
+      rect:
+        serializedVersion: 2
+        x: 6247
+        y: 1790
+        width: 272
+        height: 271
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b24652aa12c743a0800000000000000
+      internalID: -6681158102532341072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_23
+      rect:
+        serializedVersion: 2
+        x: 2567
+        y: 1684
+        width: 204
+        height: 207
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7219738bec99c2e90800000000000000
+      internalID: -7049090203608706777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_24
+      rect:
+        serializedVersion: 2
+        x: 4474
+        y: 1780
+        width: 196
+        height: 196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 384c0ed77735c5ca0800000000000000
+      internalID: -6026850428650470269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_25
+      rect:
+        serializedVersion: 2
+        x: 1266
+        y: 1538
+        width: 204
+        height: 207
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 639fd4fda18758520800000000000000
+      internalID: 2703699208116762934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_26
+      rect:
+        serializedVersion: 2
+        x: 4317
+        y: 1399
+        width: 204
+        height: 207
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c942cc49fad7c0dc0800000000000000
+      internalID: -3671421403144641380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_27
+      rect:
+        serializedVersion: 2
+        x: 5530
+        y: 1280
+        width: 272
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fd36aeeddb4afbc0800000000000000
+      internalID: -3748600323268788746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_28
+      rect:
+        serializedVersion: 2
+        x: 2092
+        y: 1042
+        width: 203
+        height: 206
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28d5669b2faa30cc0800000000000000
+      internalID: -3745962505572819582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_29
+      rect:
+        serializedVersion: 2
+        x: 3233
+        y: 1069
+        width: 272
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d89120055c2516500800000000000000
+      internalID: 387682050334923149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_30
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 688
+        width: 272
+        height: 276
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 296c8be24daf9d920800000000000000
+      internalID: 3015717214725129874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_31
+      rect:
+        serializedVersion: 2
+        x: 889
+        y: 834
+        width: 193
+        height: 198
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6d1ee6399daa15e0800000000000000
+      internalID: -1938045816066400917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_32
+      rect:
+        serializedVersion: 2
+        x: 4834
+        y: 617
+        width: 271
+        height: 272
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d1fe0b8c51537c20800000000000000
+      internalID: 3202993217902408151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_33
+      rect:
+        serializedVersion: 2
+        x: 1569
+        y: 450
+        width: 206
+        height: 207
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4094ef0d27a6a0d0800000000000000
+      internalID: -3411855855704567731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_34
+      rect:
+        serializedVersion: 2
+        x: 3981
+        y: 583
+        width: 193
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5e46f43346ed4440800000000000000
+      internalID: 4921843144111574620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocketStars_35
+      rect:
+        serializedVersion: 2
+        x: 6142
+        y: 603
+        width: 190
+        height: 197
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ccb38b5a74d2b2570800000000000000
+      internalID: 8442891712182369228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      rocketStars_0: 1271224745667065795
+      rocketStars_1: 7216161100162525906
+      rocketStars_10: -3126478625478924237
+      rocketStars_11: -8146420883545280965
+      rocketStars_12: -8154231238125230539
+      rocketStars_13: -7592166589240471888
+      rocketStars_14: -2304129205124955775
+      rocketStars_15: -2034139961251037948
+      rocketStars_16: -8255362856013428972
+      rocketStars_17: 7712686612478629110
+      rocketStars_18: -8946801381084314846
+      rocketStars_19: -6608490294844939048
+      rocketStars_2: -4090527487106700195
+      rocketStars_20: 3741667696831164039
+      rocketStars_21: 4174340627811672615
+      rocketStars_22: -6681158102532341072
+      rocketStars_23: -7049090203608706777
+      rocketStars_24: -6026850428650470269
+      rocketStars_25: 2703699208116762934
+      rocketStars_26: -3671421403144641380
+      rocketStars_27: -3748600323268788746
+      rocketStars_28: -3745962505572819582
+      rocketStars_29: 387682050334923149
+      rocketStars_3: -6607015992872176119
+      rocketStars_30: 3015717214725129874
+      rocketStars_31: -1938045816066400917
+      rocketStars_32: 3202993217902408151
+      rocketStars_33: -3411855855704567731
+      rocketStars_34: 4921843144111574620
+      rocketStars_35: 8442891712182369228
+      rocketStars_4: 4085125908542943616
+      rocketStars_5: -7897956554486894736
+      rocketStars_6: 6913990298968283642
+      rocketStars_7: 47685911020101175
+      rocketStars_8: -7697022448202703174
+      rocketStars_9: 5114162807627124461
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

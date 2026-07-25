@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cargo
       objectReference: {fileID: 0}
+    - target: {fileID: 3328365950053633513, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7148581760834823683, guid: 321f91448c589c0429c2fe16d6f07bec, type: 3}
     - target: {fileID: 3822852866446144165, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: m_Mass
       value: 3
@@ -19,7 +23,7 @@ PrefabInstance:
     - target: {fileID: 6424228768344603949, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
+      objectReference: {fileID: 7148581760834823683, guid: 321f91448c589c0429c2fe16d6f07bec, type: 3}
     - target: {fileID: 6424228768344603949, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -129,4 +133,4 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Radius: 0.95

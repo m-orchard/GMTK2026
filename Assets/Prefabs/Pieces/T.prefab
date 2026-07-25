@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6929309019022166349
 Transform:
   m_ObjectHideFlags: 0
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.27450982, g: 0.4862745, b: 0.98039216, a: 1}
+  m_Color: {r: 0.97647065, g: 0.50980395, b: 0.43921572, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -108,7 +108,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2304946233619884380
 Transform:
   m_ObjectHideFlags: 0
@@ -174,7 +174,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.27450982, g: 0.4862745, b: 0.98039216, a: 1}
+  m_Color: {r: 0.97647065, g: 0.50980395, b: 0.43921572, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -192,10 +192,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2053585287238015503, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.2796316
+      objectReference: {fileID: 0}
+    - target: {fileID: 2053585287238015503, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.85649
+      objectReference: {fileID: 0}
+    - target: {fileID: 2053585287238015503, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.035
+      objectReference: {fileID: 0}
+    - target: {fileID: 2053585287238015503, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.4969
+      objectReference: {fileID: 0}
     - target: {fileID: 2848562934725609983, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: m_Name
       value: T
       objectReference: {fileID: 0}
+    - target: {fileID: 3328365950053633513, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -6003199788964643763, guid: 321f91448c589c0429c2fe16d6f07bec, type: 3}
     - target: {fileID: 6705496721772700179, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
