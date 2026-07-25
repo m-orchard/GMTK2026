@@ -14,8 +14,8 @@ public class GameManager : Singleton<GameManager>
 
     [SerializeField] private float baseBurnDuration = 2.5f;
     [SerializeField] private float settleTime = 2f;
-    [SerializeField] private float conveyorExitAtSecondsRemaining = 3f;
-    [SerializeField] private float conveyorOffScreenAtSecondsRemaining = 1f;
+    [SerializeField] private float conveyorExitAtSecondsRemaining = 1f;
+    [SerializeField] private float conveyorOffScreenAtSecondsRemaining = 0f;
 
     private State state;
     private bool conveyorExitTriggered;
