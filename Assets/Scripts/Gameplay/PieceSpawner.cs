@@ -19,8 +19,8 @@ public class PieceSpawner : Singleton<PieceSpawner> {
     [SerializeField] private List<GameObject> cargoPrefabs;
 
     [SerializeField] private int bagSize = 20;
-    [SerializeField] private float wellMinX = -2f;
-    [SerializeField] private float wellMaxX = 2f;
+    [SerializeField] private float wellMinX = -4.5f;
+    [SerializeField] private float wellMaxX = 4.5f;
 
     private readonly List<GameObject> bag = new List<GameObject>();
     private readonly List<AvailablePiece> pool = new List<AvailablePiece>();

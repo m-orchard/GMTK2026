@@ -47,27 +47,12 @@ MonoBehaviour:
   _isGlobal: 0
   rocket: {fileID: 0}
   conveyor: {fileID: 0}
+  conveyorRig: {fileID: 0}
   crane: {fileID: 0}
-  availablePieces:
-  - prefab: {fileID: 3043429153780255533, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
-    chance: 0.3
-  - prefab: {fileID: 7610202894727582270, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
-    chance: 0.2
-  - prefab: {fileID: 4250123244721277833, guid: 7a3fef3f41928964fbcad258057827e1, type: 3}
-    chance: 0.1
-  - prefab: {fileID: 8750320709873316647, guid: 3b692067be01b7a428037f52ff79c8ec, type: 3}
-    chance: 0.05
-  - prefab: {fileID: 6128414855633721778, guid: 19028579c919ac34e8d6f8ff2fc2c249, type: 3}
-    chance: 0.05
-  - prefab: {fileID: 3043429153780255533, guid: 620ae3f19d46b1f42be0960a0b432e8e, type: 3}
-    chance: 0.1
-  - prefab: {fileID: 3043429153780255533, guid: 102c77911c4a8b54088897579c6c27c0, type: 3}
-    chance: 0.1
-  - prefab: {fileID: 2959881588920163696, guid: 91dd64b0e90727748bd7addbc3ffc231, type: 3}
-    chance: 0.1
+  craneRig: {fileID: 0}
   cargoPrefabs:
   - {fileID: 8976659357231157856, guid: 0dda6ef7762e7a24baa614cce3977481, type: 3}
   - {fileID: 8976659357231157856, guid: 0dda6ef7762e7a24baa614cce3977481, type: 3}
   bagSize: 20
-  wellMinX: -2
-  wellMaxX: 2
+  wellMinX: -4
+  wellMaxX: 4
