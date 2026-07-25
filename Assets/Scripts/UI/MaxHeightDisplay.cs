@@ -13,9 +13,6 @@ public class MaxHeightDisplay : MonoBehaviour {
 
     [SerializeField] private float topViewportLimit = 0.93f;
     [SerializeField] private float bottomViewportLimit = 0.05f;
-    [SerializeField] private float dashLengthPixels = 18f;
-    [SerializeField] private float gapLengthPixels = 12f;
-    [SerializeField] private Color lineColor = Color.white;
     [SerializeField] private string heightFormat = "{0:0.0}m / {1:0}m";
 
     private float targetHeight;
@@ -25,7 +22,13 @@ public class MaxHeightDisplay : MonoBehaviour {
         bar = (RectTransform)transform;
         if (worldCamera == null)
             worldCamera = Camera.main;
-        BuildDottedLine();
+        MatchDotSizeToLineHeight();
+    }
+
+    private void MatchDotSizeToLineHeight() {
+        float lineHeight = dottedLine.rectTransform.rect.height;
+        float spriteHeight = dottedLine.sprite.rect.height;
+        dottedLine.pixelsPerUnitMultiplier = spriteHeight / (dottedLine.pixelsPerUnit * lineHeight);
     }
 
     private void OnEnable() {
@@ -88,23 +91,5 @@ public class MaxHeightDisplay : MonoBehaviour {
 
         aboveViewIndicator.SetActive(aboveView);
         heightLabel.text = string.Format(heightFormat, maxHeight, targetHeight);
-    }
-
-    private void BuildDottedLine() {
-        int dashPixels = Mathf.Max(1, Mathf.RoundToInt(dashLengthPixels));
-        int gapPixels = Mathf.Max(1, Mathf.RoundToInt(gapLengthPixels));
-        int patternWidth = dashPixels + gapPixels;
-
-        var texture = new Texture2D(patternWidth, 1);
-        texture.wrapMode = TextureWrapMode.Repeat;
-        texture.filterMode = FilterMode.Point;
-        for (int column = 0; column < patternWidth; column++) {
-            texture.SetPixel(column, 0, column < dashPixels ? Color.white : Color.clear);
-        }
-        texture.Apply();
-
-        dottedLine.sprite = Sprite.Create(texture, new Rect(0f, 0f, patternWidth, 1f), new Vector2(0.5f, 0.5f), 1f);
-        dottedLine.type = Image.Type.Tiled;
-        dottedLine.color = lineColor;
     }
 }
