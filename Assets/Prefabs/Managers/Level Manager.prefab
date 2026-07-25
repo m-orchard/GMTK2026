@@ -54,7 +54,7 @@ MonoBehaviour:
     chance: 0.4
   - prefab: {fileID: 8265909787928782443, guid: 6c017c7af4658474eb7d09cdb5618b2c, type: 3}
     chance: 0.2
-  - prefab: {fileID: 8265909787928782443, guid: 79fd84ae8a2d7ce42a0700712caa6227, type: 3}
+  - prefab: {fileID: 5214020119653457056, guid: e9e6a349388890f429a0d86280bd4716, type: 3}
     chance: 0.2
   addablePieces:
   - prefab: {fileID: 6128414855633721778, guid: 19028579c919ac34e8d6f8ff2fc2c249, type: 3}
