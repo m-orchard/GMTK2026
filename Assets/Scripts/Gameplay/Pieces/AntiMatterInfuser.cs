@@ -10,7 +10,7 @@ public class AntiMatterInfuser : MonoBehaviour
         var body = target.GetComponent<Rigidbody2D>();
         var currentMass = body.mass;
         var newMass = (currentMass * MassAdjustmentMultiplier) + MassAdjustmentValue;
-        Debug.Log($"AntiMatterInfuser: Applying mass adjustment (({currentMass} * {MassAdjustmentMultiplier}) + {MassAdjustmentValue} = {newMass}");
+        Debug.Log($"[AntiMatterInfuser] Applying mass adjustment (({currentMass} * {MassAdjustmentMultiplier}) + {MassAdjustmentValue} = {newMass}");
         body.mass = newMass;
     }
 }

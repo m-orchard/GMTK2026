@@ -6,24 +6,54 @@ using UnityEngine;
 public class LaunchController : MonoBehaviour {
     private Coroutine launchRoutine;
 
-    public IEnumerator Launch(RocketAssembly rocket, float burnDuration, float settleTime) {
+    public float fuelBurnRatio = 1.5f;
+
+    public IEnumerator Launch(RocketAssembly rocket, float baseBurnDuration, float settleTime) {
         if (launchRoutine != null)
             StopCoroutine(launchRoutine);
 
         HashSet<EngineThrustEffect> bracedEngines = rocket.GetBracedEngines();
-        launchRoutine = StartCoroutine(BurnEngines(rocket, burnDuration, settleTime, bracedEngines));
+        var fuel = rocket.GetFuel();
+        launchRoutine = StartCoroutine(BurnEngines(rocket, baseBurnDuration, settleTime, bracedEngines, fuel));
         yield return launchRoutine;
         launchRoutine = null;
     }
 
-    private IEnumerator BurnEngines(RocketAssembly rocket, float burnDuration, float settleTime, HashSet<EngineThrustEffect> bracedEngines)
-    {
-        var enginesByPhase = bracedEngines.GroupBy(engine => engine.Phase).OrderBy(group => group.Key);
+    private IEnumerator BurnEngines(
+        RocketAssembly rocket,
+        float baseBurnDuration,
+        float settleTime,
+        HashSet<EngineThrustEffect> bracedEngines,
+        IEnumerable<Fuel> fuel
+    ) {
+        var priorityGroups = bracedEngines
+            .GroupBy(x => x.Group)
+            .Select(g => g
+                .GroupBy(x => x.PhasePriority)
+                .OrderBy(pg => pg.Key)
+                .Select(pg => pg.ToList())
+                .ToList())
+            .ToList();
+
+        int numPhases = priorityGroups.Max(g => g.Count);
+        var enginesByPhase = Enumerable.Range(0, numPhases)
+            .Select(depth => priorityGroups
+                .Where(g => depth < g.Count)
+                .SelectMany(g => g[depth])
+                .ToList())
+            .ToList();
+
+        float totalFuel = fuel.Sum(container => container.Value);
+        float burnDuration = baseBurnDuration + (totalFuel * fuelBurnRatio / (1 + bracedEngines.Count()));
+
+        Debug.Log($"[LaunchController] Burning each phase for {baseBurnDuration} + ({totalFuel} * {fuelBurnRatio} / (1 + {bracedEngines.Count()})) = {burnDuration}");
+
         ScreenShake.Instance?.Shake(2f);
-        foreach (var activeEngines in enginesByPhase)
+        for (var i = 0; i < enginesByPhase.Count(); i++)
         {
-            LogThrustVsWeight(rocket, activeEngines.Key, activeEngines);
-            yield return Burn(activeEngines.Key, activeEngines, burnDuration, settleTime);
+            var activeEngines = enginesByPhase[i];
+            LogThrustVsWeight(rocket, i, activeEngines);
+            yield return Burn(i, activeEngines, burnDuration, settleTime);
         }
     }
 
@@ -46,10 +76,10 @@ public class LaunchController : MonoBehaviour {
         }
 
         var message = phase == 1 ? " (need thrust > weight to lift off)" : "";
-        Debug.Log($"[Launch Controller] Phase {phase}: totalThrust={totalThrust:0.0} totalWeight={totalWeight:0.0}{message}");
+        Debug.Log($"[LaunchController] Phase {phase}: totalThrust={totalThrust:0.0} totalWeight={totalWeight:0.0}{message}");
     }
 
-    private IEnumerator Burn(int phase, IEnumerable<EngineThrustEffect> activeEngines, float burnDuration, float settleDuration) {
+    private IEnumerator Burn(int phase, IEnumerable<EngineThrustEffect> activeEngines, float baseBurnDuration, float settleDuration) {
         var pieces = new Dictionary<EngineThrustEffect, Piece>();
         foreach (var engine in activeEngines) {
             var piece = engine.GetComponent<Piece>();
@@ -57,9 +87,9 @@ public class LaunchController : MonoBehaviour {
             engine.SetFiring(piece.IsLocked);
         }
 
-        Debug.Log($"[Launch Controller] Phase {phase}: Burning {activeEngines.Count()} engines");
+        Debug.Log($"[LaunchController] Phase {phase}: Burning {activeEngines.Count()} engines");
         float elapsedBurn = 0f;
-        while (elapsedBurn < burnDuration) {
+        while (elapsedBurn < baseBurnDuration) {
             foreach (var engine in activeEngines) {
                 var piece = pieces[engine];
                 if (!piece.IsLocked)
@@ -74,13 +104,13 @@ public class LaunchController : MonoBehaviour {
             engine.SetFiring(false);
         }
 
-        Debug.Log($"[Launch Controller] Phase {phase}: Settling");
+        Debug.Log($"[LaunchController] Phase {phase}: Settling");
         float elapsedSettle = 0f;
         while (elapsedSettle < settleDuration) {
             elapsedSettle += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
 
-        Debug.Log($"[Launch Controller] Phase {phase}: Complete");
+        Debug.Log($"[LaunchController] Phase {phase}: Complete");
     }
 }
