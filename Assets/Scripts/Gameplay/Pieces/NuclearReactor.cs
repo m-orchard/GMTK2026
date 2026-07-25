@@ -13,6 +13,7 @@ public class NuclearReactor : MonoBehaviour
             var newThrust = (currentThrust * BoostMultiplier) + BoostValue;
             Debug.Log($"[NuclearReactor] Applying thruster boost (({currentThrust} * {BoostMultiplier}) + {BoostValue}) = {newThrust}");
             thrustEffect.Thrust = newThrust;
+            thrustEffect.Empower();
         }
     }
 }

@@ -308,6 +308,12 @@ MonoBehaviour:
   Group: 1
   PhasePriority: 1
   thrusterFireSound: {fileID: 0}
+  empoweredThrustColor: {r: 1, g: 0.39215687, b: 0.23137255, a: 1}
+  empoweredThrustSizeMultiplier: 1.4
+  engineSprite: {fileID: 0}
+  empoweredAura: {fileID: 0}
+  empoweredAuraColor: {r: 1, g: 0.39215687, b: 0.23137255, a: 1}
+  auraPulseDuration: 0.8
   OnFiringStart:
     m_PersistentCalls:
       m_Calls: []

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,11 +11,22 @@ public class EngineThrustEffect : MonoBehaviour
     [SerializeField] public int PhasePriority = 1;
     [SerializeField] private AudioClip thrusterFireSound;
 
+    [Header("Empowered")]
+    [SerializeField] private Color empoweredThrustColor = new Color(0.4f, 1f, 0.3f, 1f);
+    [SerializeField] private float empoweredThrustSizeMultiplier = 1.4f;
+    [SerializeField] private SpriteRenderer engineSprite;
+    [SerializeField] private ParticleSystem empoweredAura;
+    [SerializeField] private Color empoweredAuraColor = new Color(0.5f, 1f, 0.4f, 1f);
+    [SerializeField] private float auraPulseDuration = 0.8f;
+
     public UnityEvent OnFiringStart;
 
     public UnityEvent OnFiringEnd;
 
+    public bool Empowered { get; private set; }
+
     private bool isFiring;
+    private Tween auraPulseTween;
 
     private void Awake()
     {
@@ -46,6 +58,41 @@ public class EngineThrustEffect : MonoBehaviour
         }
     }
 
+    public void Empower()
+    {
+        if (Empowered)
+        {
+            return;
+        }
+
+        Empowered = true;
+        ApplyEmpoweredThrustAppearance();
+        StartEmpoweredAura();
+    }
+
+    private void ApplyEmpoweredThrustAppearance()
+    {
+        var main = thrustParticles.main;
+        main.startColor = empoweredThrustColor;
+        main.startSizeMultiplier *= empoweredThrustSizeMultiplier;
+    }
+
+    private void StartEmpoweredAura()
+    {
+        if (empoweredAura != null)
+        {
+            empoweredAura.Play();
+        }
+
+        if (engineSprite != null)
+        {
+            auraPulseTween = engineSprite
+                .DOColor(empoweredAuraColor, auraPulseDuration)
+                .SetEase(Ease.InOutSine)
+                .SetLoops(-1, LoopType.Yoyo);
+        }
+    }
+
     public void EmitPuff()
     {
         puffParticles.Play();
@@ -59,5 +106,10 @@ public class EngineThrustEffect : MonoBehaviour
         }
 
         AudioManager.Instance.PlaySound(thrusterFireSound, transform);
+    }
+
+    private void OnDestroy()
+    {
+        auraPulseTween?.Kill();
     }
 }

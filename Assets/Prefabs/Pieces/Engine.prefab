@@ -218,6 +218,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6705496721772700179, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
   m_PrefabInstance: {fileID: 5626403119488900033}
   m_PrefabAsset: {fileID: 0}
+--- !u!212 &6927737862967973416 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 3328365950053633513, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+  m_PrefabInstance: {fileID: 5626403119488900033}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7610202894727582270 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2848562934725609983, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
@@ -241,6 +246,12 @@ MonoBehaviour:
   Group: 2
   PhasePriority: 2
   thrusterFireSound: {fileID: 8300000, guid: 2415ca91de2381b46b763ace0c60f991, type: 3}
+  empoweredThrustColor: {r: 1, g: 0.3933879, b: 0.23137254, a: 1}
+  empoweredThrustSizeMultiplier: 1.4
+  engineSprite: {fileID: 6927737862967973416}
+  empoweredAura: {fileID: 0}
+  empoweredAuraColor: {r: 1, g: 0.3921569, b: 0.23137257, a: 1}
+  auraPulseDuration: 0.8
   OnFiringStart:
     m_PersistentCalls:
       m_Calls: []
