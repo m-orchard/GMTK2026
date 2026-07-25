@@ -17,7 +17,6 @@ public class Piece : MonoBehaviour
     [SerializeField] private int engineSupportCapacity = 1;
 
     public bool IsLocked { get; private set; }
-    public bool IsConnected { get; private set; }
     public Rigidbody2D Body2D { get; private set; }
     public int EngineSupportCapacity => engineSupportCapacity;
 
@@ -48,11 +47,6 @@ public class Piece : MonoBehaviour
         IsLocked = true;
     }
 
-    public void MarkConnected()
-    {
-        IsConnected = true;
-    }
-
     public FixedJoint2D WeldTo(Rigidbody2D other)
     {
         var weld = gameObject.AddComponent<FixedJoint2D>();
@@ -75,6 +69,7 @@ public class Piece : MonoBehaviour
     {
         childPieceWelds.Add(weld);
         OnWeld?.Invoke(weld.child);
+        RocketAssembly.Instance.UpdateRocket();
     }
 
     public void WeldAsChild(PieceWeld weld)
@@ -87,6 +82,7 @@ public class Piece : MonoBehaviour
     {
         childPieceWelds.Remove(weld);
         Destroy(weld.joint);
+        RocketAssembly.Instance.UpdateRocket();
     }
 
     public void DetachAsChild(PieceWeld weld)

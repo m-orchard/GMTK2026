@@ -87,6 +87,26 @@ PrefabInstance:
       propertyPath: lockedTint.r
       value: 0.5019608
       objectReference: {fileID: 0}
+    - target: {fileID: 2726803989224796958, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: settleDuration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726803989224796958, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: settleDecayRate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726803989224796958, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: landingMask.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726803989224796958, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: settleLinearSpeedThreshold
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726803989224796958, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: settleAngularSpeedThreshold
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2848562934725609983, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: m_Name
       value: MainThruster

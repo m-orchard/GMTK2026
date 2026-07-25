@@ -2,12 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public struct FuelPiece
-{
-    public Fuel fuel;
-    public Piece piece;
-}
-
 public class RocketAssembly : Singleton<RocketAssembly>
 {
     [SerializeField] private GameObject rocketFoundationPrefab;
@@ -15,7 +9,12 @@ public class RocketAssembly : Singleton<RocketAssembly>
 
     public float PadY { get; private set; }
     public readonly List<Piece> PadPieces = new();
+
+    public readonly Rocket Rocket = new();
+
     public Piece CargoPiece { get; private set; }
+
+    public System.Action OnAddPiece;
 
     private void Awake()
     {
@@ -61,90 +60,6 @@ public class RocketAssembly : Singleton<RocketAssembly>
         CargoPiece = piece;
     }
 
-    public HashSet<EngineThrustEffect> GetBracedEngines()
-    {
-        var braced = new HashSet<EngineThrustEffect>();
-
-        if (!requireEngineBracing)
-        {
-            foreach (var engine in GetComponentsInChildren<EngineThrustEffect>()) braced.Add(engine);
-            return braced;
-        }
-
-        var remainingCapacity = new Dictionary<Piece, int>();
-
-        foreach (var p in Pieces)
-        {
-            if (p.TryGetComponent<EngineThrustEffect>(out _)) continue;
-            remainingCapacity[p] = p.EngineSupportCapacity;
-        }
-
-        foreach (var p in Pieces)
-        {
-            if (!p.TryGetComponent<EngineThrustEffect>(out var engine)) continue;
-
-            foreach (var neighbor in p.WeldedNeighbors)
-            {
-                if (!remainingCapacity.TryGetValue(neighbor, out int capacity) || capacity <= 0) continue;
-                remainingCapacity[neighbor] = capacity - 1;
-                braced.Add(engine);
-                break;
-            }
-        }
-
-        return braced;
-    }
-
-    public List<List<Fuel>> GetFuel()
-    {
-        var connectedPieces = GetConnectedPieces();
-        List<FuelPiece> fuelPieces = new();
-        foreach (Piece piece in connectedPieces)
-        {
-            if (piece.TryGetComponent<Fuel>(out var fuel))
-            {
-                fuelPieces.Add(new FuelPiece { fuel = fuel, piece = piece });
-            }
-        }
-
-        var fuelPieceGroups = fuelPieces.GroupBy(fp => fp.fuel.Group);
-        List<List<Fuel>> fuelClusters = new();
-
-        foreach (var fuelPieceGroup in fuelPieceGroups)
-        {
-            var remaining = fuelPieceGroup.ToDictionary(fp => fp.piece);
-
-            while (remaining.Count > 0)
-            {
-                var cluster = new List<Fuel>();
-                var queue = new Queue<FuelPiece>();
-
-                var start = remaining.Values.First();
-                queue.Enqueue(start);
-                remaining.Remove(start.piece);
-
-                while (queue.Count > 0)
-                {
-                    var current = queue.Dequeue();
-                    cluster.Add(current.fuel);
-
-                    var neighbors = current.piece.WeldedNeighbors;
-                    foreach (var neighbor in neighbors)
-                    {
-                        if (remaining.TryGetValue(neighbor, out var neighborFp))
-                        {
-                            queue.Enqueue(neighborFp);
-                            remaining.Remove(neighbor);
-                        }
-                    }
-                }
-
-                fuelClusters.Add(cluster);
-            }
-        }
-        return fuelClusters;
-    }
-
     public void LockSettledPieces()
     {
         foreach (var p in Pieces)
@@ -154,74 +69,50 @@ public class RocketAssembly : Singleton<RocketAssembly>
         }
     }
 
-    public HashSet<Piece> GetConnectedPieces()
+    private void AddNeighbours(HashSet<Piece> collection, Piece piece)
     {
-        var result = new HashSet<Piece>();
-
-        Piece root = null;
-        if (PadPieces.Count > 0)
+        var neighbours = piece.WeldedNeighbors;
+        foreach (var neighbour in neighbours)
         {
-            root = PadPieces[0];
-        }
-        else
-        {
-            // No foundation piece was spawned this round (prefab not assigned yet) -
-            // fall back to any locked piece so connectivity/camera framing still works.
-            foreach (var p in Pieces)
+            if (collection.Contains(neighbour))
             {
-                if (!p.IsLocked) continue;
-                root = p;
-                break;
+                continue;
             }
-            if (root == null) return result;
+
+            collection.Add(neighbour);
+            AddNeighbours(collection, neighbour);
         }
-
-        var adjacency = new Dictionary<Rigidbody2D, List<Rigidbody2D>>();
-        foreach (var p in Pieces)
-        {
-            foreach (var joint in p.GetComponents<Joint2D>())
-            {
-                if (joint.connectedBody == null) continue;
-                AddEdge(adjacency, p.Body2D, joint.connectedBody);
-                AddEdge(adjacency, joint.connectedBody, p.Body2D);
-            }
-        }
-
-        var visited = new HashSet<Rigidbody2D> { root.Body2D };
-        var queue = new Queue<Rigidbody2D>();
-        queue.Enqueue(root.Body2D);
-
-        while (queue.Count > 0)
-        {
-            var current = queue.Dequeue();
-            if (!adjacency.TryGetValue(current, out var neighbors)) continue;
-
-            foreach (var neighbor in neighbors)
-            {
-                if (visited.Add(neighbor)) queue.Enqueue(neighbor);
-            }
-        }
-
-        foreach (var p in Pieces)
-        {
-            if (visited.Contains(p.Body2D)) result.Add(p);
-        }
-        return result;
     }
 
-    private static void AddEdge(Dictionary<Rigidbody2D, List<Rigidbody2D>> adjacency, Rigidbody2D a, Rigidbody2D b)
+    public void UpdateRocket()
     {
-        if (!adjacency.TryGetValue(a, out var list))
+        Rocket.requireEngineBracing = requireEngineBracing;
+
+        Piece root = PadPieces.Count > 0
+            ? PadPieces[0]
+            // No foundation piece was spawned this round (prefab not assigned yet) -
+            // fall back to any locked piece so connectivity/camera framing still works.
+            : Pieces.FirstOrDefault(p => p.IsLocked);
+
+        int previousCount = Rocket.Pieces.Count();
+
+        Rocket.Update(root);
+
+        int newCount = Rocket.Pieces.Count();
+        int change = newCount - previousCount;
+
+        Debug.Log($"[RocketAssembly] Updated rocket: had {previousCount} pieces, now {newCount} pieces");
+
+        for (var i = 0; i < change; i++)
         {
-            list = new List<Rigidbody2D>();
-            adjacency[a] = list;
+            OnAddPiece?.Invoke();
         }
-        list.Add(b);
     }
 
     public void ClearAll()
     {
         PadPieces.Clear();
+        UpdateRocket();
         CargoPiece = null;
         for (int i = transform.childCount - 1; i >= 0; i--)
         {
@@ -236,20 +127,24 @@ public class RocketAssembly : Singleton<RocketAssembly>
 
         var instance = Instantiate(rocketFoundationPrefab, new Vector3(transform.position.x, PadY + 1f, 0f), Quaternion.identity, transform);
 
-        int lockedLayer = LayerMask.NameToLayer("Locked");
-        if (lockedLayer >= 0) instance.layer = lockedLayer;
+        PadPieces.AddRange(instance.GetComponentsInChildren<Piece>());
+        Debug.Log($"[RocketAssembly] Adding {PadPieces.Count()} pad pieces");
 
-        var controllers = instance.GetComponents<FallingPieceController>();
+        var controllers = instance.GetComponentsInChildren<FallingPieceController>();
         foreach (var controller in controllers)
         {
-            controller.ForceLock();
+            controller.Release();
         }
 
-        PadPieces.AddRange(instance.GetComponents<Piece>());
-
-        foreach (var piece in PadPieces)
+        for (var i = 0; i < PadPieces.Count(); i++)
         {
+            var piece = PadPieces[i];
             piece.Body2D.bodyType = RigidbodyType2D.Kinematic;
+            if (i > 0)
+            {
+                piece.WeldTo(PadPieces[i - 1]);
+            }
+            piece.Lock();
         }
     }
 

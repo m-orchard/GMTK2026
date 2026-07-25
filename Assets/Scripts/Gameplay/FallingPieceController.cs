@@ -268,7 +268,9 @@ public class FallingPieceController : MonoBehaviour
             ? Mathf.Min(settleDuration, settleTimer + Time.fixedDeltaTime)
             : Mathf.Max(0f, settleTimer - Time.fixedDeltaTime * settleDecayRate);
 
-        if (settleTimer >= settleDuration) FinalizeLock();
+        if (settleTimer >= settleDuration) {
+            FinalizeLock();
+        }
     }
 
     public void ForceLock()
@@ -319,8 +321,6 @@ public class FallingPieceController : MonoBehaviour
     {
         int contactCount = CheckContacts();
         if (contactCount == 0) return; // never touched anything - stray piece, stays unconnected
-
-        piece.MarkConnected();
 
         var welded = new System.Collections.Generic.HashSet<Rigidbody2D>();
 
