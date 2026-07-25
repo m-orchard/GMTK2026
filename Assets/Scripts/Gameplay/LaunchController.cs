@@ -13,7 +13,7 @@ public class LaunchController : MonoBehaviour {
             StopCoroutine(launchRoutine);
 
         HashSet<EngineThrustEffect> bracedEngines = rocket.GetBracedEngines();
-        var fuel = rocket.GetFuel();
+        var fuel = CalculateTotalFuel(rocket.GetFuel());
         launchRoutine = StartCoroutine(BurnEngines(rocket, baseBurnDuration, settleTime, bracedEngines, fuel));
         yield return launchRoutine;
         launchRoutine = null;
@@ -24,7 +24,7 @@ public class LaunchController : MonoBehaviour {
         float baseBurnDuration,
         float settleTime,
         HashSet<EngineThrustEffect> bracedEngines,
-        IEnumerable<Fuel> fuel
+        float fuel
     ) {
         var priorityGroups = bracedEngines
             .GroupBy(x => x.Group)
@@ -43,10 +43,9 @@ public class LaunchController : MonoBehaviour {
                 .ToList())
             .ToList();
 
-        float totalFuel = fuel.Sum(container => container.Value);
-        float burnDuration = baseBurnDuration + (totalFuel * fuelBurnRatio / (1 + bracedEngines.Count()));
+        float burnDuration = baseBurnDuration + (fuel * fuelBurnRatio / (1 + bracedEngines.Count()));
 
-        Debug.Log($"[LaunchController] Burning each phase for {baseBurnDuration} + ({totalFuel} * {fuelBurnRatio} / (1 + {bracedEngines.Count()})) = {burnDuration}");
+        Debug.Log($"[LaunchController] Calculated burn duration: base={baseBurnDuration}, fuel={fuel}, burnRatio={fuelBurnRatio}, engineCount={bracedEngines.Count()}, burnDuration={burnDuration}");
 
         ScreenShake.Instance?.Shake(2f);
         for (var i = 0; i < enginesByPhase.Count(); i++)
@@ -55,6 +54,21 @@ public class LaunchController : MonoBehaviour {
             LogThrustVsWeight(rocket, i, activeEngines);
             yield return Burn(i, activeEngines, burnDuration, settleTime);
         }
+    }
+
+    private float CalculateTotalFuel(List<List<Fuel>> fuelClusters)
+    {
+        float total = 0f;
+        foreach (var cluster in fuelClusters)
+        {
+            float clusterSum = cluster.Sum(fp => fp.Value);
+            float clusterSize = cluster.Count;
+            float clusterTotal = clusterSum * clusterSize;
+            Debug.Log($"[LaunchController] Calculated cluster fuel for cluster: group={cluster[0].Group}, sum={clusterSum}, size={clusterSize}, total={clusterTotal}");
+            total += clusterTotal;
+        }
+        Debug.Log($"[LaunchController] Calculated total fuel for {fuelClusters.Count()} clusters: {total}");
+        return total;
     }
 
     private void LogThrustVsWeight(RocketAssembly rocket, int phase, IEnumerable<EngineThrustEffect> activeEngines) {

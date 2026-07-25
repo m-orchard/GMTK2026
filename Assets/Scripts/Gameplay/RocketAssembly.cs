@@ -1,5 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+
+public struct FuelPiece
+{
+    public Fuel fuel;
+    public Piece piece;
+}
 
 public class RocketAssembly : Singleton<RocketAssembly>
 {
@@ -82,15 +89,54 @@ public class RocketAssembly : Singleton<RocketAssembly>
         return braced;
     }
 
-    public IEnumerable<Fuel> GetFuel()
+    public List<List<Fuel>> GetFuel()
     {
         var connectedPieces = GetConnectedPieces();
-        List<Fuel> fuel = new();
+        List<FuelPiece> fuelPieces = new();
         foreach (Piece piece in connectedPieces)
         {
-            fuel.AddRange(piece.GetComponentsInChildren<Fuel>());
+            if (piece.TryGetComponent<Fuel>(out var fuel))
+            {
+                fuelPieces.Add(new FuelPiece { fuel = fuel, piece = piece });
+            }
         }
-        return fuel;
+
+        var fuelPieceGroups = fuelPieces.GroupBy(fp => fp.fuel.Group);
+        List<List<Fuel>> fuelClusters = new();
+
+        foreach (var fuelPieceGroup in fuelPieceGroups)
+        {
+            var remaining = fuelPieceGroup.ToDictionary(fp => fp.piece);
+
+            while (remaining.Count > 0)
+            {
+                var cluster = new List<Fuel>();
+                var queue = new Queue<FuelPiece>();
+
+                var start = remaining.Values.First();
+                queue.Enqueue(start);
+                remaining.Remove(start.piece);
+
+                while (queue.Count > 0)
+                {
+                    var current = queue.Dequeue();
+                    cluster.Add(current.fuel);
+
+                    var neighbors = current.piece.WeldedNeighbors;
+                    foreach (var neighbor in neighbors)
+                    {
+                        if (remaining.TryGetValue(neighbor, out var neighborFp))
+                        {
+                            queue.Enqueue(neighborFp);
+                            remaining.Remove(neighbor);
+                        }
+                    }
+                }
+
+                fuelClusters.Add(cluster);
+            }
+        }
+        return fuelClusters;
     }
 
     public void LockSettledPieces()
@@ -110,7 +156,8 @@ public class RocketAssembly : Singleton<RocketAssembly>
         if (PadPieces.Count > 0)
         {
             root = PadPieces[0];
-        } else
+        }
+        else
         {
             // No foundation piece was spawned this round (prefab not assigned yet) -
             // fall back to any locked piece so connectivity/camera framing still works.
