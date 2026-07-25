@@ -17,6 +17,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1303782271833640337, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
+      propertyPath: Thrust
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 1303782271833640337, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
       propertyPath: flameColor.b
       value: 0.101960786
       objectReference: {fileID: 0}
@@ -100,9 +104,17 @@ PrefabInstance:
       propertyPath: m_Color.g
       value: 0.14901961
       objectReference: {fileID: 0}
+    - target: {fileID: 2759623539877960539, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
+      propertyPath: engineSupportCapacity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7610202894727582270, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
       propertyPath: m_Name
       value: DetachingBooster
+      objectReference: {fileID: 0}
+    - target: {fileID: 8870261398212585828, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
+      propertyPath: m_Mass
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

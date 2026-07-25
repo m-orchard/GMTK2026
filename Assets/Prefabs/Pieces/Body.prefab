@@ -28,6 +28,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -1137790626669449319, guid: 321f91448c589c0429c2fe16d6f07bec, type: 3}
+    - target: {fileID: 3822852866446144165, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: m_Mass
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6424228768344603949, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -87,6 +91,10 @@ PrefabInstance:
     - target: {fileID: 6705496721772700179, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518998372916805786, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: engineSupportCapacity
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

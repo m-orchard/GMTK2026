@@ -144,7 +144,7 @@ public class CameraManager : Singleton<CameraManager> {
     }
 
     private void SyncTrackedPiecesWithRocket() {
-        HashSet<Piece> connectedPieces = rocket.GetConnectedPieces();
+        HashSet<Piece> connectedPieces = rocket.Rocket.Pieces;
 
         piecesToRemove.Clear();
         foreach (Piece trackedPiece in trackedPieces) {

@@ -104,7 +104,7 @@ public class GameManager : Singleton<GameManager>
 
     private IEnumerator Launch()
     {
-        yield return launchController.Launch(rocket, baseBurnDuration, settleTime);
+        yield return launchController.Launch(rocket.Rocket, baseBurnDuration, settleTime);
         yield return new WaitUntil(() => !heightTracker.IsTracking);
         EnterResult();
     }

@@ -148,6 +148,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -2531125723913884957, guid: 321f91448c589c0429c2fe16d6f07bec, type: 3}
+    - target: {fileID: 3822852866446144165, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: m_Mass
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6424228768344603949, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -204,6 +208,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7518998372916805786, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: engineSupportCapacity
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -241,7 +249,7 @@ MonoBehaviour:
   particleLifetime: 0.35
   particleSpeed: 4
   particleSize: 0.2
-  Thrust: 100
+  Thrust: 150
   Group: 2
   PhasePriority: 2
   thrusterFireSound: {fileID: 8300000, guid: 2415ca91de2381b46b763ace0c60f991, type: 3}
