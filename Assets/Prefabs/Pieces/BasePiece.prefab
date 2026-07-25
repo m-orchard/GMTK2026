@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d6b1d2dbfbfb448ea93a8e398c8171f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FallingPieceController
-  horizontalSpeed: 4
+  horizontalSpeed: 8
   rotateStepDegrees: 90
   rotateCooldown: 0.15
   rotateTweenDuration: 0.12
@@ -214,14 +214,14 @@ MonoBehaviour:
   settleLinearSpeedThreshold: 1
   settleAngularSpeedThreshold: 15
   settleDecayRate: 0.5
-  tapToMoveHorizontally: 1
+  tapToMoveHorizontally: 0
   blockSize: 1
   tapMoveStepInBlocks: 0.5
   stepMoveTweenDuration: 0.12
-  autoLockOnSettle: 0
+  autoLockOnSettle: 1
   acceleratingSoftDrop: 1
-  normalDropSpeed: 1
-  maxDropSpeed: 16
+  normalDropSpeed: 6
+  maxDropSpeed: 50
   dropAcceleration: 40
   dropDeceleration: 80
 --- !u!1 &4356514726424988020
