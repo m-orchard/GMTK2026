@@ -168,7 +168,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.95, y: 0.95}
   m_EdgeRadius: 0
 --- !u!114 &7518998372916805786
 MonoBehaviour:
@@ -199,8 +199,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FallingPieceController
   horizontalSpeed: 4
-  dropSpeed: 2
-  softDropSpeed: 8
   rotateStepDegrees: 90
   rotateCooldown: 0.15
   rotateTweenDuration: 0.12
@@ -209,13 +207,21 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   lockedLayerName: Locked
-  settleDuration: 1
+  settleDuration: 3
   settleLinearSpeedThreshold: 0.3
   settleAngularSpeedThreshold: 15
   settleDecayRate: 0.5
   lockedTint: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
-  wiggleGraceDuration: 0.3
+  wiggleGraceDuration: 0
   pieceFriction: 0.6
+  tapToMoveHorizontally: 1
+  blockSize: 1
+  tapMoveStepInBlocks: 0.5
+  acceleratingSoftDrop: 1
+  normalDropSpeed: 1
+  maxDropSpeed: 16
+  dropAcceleration: 40
+  dropDeceleration: 80
 --- !u!1 &4356514726424988020
 GameObject:
   m_ObjectHideFlags: 0

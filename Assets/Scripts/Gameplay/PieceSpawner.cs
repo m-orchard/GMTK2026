@@ -124,6 +124,7 @@ public class PieceSpawner : Singleton<PieceSpawner> {
         controller.enabled = true;
         controller.SetBounds(wellMinX, wellMaxX);
         controller.SetLockCeiling(instance.transform.position.y);
+        controller.SnapToMovementStep();
         controller.OnReleased += HandleReleased;
         Active = controller;
     }

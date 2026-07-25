@@ -1,28 +1,50 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(Piece))]
 public class FallingPieceController : MonoBehaviour
 {
+    [Header("Movement")]
     [SerializeField] private float horizontalSpeed = 4f;
-    [SerializeField] private float dropSpeed = 2f;
-    [SerializeField] private float softDropSpeed = 8f;
+
+    [Header("Rotation")]
     [SerializeField] private float rotateStepDegrees = 90f;
     [SerializeField] private float rotateCooldown = 0.15f;
     [SerializeField] private float rotateTweenDuration = 0.12f;
     [SerializeField] private float rotateOvershoot = 2.2f;
+
+    [Header("Landing & Locking")]
     [SerializeField] private LayerMask landingMask;
     [SerializeField] private string lockedLayerName = "Locked";
+    [SerializeField] private Color lockedTint = new Color(0.5f, 0.5f, 0.5f, 1f);
+    [SerializeField] private float wiggleGraceDuration = 0.3f;
+    [SerializeField] private float pieceFriction = 0.6f;
+
+    [Header("Settling")]
     [SerializeField] private float settleDuration = 1f;
     [SerializeField] private float settleLinearSpeedThreshold = 0.3f;
     [SerializeField] private float settleAngularSpeedThreshold = 15f;
     [SerializeField] private float settleDecayRate = 0.5f;
-    [SerializeField] private Color lockedTint = new Color(0.5f, 0.5f, 0.5f, 1f);
-    [SerializeField] private float wiggleGraceDuration = 0.3f;
-    [SerializeField] private float pieceFriction = 0.6f;
+
+    [Header("Experimental Controls")]
+    [SerializeField] private bool tapToMoveHorizontally = false;
+    [SerializeField] private float blockSize = 1f;
+    [SerializeField] private float tapMoveStepInBlocks = 0.5f;
+
+    private float TapMoveStepDistance => blockSize * tapMoveStepInBlocks;
+
+    [Header("Drop Speed")]
+    [SerializeField] private bool acceleratingSoftDrop = false;
+    [FormerlySerializedAs("dropSpeed")]
+    [SerializeField] private float normalDropSpeed = 2f;
+    [FormerlySerializedAs("softDropSpeed")]
+    [SerializeField] private float maxDropSpeed = 8f;
+    [SerializeField] private float dropAcceleration = 20f;
+    [SerializeField] private float dropDeceleration = 20f;
 
     private Rigidbody2D body2D;
     private Collider2D collider2D;
@@ -38,10 +60,16 @@ public class FallingPieceController : MonoBehaviour
     private bool released;
     private float settleTimer;
     private float wiggleTimer;
+    private int pendingHorizontalSteps;
+    private float currentDropSpeed;
     private static readonly Collider2D[] OverlapBuffer = new Collider2D[8];
 
     public System.Action OnReleased;
     public System.Action OnLocked;
+
+    public bool Released => released;
+    public Collider2D LandingCollider => collider2D;
+    public LayerMask LandingMask => landingMask;
 
     private void Awake()
     {
@@ -54,6 +82,7 @@ public class FallingPieceController : MonoBehaviour
         collider2D.sharedMaterial = new PhysicsMaterial2D("PieceFriction") { friction = pieceFriction };
         currentRotationZ = transform.eulerAngles.z;
         targetRotationZ = currentRotationZ;
+        currentDropSpeed = normalDropSpeed;
     }
 
     public void SetBounds(float min, float max)
@@ -65,6 +94,27 @@ public class FallingPieceController : MonoBehaviour
     public void SetLockCeiling(float y)
     {
         lockCeilingY = y;
+    }
+
+    public void SnapToMovementStep()
+    {
+        if (!tapToMoveHorizontally) return;
+
+        float step = TapMoveStepDistance;
+        if (step <= 0f) return;
+
+        Vector2 position = body2D.position;
+        position.x = SnapToStepGrid(position.x, step);
+        position.x = Mathf.Clamp(position.x, minX, maxX);
+        body2D.position = position;
+    }
+
+    private float SnapToStepGrid(float value, float step)
+    {
+        float gridOrigin = 0f;
+        if (!float.IsInfinity(minX) && !float.IsInfinity(maxX)) gridOrigin = (minX + maxX) * 0.5f;
+
+        return gridOrigin + Mathf.Round((value - gridOrigin) / step) * step;
     }
 
     private void Update()
@@ -79,6 +129,12 @@ public class FallingPieceController : MonoBehaviour
         {
             RotateStep();
             nextRotateTime = Time.time + rotateCooldown;
+        }
+
+        if (tapToMoveHorizontally)
+        {
+            if (keyboard.leftArrowKey.wasPressedThisFrame || keyboard.aKey.wasPressedThisFrame) pendingHorizontalSteps -= 1;
+            if (keyboard.rightArrowKey.wasPressedThisFrame || keyboard.dKey.wasPressedThisFrame) pendingHorizontalSteps += 1;
         }
     }
 
@@ -122,22 +178,52 @@ public class FallingPieceController : MonoBehaviour
         }
 
         var keyboard = Keyboard.current;
-        float horizontal = 0f;
-        bool softDrop = false;
+        bool softDrop = keyboard != null && (keyboard.downArrowKey.isPressed || keyboard.sKey.isPressed);
 
-        if (keyboard != null)
-        {
-            if (keyboard.leftArrowKey.isPressed || keyboard.aKey.isPressed) horizontal -= 1f;
-            if (keyboard.rightArrowKey.isPressed || keyboard.dKey.isPressed) horizontal += 1f;
-            softDrop = keyboard.downArrowKey.isPressed || keyboard.sKey.isPressed;
-        }
+        float horizontalDelta = tapToMoveHorizontally
+            ? ConsumePendingHorizontalDelta()
+            : ReadContinuousHorizontalDelta(keyboard);
 
-        float fallSpeed = touchingNow ? 0f : (softDrop ? softDropSpeed : dropSpeed);
-        Vector2 delta = new Vector2(horizontal * horizontalSpeed, -fallSpeed) * Time.fixedDeltaTime;
+        float fallSpeed = ResolveDropSpeed(softDrop, touchingNow);
+        Vector2 delta = new Vector2(horizontalDelta, -fallSpeed * Time.fixedDeltaTime);
         Vector2 target = body2D.position + delta;
         target.x = Mathf.Clamp(target.x, minX, maxX);
 
         body2D.MovePosition(target);
+    }
+
+    private float ConsumePendingHorizontalDelta()
+    {
+        float distance = pendingHorizontalSteps * TapMoveStepDistance;
+        pendingHorizontalSteps = 0;
+        return distance;
+    }
+
+    private float ResolveDropSpeed(bool softDropHeld, bool touchingNow)
+    {
+        if (touchingNow) return 0f;
+
+        float targetDropSpeed = softDropHeld ? maxDropSpeed : normalDropSpeed;
+
+        if (!acceleratingSoftDrop)
+        {
+            currentDropSpeed = targetDropSpeed;
+            return currentDropSpeed;
+        }
+
+        float rate = targetDropSpeed > currentDropSpeed ? dropAcceleration : dropDeceleration;
+        currentDropSpeed = Mathf.MoveTowards(currentDropSpeed, targetDropSpeed, rate * Time.fixedDeltaTime);
+        return currentDropSpeed;
+    }
+
+    private float ReadContinuousHorizontalDelta(Keyboard keyboard)
+    {
+        if (keyboard == null) return 0f;
+
+        float direction = 0f;
+        if (keyboard.leftArrowKey.isPressed || keyboard.aKey.isPressed) direction -= 1f;
+        if (keyboard.rightArrowKey.isPressed || keyboard.dKey.isPressed) direction += 1f;
+        return direction * horizontalSpeed * Time.fixedDeltaTime;
     }
 
     public void Release()
