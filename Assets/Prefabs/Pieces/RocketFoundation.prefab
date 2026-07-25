@@ -24,6 +24,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RocketFoundation
       objectReference: {fileID: 0}
+    - target: {fileID: 3822852866446144165, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: m_Mass
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6424228768344603949, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -117,8 +121,9 @@ MonoBehaviour:
   particleLifetime: 0.35
   particleSpeed: 4
   particleSize: 0.2
-  Thrust: 50
-  Phase: 1
+  Thrust: 100
+  Group: 1
+  PhasePriority: 1
   thrusterFireSound: {fileID: 0}
   OnFiringStart:
     m_PersistentCalls:
