@@ -20,9 +20,41 @@ PrefabInstance:
       propertyPath: displayName
       value: Long Fuel Multiplier
       objectReference: {fileID: 0}
+    - target: {fileID: 2368343926956953879, guid: 51a52faa39b7c51449154b0c5eb8f330, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2368343926956953879, guid: 51a52faa39b7c51449154b0c5eb8f330, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4348509434015854766, guid: 51a52faa39b7c51449154b0c5eb8f330, type: 3}
       propertyPath: m_Name
       value: FuelLong Multiplier
+      objectReference: {fileID: 0}
+    - target: {fileID: 4569683308614267731, guid: 51a52faa39b7c51449154b0c5eb8f330, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4569683308614267731, guid: 51a52faa39b7c51449154b0c5eb8f330, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4569683308614267731, guid: 51a52faa39b7c51449154b0c5eb8f330, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4569683308614267731, guid: 51a52faa39b7c51449154b0c5eb8f330, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4569683308614267731, guid: 51a52faa39b7c51449154b0c5eb8f330, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4569683308614267731, guid: 51a52faa39b7c51449154b0c5eb8f330, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5106966607630424898, guid: 51a52faa39b7c51449154b0c5eb8f330, type: 3}
       propertyPath: m_LocalPosition.x

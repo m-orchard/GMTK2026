@@ -274,6 +274,7 @@ MonoBehaviour:
   entranceSound: {fileID: 0}
   hoverSound: {fileID: 8300000, guid: a2be5a2a692651a4b9537b6a19c24538, type: 3}
   clickSound: {fileID: 8300000, guid: 228d45efddd53574da391bcc5cadd822, type: 3}
+  exitSound: {fileID: 0}
   entranceStartScale: 0
   entrancePeakScale: 1.18
   entranceRiseToPeakDuration: 0.38
@@ -631,7 +632,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -3380842446347156022, guid: 3a311f7aeaa39064f998da70d506f03a, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

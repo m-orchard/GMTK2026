@@ -12,6 +12,7 @@ public class CardSelectionManager : MonoBehaviour
     private RewardIntroBanner activeBanner;
     private readonly List<PieceCardView> activeCards = new();
     private List<PieceCard> offeredCards;
+    private int pendingCardDismissals;
 
     private void OnEnable()
     {
@@ -23,7 +24,7 @@ public class CardSelectionManager : MonoBehaviour
         if (GameManager.Instance != null)
             GameManager.Instance.OnRoundResult -= HandleRoundResult;
 
-        DespawnCards();
+        DestroyActiveCards();
         DespawnBanner();
     }
 
@@ -55,12 +56,12 @@ public class CardSelectionManager : MonoBehaviour
 
             PieceCardView cardView = Instantiate(cardPrefab, cardContainer);
             cardView.Populate(cardToAcquire);
-            cardView.Clicked += () => HandleCardPicked(cardToAcquire);
+            cardView.Clicked += () => HandleCardPicked(cardToAcquire, cardView);
             activeCards.Add(cardView);
         }
     }
 
-    private void HandleCardPicked(PieceCard pickedCard)
+    private void HandleCardPicked(PieceCard pickedCard, PieceCardView pickedCardView)
     {
         if (offeredCards == null)
             return;
@@ -68,28 +69,47 @@ public class CardSelectionManager : MonoBehaviour
         LevelManager.Instance.AcquirePiece(pickedCard.PiecePrefab);
         offeredCards = null;
 
-        DismissCards();
+        DismissUnpickedCards(pickedCardView);
         DismissBanner();
         GameManager.Instance.GoToNextLevel();
     }
 
-    private void DismissCards()
+    private void DismissUnpickedCards(PieceCardView pickedCardView)
     {
+        pendingCardDismissals = 0;
+
         foreach (PieceCardView cardView in activeCards)
         {
-            if (cardView != null)
-                cardView.Dismiss();
+            if (cardView == null || cardView == pickedCardView)
+                continue;
+
+            cardView.DismissCompleted += HandleCardDismissCompleted;
+            if (cardView.Dismiss())
+                pendingCardDismissals++;
+            else
+                cardView.DismissCompleted -= HandleCardDismissCompleted;
         }
 
-        activeCards.Clear();
+        if (pendingCardDismissals == 0)
+            DestroyActiveCards();
     }
 
-    private void DespawnCards()
+    private void HandleCardDismissCompleted()
+    {
+        pendingCardDismissals--;
+        if (pendingCardDismissals <= 0)
+            DestroyActiveCards();
+    }
+
+    private void DestroyActiveCards()
     {
         foreach (PieceCardView cardView in activeCards)
         {
-            if (cardView != null)
-                Destroy(cardView.gameObject);
+            if (cardView == null)
+                continue;
+
+            cardView.DismissCompleted -= HandleCardDismissCompleted;
+            Destroy(cardView.gameObject);
         }
 
         activeCards.Clear();

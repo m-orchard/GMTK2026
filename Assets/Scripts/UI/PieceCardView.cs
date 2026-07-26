@@ -49,6 +49,7 @@ public class PieceCardView : MonoBehaviour
     [SerializeField] private float exitSpinRotation = 22f;
 
     public event Action Clicked;
+    public event Action DismissCompleted;
 
     private CanvasGroup canvasGroup;
     private Sequence entranceSequence;
@@ -201,14 +202,15 @@ public class PieceCardView : MonoBehaviour
         interactionSequence.Join(animatedTransform.DOLocalRotate(new Vector3(0f, 0f, targetTilt), duration).SetEase(ease));
     }
 
-    public void Dismiss()
+    public bool Dismiss()
     {
         if (isDismissing)
-            return;
+            return false;
 
         isDismissing = true;
         PlaySound(exitSound);
-        PlayExit(DestroySelf);
+        PlayExit(RaiseDismissCompleted);
+        return true;
     }
 
     private void HandleCardButtonClicked()
@@ -263,12 +265,11 @@ public class PieceCardView : MonoBehaviour
     private void HandlePickedDismissComplete()
     {
         Clicked?.Invoke();
-        DestroySelf();
     }
 
-    private void DestroySelf()
+    private void RaiseDismissCompleted()
     {
-        Destroy(gameObject);
+        DismissCompleted?.Invoke();
     }
 
     private void PlaySound(AudioClip clip)

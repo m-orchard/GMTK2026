@@ -20,33 +20,14 @@ public class PieceCard
         if (piecePrefab == null)
             return null;
 
-        Sprite icon = ResolveIcon(piecePrefab);
-
         var description = piecePrefab.GetComponentInChildren<PieceDescription>(true);
+
+        Sprite icon = description != null ? description.Icon : null;
         string displayName = description != null && !string.IsNullOrEmpty(description.DisplayName)
             ? description.DisplayName
             : piecePrefab.name;
         string howItWorks = description != null ? description.HowItWorks : string.Empty;
 
         return new PieceCard(piecePrefab, icon, displayName, howItWorks);
-    }
-
-    private static Sprite ResolveIcon(GameObject piecePrefab)
-    {
-        Sprite fallback = null;
-
-        foreach (var spriteRenderer in piecePrefab.GetComponentsInChildren<SpriteRenderer>(true))
-        {
-            if (spriteRenderer.sprite == null)
-                continue;
-
-            if (spriteRenderer.enabled)
-                return spriteRenderer.sprite;
-
-            if (fallback == null)
-                fallback = spriteRenderer.sprite;
-        }
-
-        return fallback;
     }
 }

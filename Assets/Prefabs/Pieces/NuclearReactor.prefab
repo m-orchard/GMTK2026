@@ -17,6 +17,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -4946118882232234762, guid: 3a311f7aeaa39064f998da70d506f03a, type: 3}
     - target: {fileID: 4275993252948803437, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: icon
+      value: 
+      objectReference: {fileID: -4946118882232234762, guid: 3a311f7aeaa39064f998da70d506f03a, type: 3}
+    - target: {fileID: 4275993252948803437, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: howItWorks
       value: 2x2 piece that boosts thrusters it is welded to.
       objectReference: {fileID: 0}

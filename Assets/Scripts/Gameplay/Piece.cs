@@ -19,6 +19,9 @@ public class Piece : MonoBehaviour
 {
     [SerializeField] private int engineSupportCapacity = 1;
 
+    [Tooltip("When enabled, this piece plays the weld sound as it bonds to a neighbour. Turn off to weld silently (for example the starting platform).")]
+    [SerializeField] private bool playsWeldSound = true;
+
     public bool IsLocked { get; private set; }
     public Rigidbody2D Body2D { get; private set; }
     public int EngineSupportCapacity => engineSupportCapacity;
@@ -85,6 +88,7 @@ public class Piece : MonoBehaviour
 
     private void PlayWeldSound(Vector3 weldPosition)
     {
+        if (!playsWeldSound) return;
         if (AudioManager.Instance == null) return;
 
         AudioManager.Instance.PlaySound(RocketAssembly.Instance.RandomPieceWeldedSound(), weldPosition);

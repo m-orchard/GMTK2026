@@ -77,6 +77,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3955056987283340735, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: icon
+      value: 
+      objectReference: {fileID: 8840986295746278718, guid: 3a311f7aeaa39064f998da70d506f03a, type: 3}
+    - target: {fileID: 3955056987283340735, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
       propertyPath: howItWorks
       value: Basic 2x1 fuel piece. Adds its indicated fuel to the tank.
       objectReference: {fileID: 0}

@@ -69,6 +69,10 @@ PrefabInstance:
       value: -0.07
       objectReference: {fileID: 0}
     - target: {fileID: 7955935264721572089, guid: 6c017c7af4658474eb7d09cdb5618b2c, type: 3}
+      propertyPath: icon
+      value: 
+      objectReference: {fileID: -4815530432455667702, guid: 2a2c1fa8054cd244c8fef0d0c5360f61, type: 3}
+    - target: {fileID: 7955935264721572089, guid: 6c017c7af4658474eb7d09cdb5618b2c, type: 3}
       propertyPath: howItWorks
       value: Basic 3x2 inverse L shape fuel piece. Adds its indicated fuel to the
         tank.

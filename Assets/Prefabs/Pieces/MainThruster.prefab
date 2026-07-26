@@ -271,6 +271,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7518998372916805786, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: playsWeldSound
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518998372916805786, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: engineSupportCapacity
       value: 3
       objectReference: {fileID: 0}

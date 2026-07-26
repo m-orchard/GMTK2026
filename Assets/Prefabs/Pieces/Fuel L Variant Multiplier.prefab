@@ -52,6 +52,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fuel L Variant Multiplier
       objectReference: {fileID: 0}
+    - target: {fileID: 5433644782198988637, guid: e9e6a349388890f429a0d86280bd4716, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5433644782198988637, guid: e9e6a349388890f429a0d86280bd4716, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5433644782198988637, guid: e9e6a349388890f429a0d86280bd4716, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5433644782198988637, guid: e9e6a349388890f429a0d86280bd4716, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5433644782198988637, guid: e9e6a349388890f429a0d86280bd4716, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5433644782198988637, guid: e9e6a349388890f429a0d86280bd4716, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6090180048768199218, guid: e9e6a349388890f429a0d86280bd4716, type: 3}
       propertyPath: howItWorks
       value: 3x2 inverse L shape piece that multiplies welded fuel.
@@ -59,6 +83,14 @@ PrefabInstance:
     - target: {fileID: 6090180048768199218, guid: e9e6a349388890f429a0d86280bd4716, type: 3}
       propertyPath: displayName
       value: Inverse L Fuel Multiplier
+      objectReference: {fileID: 0}
+    - target: {fileID: 6115014899071794457, guid: e9e6a349388890f429a0d86280bd4716, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6115014899071794457, guid: e9e6a349388890f429a0d86280bd4716, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8545007990610935246, guid: e9e6a349388890f429a0d86280bd4716, type: 3}
       propertyPath: value
