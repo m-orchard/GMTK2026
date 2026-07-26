@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
   _isGlobal: 0
-  initialLevel: 3
+  initialLevel: 1
   levelPools:
   - {fileID: 11400000, guid: 733dd9f6b35ef714c8e0872db4159853, type: 2}
   - {fileID: 11400000, guid: 38d8d9ef7565e694b89833089e0c83b1, type: 2}
