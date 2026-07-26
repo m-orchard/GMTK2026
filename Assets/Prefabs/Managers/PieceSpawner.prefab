@@ -51,8 +51,7 @@ MonoBehaviour:
   crane: {fileID: 0}
   craneRig: {fileID: 0}
   cargoPrefabs:
-  - {fileID: 8976659357231157856, guid: 0dda6ef7762e7a24baa614cce3977481, type: 3}
-  - {fileID: 8976659357231157856, guid: 0dda6ef7762e7a24baa614cce3977481, type: 3}
-  wellMinX: -4
-  wellMaxX: 4
+  - {fileID: 7941614183535086806, guid: b508199d49de25842940c695a74422ec, type: 3}
+  wellMinX: -7.5
+  wellMaxX: 7.5
   cargoDropStopsConveyor: 0

@@ -209,9 +209,8 @@ public class PieceSpawner : Singleton<PieceSpawner>
         if (bag.Count == 0)
             RefillBag();
 
-        int lastIndex = bag.Count - 1;
-        GameObject prefab = bag[lastIndex];
-        bag.RemoveAt(lastIndex);
+        GameObject prefab = bag[0];
+        bag.RemoveAt(0);
         return prefab;
     }
 
