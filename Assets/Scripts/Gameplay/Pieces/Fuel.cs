@@ -58,9 +58,6 @@ public class Fuel : MonoBehaviour
 
     public void OnWeld(PieceWeld weld)
     {
-        var porc = piece == weld.child ? "child" : "parent";
-        Debug.Log($"[Fuel] Fuel being welded {effect} {value} (i am {porc})");
-
         // Any weld can change the multiplier topology for the whole connected
         // structure, so rebuild everything reachable from here in one pass.
         RebuildStructure();
