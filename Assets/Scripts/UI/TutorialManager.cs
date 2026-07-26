@@ -12,6 +12,7 @@ using UnityEngine.UI;
 public class TutorialPage
 {
     [TextArea(3, 8)] public string text;
+    public Sprite image;
     public string actionLabel = "Continue";
     public UnityEvent onAction;
 }
@@ -30,6 +31,7 @@ public class TutorialManager : Singleton<TutorialManager>, IPreBuildGate
 
     [SerializeField] private GameObject panel;
     [SerializeField] private TextMeshProUGUI pageText;
+    [SerializeField] private Image pageImage;
     [SerializeField] private TextMeshProUGUI actionButtonLabel;
     [SerializeField] private Button actionButton;
     [SerializeField] private Button skipButton;
@@ -99,6 +101,12 @@ public class TutorialManager : Singleton<TutorialManager>, IPreBuildGate
         pageText.text = page.text;
         pageText.maxVisibleCharacters = 0;
         pageFullyRevealed = false;
+
+        if (pageImage != null)
+        {
+            pageImage.sprite = page.image;
+            pageImage.gameObject.SetActive(page.image != null);
+        }
 
         if (actionButtonLabel != null)
             actionButtonLabel.text = string.IsNullOrEmpty(page.actionLabel) ? "Continue" : page.actionLabel;
