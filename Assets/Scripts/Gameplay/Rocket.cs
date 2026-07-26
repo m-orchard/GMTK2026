@@ -2,12 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public struct FuelPiece
-{
-    public Fuel fuel;
-    public Piece piece;
-}
-
 public class Rocket
 {
     public readonly HashSet<Piece> Pieces = new();
@@ -16,9 +10,9 @@ public class Rocket
 
     public float TotalWeight { get; private set; }
 
-    public readonly List<List<Fuel>> FuelClusters = new();
-
     public readonly List<List<EngineThrustEffect>> EngineGroups = new();
+
+    public readonly List<Fuel> FuelCells = new();
 
     public float AvailableFuel { get; private set; }
 
@@ -46,53 +40,18 @@ public class Rocket
         UpdateEngines();
     }
 
-    private List<List<Fuel>> GetFuelClusters()
+    private List<Fuel> GetFuelCells()
     {
-        List<FuelPiece> fuelPieces = new();
+        List<Fuel> fuelCells = new();
         foreach (Piece piece in Pieces)
         {
             if (piece.TryGetComponent<Fuel>(out var fuel))
             {
-                fuelPieces.Add(new FuelPiece { fuel = fuel, piece = piece });
+                fuelCells.Add(fuel);
             }
         }
 
-        var fuelPieceGroups = fuelPieces.GroupBy(fp => fp.fuel.Group);
-        List<List<Fuel>> fuelClusters = new();
-
-        foreach (var fuelPieceGroup in fuelPieceGroups)
-        {
-            var remaining = fuelPieceGroup.ToDictionary(fp => fp.piece);
-
-            while (remaining.Count > 0)
-            {
-                var cluster = new List<Fuel>();
-                var queue = new Queue<FuelPiece>();
-
-                var start = remaining.Values.First();
-                queue.Enqueue(start);
-                remaining.Remove(start.piece);
-
-                while (queue.Count > 0)
-                {
-                    var current = queue.Dequeue();
-                    cluster.Add(current.fuel);
-
-                    var neighbors = current.piece.WeldedNeighbors;
-                    foreach (var neighbor in neighbors)
-                    {
-                        if (remaining.TryGetValue(neighbor, out var neighborFp))
-                        {
-                            queue.Enqueue(neighborFp);
-                            remaining.Remove(neighbor);
-                        }
-                    }
-                }
-
-                fuelClusters.Add(cluster);
-            }
-        }
-        return fuelClusters;
+        return fuelCells;
     }
 
     private void AddNeighbours(HashSet<Piece> collection, Piece piece)
@@ -120,24 +79,9 @@ public class Rocket
 
     private void UpdateFuel()
     {
-        FuelClusters.Clear();
-        FuelClusters.AddRange(GetFuelClusters());
-        AvailableFuel = CalculateTotalFuel(FuelClusters);
-    }
-
-    private float CalculateTotalFuel(List<List<Fuel>> fuelClusters)
-    {
-        float total = 0f;
-        foreach (var cluster in fuelClusters)
-        {
-            float clusterSum = cluster.Sum(fp => fp.Value);
-            float clusterSize = cluster.Count;
-            float clusterTotal = clusterSum * (1 + ((clusterSize - 1) / 2));
-            Debug.Log($"[LaunchController] Calculated cluster fuel for cluster: group={cluster[0].Group}, sum={clusterSum}, size={clusterSize}, total={clusterTotal}");
-            total += clusterTotal;
-        }
-        Debug.Log($"[LaunchController] Calculated total fuel for {fuelClusters.Count()} clusters: {total}");
-        return total;
+        FuelCells.Clear();
+        FuelCells.AddRange(GetFuelCells());
+        AvailableFuel = FuelCells.Where(fuelCell => fuelCell.Effect == Effect.add).Sum(fuelCell => fuelCell.Value);
     }
 
     private void UpdateEngines()

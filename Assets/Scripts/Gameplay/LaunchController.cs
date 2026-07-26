@@ -6,7 +6,7 @@ using UnityEngine;
 public class LaunchController : MonoBehaviour {
     private Coroutine launchRoutine;
 
-    public float fuelBurnRatio = 1.5f;
+    public float fuelBurnRatio = 0.1f;
 
     public IEnumerator Launch(Rocket rocket, float baseBurnDuration, float settleTime) {
         if (launchRoutine != null)

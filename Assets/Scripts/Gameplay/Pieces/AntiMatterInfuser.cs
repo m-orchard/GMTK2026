@@ -1,12 +1,21 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Piece))]
 public class AntiMatterInfuser : MonoBehaviour
 {
     [SerializeField] private float MassAdjustmentValue = 0;
     [SerializeField] private float MassAdjustmentMultiplier = 0.8f;
 
-    public void OnWeld(Piece target)
+    private Piece piece;
+
+    public void Awake()
     {
+        piece = GetComponent<Piece>();
+    }
+
+    public void OnWeld(PieceWeld weld)
+    {
+        var target = piece == weld.parent ? weld.child : weld.parent;
         var body = target.GetComponent<Rigidbody2D>();
         var currentMass = body.mass;
         var newMass = (currentMass * MassAdjustmentMultiplier) + MassAdjustmentValue;

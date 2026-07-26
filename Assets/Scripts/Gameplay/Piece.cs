@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -37,7 +38,7 @@ public class Piece : MonoBehaviour
         }
     }
 
-    public UnityEvent<Piece> OnWeld;
+    public UnityEvent<PieceWeld> OnWeld;
 
     private void Awake()
     {
@@ -58,8 +59,13 @@ public class Piece : MonoBehaviour
         return weld;
     }
 
-    public FixedJoint2D WeldTo(Piece other)
+    public void WeldTo(Piece other)
     {
+        if (WeldedNeighbors.Contains(other))
+        {
+            return;
+        }
+
         var weld = WeldTo(other.GetComponent<Rigidbody2D>());
         var weldPosition = ResolveContactPoint(other);
         var weldMarker = CreateWeldMarker(weldPosition);
@@ -67,7 +73,6 @@ public class Piece : MonoBehaviour
         var pieceWeld = new PieceWeld { parent = this, child = other, joint = weld, weldMarker = weldMarker };
         WeldAsParent(pieceWeld);
         other.WeldAsChild(pieceWeld);
-        return weld;
     }
 
     private GameObject CreateWeldMarker(Vector3 weldPosition)
@@ -101,14 +106,14 @@ public class Piece : MonoBehaviour
     public void WeldAsParent(PieceWeld weld)
     {
         childPieceWelds.Add(weld);
-        OnWeld?.Invoke(weld.child);
+        OnWeld?.Invoke(weld);
         RocketAssembly.Instance.UpdateRocket();
     }
 
     public void WeldAsChild(PieceWeld weld)
     {
         parentPieceWelds.Add(weld);
-        OnWeld?.Invoke(weld.parent);
+        OnWeld?.Invoke(weld);
     }
 
     public void DetachAsParent(PieceWeld weld)
