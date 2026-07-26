@@ -1,5 +1,80 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &314259268173025879
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5676063938250663716}
+  - component: {fileID: 5631494445562475685}
+  - component: {fileID: 1983343834686056486}
+  m_Layer: 0
+  m_Name: Tutorial Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5676063938250663716
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314259268173025879}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8836464187519056744}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 237, y: -147}
+  m_SizeDelta: {x: 308.1479, y: 272.5}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &5631494445562475685
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314259268173025879}
+  m_CullTransparentMesh: 1
+--- !u!114 &1983343834686056486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314259268173025879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: bfb897bf52c3b43f0ac3428f849bc08b, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &805759211679200453
 GameObject:
   m_ObjectHideFlags: 0
@@ -36,7 +111,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 236.35056, y: -198.33942}
+  m_AnchoredPosition: {x: -15, y: -217}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7461000486661183809
@@ -167,8 +242,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 120.44055, y: -3.2394104}
-  m_SizeDelta: {x: 791, y: 445}
+  m_AnchoredPosition: {x: 0.25561523, y: -0.000015258789}
+  m_SizeDelta: {x: 873.5112, y: 445}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7745740390127951291
 CanvasRenderer:
@@ -199,7 +274,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -242,8 +317,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 45.005737, y: -112.42941}
-  m_SizeDelta: {x: 542.6937, y: 119.62399}
+  m_AnchoredPosition: {x: -131.82718, y: -111.917816}
+  m_SizeDelta: {x: 438.458, y: 59.4596}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5049865907119343028
 CanvasRenderer:
@@ -317,8 +392,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 44.79608, y: -112.46473}
-  m_SizeDelta: {x: 504.7518, y: 88.6857}
+  m_AnchoredPosition: {x: -137.28317, y: -112.470825}
+  m_SizeDelta: {x: 479.0952, y: 119.6273}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7134151313854019707
 CanvasRenderer:
@@ -453,6 +528,7 @@ RectTransform:
   - {fileID: 2984816373872431331}
   - {fileID: 5625532258314585473}
   - {fileID: 8001683897678780646}
+  - {fileID: 5676063938250663716}
   m_Father: {fileID: 5822531941923626317}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -512,6 +588,7 @@ MonoBehaviour:
   _isGlobal: 0
   panel: {fileID: 5161206108211144528}
   pageText: {fileID: 2023823810285167329}
+  pageImage: {fileID: 1983343834686056486}
   actionButtonLabel: {fileID: 5436582056427789750}
   actionButton: {fileID: 5304358462306167625}
   skipButton: {fileID: 7647102723435459357}
@@ -520,24 +597,50 @@ MonoBehaviour:
   - level: 1
     pages:
     - text: Hi! Welcome to your new role as a rocket designer at Space Express.
+      image: {fileID: 21300000, guid: bfb897bf52c3b43f0ac3428f849bc08b, type: 3}
       actionLabel: Hello!
       onAction:
         m_PersistentCalls:
           m_Calls: []
     - text: We usually ask for at least ten years of rocket building experience...
+      image: {fileID: 21300000, guid: b26e8d8d147d746e9a0d276c52e6bdfb, type: 3}
       actionLabel: Oh..
       onAction:
         m_PersistentCalls:
           m_Calls: []
-  - level: 2
-    pages:
-    - text: Hi! Welcome to your new role as a rocket designer at Space Express.
-      actionLabel: Hello!
+    - text: 'But you know our motto: Fail Fast!'
+      image: {fileID: 21300000, guid: bfb897bf52c3b43f0ac3428f849bc08b, type: 3}
+      actionLabel: Exactly!
       onAction:
         m_PersistentCalls:
           m_Calls: []
-    - text: We usually ask for at least ten years of rocket building experience...
-      actionLabel: Oh..
+    - text: "The special thing about our rockets is that we don\u2019t let ANYTHING
+        stand in the way of the march of progress."
+      image: {fileID: 21300000, guid: bfb897bf52c3b43f0ac3428f849bc08b, type: 3}
+      actionLabel: Gotcha
+      onAction:
+        m_PersistentCalls:
+          m_Calls: []
+    - text: "Once we\u2019ve decided we want to launch, we LAUNCH. Our count down
+        starts BEFORE the rocket has been constructed, NOTHING can stop it, and the
+        rocket WILL launch when the count down finishes."
+      image: {fileID: 21300000, guid: bfb897bf52c3b43f0ac3428f849bc08b, type: 3}
+      actionLabel: Ah
+      onAction:
+        m_PersistentCalls:
+          m_Calls: []
+    - text: "Let\u2019s try it now. Use [LEFT ARROW] and [RIGHT ARROW] to move rocket
+        pieces. Press [UP ARROW] to rotate and press [DOWN ARROW] to accelerate the
+        piece."
+      image: {fileID: 21300000, guid: bfb897bf52c3b43f0ac3428f849bc08b, type: 3}
+      actionLabel: Sure
+      onAction:
+        m_PersistentCalls:
+          m_Calls: []
+    - text: 'Oh one last thing: the CARGO. The cargo is VERY important. Drop it with
+        [C], or it''ll drop automatically right before takeoff. Ready to go? '
+      image: {fileID: 21300000, guid: b26e8d8d147d746e9a0d276c52e6bdfb, type: 3}
+      actionLabel: Of Course!
       onAction:
         m_PersistentCalls:
           m_Calls: []
@@ -714,7 +817,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -146.33945, y: -198.33942}
+  m_AnchoredPosition: {x: -359.35, y: -217}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1122145556447984062
