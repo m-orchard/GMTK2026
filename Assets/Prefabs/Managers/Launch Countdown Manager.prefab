@@ -50,6 +50,8 @@ MonoBehaviour:
   slammingNumberPrefab: {fileID: 3800000000000000005, guid: 4a3b2c1d0e9f80716253849a5b6c7d8e, type: 3}
   slammingNumberParent: {fileID: 0}
   countdownStartSecond: 5
+  emitThrusterPuffAtSecond: 3
+  countdownStartSound: {fileID: 8300000, guid: e20f745f33f5f924e8d5e3fd297dca94, type: 3}
   countdownSteps:
   - number: 5
     clip: {fileID: 8300000, guid: 72fdf49a36cd3e84a8c1ddc09efaf502, type: 3}

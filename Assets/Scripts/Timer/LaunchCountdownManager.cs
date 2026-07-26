@@ -19,6 +19,7 @@ public class LaunchCountdownManager : Singleton<LaunchCountdownManager>
     [SerializeField] private RectTransform slammingNumberParent;
     [SerializeField] private int countdownStartSecond = 5;
     [SerializeField] private int emitThrusterPuffAtSecond = 3;
+    [SerializeField] private AudioClip countdownStartSound;
     [FormerlySerializedAs("countdownVoices")]
     [SerializeField] private CountdownStep[] countdownSteps;
 
@@ -77,10 +78,25 @@ public class LaunchCountdownManager : Singleton<LaunchCountdownManager>
         SlammingNumber slammingNumber = Instantiate(slammingNumberPrefab, slammingNumberParent);
         slammingNumber.Play(numberToDisplay, voiceClip, topColor, bottomColor);
 
+        if (numberToDisplay == countdownStartSecond)
+        {
+            PlayCountdownStartSound();
+        }
+
         if (numberToDisplay == emitThrusterPuffAtSecond)
         {
             EmitThrusterPuffs();
         }
+    }
+
+    private void PlayCountdownStartSound()
+    {
+        if (AudioManager.Instance == null)
+        {
+            return;
+        }
+
+        AudioManager.Instance.PlaySound(countdownStartSound);
     }
 
     private void EmitThrusterPuffs()

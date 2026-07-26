@@ -25,6 +25,8 @@ public class EngineThrustEffect : MonoBehaviour
 
     public bool Empowered { get; private set; }
 
+    public bool IsFiring => isFiring;
+
     private bool isFiring;
     private Tween auraPulseTween;
 
