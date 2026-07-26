@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -188,7 +189,7 @@ public class FallingPieceController : MonoBehaviour
             return;
         }
 
-        bool touchingNow = body2D.position.y < lockCeilingY && CheckContacts() > 0;
+        bool touchingNow = body2D.position.y < lockCeilingY && HasWeldableContacts();
 
         if (touchingNow)
         {
@@ -312,31 +313,59 @@ public class FallingPieceController : MonoBehaviour
         horizontalTween?.Kill();
     }
 
-    public int CheckContacts()
+    private int CheckAnyContacts()
     {
         var filter = new ContactFilter2D();
         filter.SetLayerMask(landingMask);
         filter.useTriggers = false;
 
         return Physics2D.OverlapCollider(collider2D, filter, OverlapBuffer);
+    }
 
+    private bool IsWeldableContact(Rigidbody2D contact)
+    {
+        return contact != null && contact != body2D && contact.TryGetComponent<Piece>(out var otherPiece) && AcceptsWeld(otherPiece);
+    }
+
+    public bool HasWeldableContacts()
+    {
+        var contactCount = CheckAnyContacts();
+        for (var i = 0; i < contactCount; i++)
+        {
+            var contact = OverlapBuffer[i].attachedRigidbody;
+            if (IsWeldableContact(contact)) return true;
+        }
+
+        return false;
+    }
+
+    public List<Rigidbody2D> GetWeldableContacts()
+    {
+        var result = new List<Rigidbody2D>();
+        var contactCount = CheckAnyContacts();
+        for (var i = 0; i < contactCount; i++)
+        {
+            var contact = OverlapBuffer[i].attachedRigidbody;
+            if (!IsWeldableContact(contact)) continue;
+            result.Add(contact);
+        }
+
+        return result;
     }
 
     private void WeldToContacts()
     {
+        Debug.Log($"[FallingPieceController] Attempting to weld to contacts (weldsToNeighbors={weldsToNeighbors})");
+
         if (!weldsToNeighbors) return;
 
-        int contactCount = CheckContacts();
-        if (contactCount == 0) return; // never touched anything - stray piece, stays unconnected
+        var contacts = GetWeldableContacts();
 
-        var welded = new System.Collections.Generic.HashSet<Rigidbody2D>();
+        Debug.Log($"[FallingPieceController] Welding to contacts (count={contacts.Count})");
 
-        for (int i = 0; i < contactCount; i++)
+        foreach (var contact in contacts)
         {
-            Rigidbody2D other = OverlapBuffer[i].attachedRigidbody;
-            if (other == null || other == body2D) continue; // bare scenery (ground/walls) - rest on it, nothing to weld to
-            if (!welded.Add(other)) continue;
-            if (other.TryGetComponent<Piece>(out var otherPiece) && AcceptsWeld(otherPiece)) piece.WeldTo(otherPiece);
+            if (contact.TryGetComponent<Piece>(out var otherPiece)) piece.WeldTo(otherPiece);
         }
     }
 

@@ -139,6 +139,18 @@ PrefabInstance:
       propertyPath: m_Mass
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4275993252948803437, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: icon
+      value: 
+      objectReference: {fileID: -3380842446347156022, guid: 3a311f7aeaa39064f998da70d506f03a, type: 3}
+    - target: {fileID: 4275993252948803437, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: howItWorks
+      value: 2x1 Thruster. Uses fuel to push the rocket.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4275993252948803437, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: displayName
+      value: Thruster
+      objectReference: {fileID: 0}
     - target: {fileID: 6424228768344603949, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: m_Sprite
       value: 

@@ -6,12 +6,11 @@ public class ActivePieceOutline : MonoBehaviour
     [SerializeField] private Material outlineMaterial;
     [ColorUsage(true, true)]
     [SerializeField] private Color outlineColor = new Color(0.5f, 2.5f, 3f, 1f);
-    [Range(0f, 16f)]
-    [SerializeField] private float outlineWidthInTexels = 4f;
+    [Min(0f)]
+    [SerializeField] private float outlineWidthInWorldUnits = 0.1f;
     [SerializeField] private int sortingOrderOffset = -1;
 
     private static readonly int OutlineColorPropertyId = Shader.PropertyToID("_OutlineColor");
-    private static readonly int OutlineWidthPropertyId = Shader.PropertyToID("_OutlineWidth");
 
     private FallingPieceController trackedPiece;
     private readonly List<PieceOutlineRenderer> pieceOutlineRenderers = new();
@@ -69,7 +68,7 @@ public class ActivePieceOutline : MonoBehaviour
     {
         for (int index = pieceOutlineRenderers.Count - 1; index >= 0; index--)
         {
-            if (!pieceOutlineRenderers[index].TrySync())
+            if (!pieceOutlineRenderers[index].TrySync(outlineWidthInWorldUnits))
             {
                 DestroyOutlineRenderer(pieceOutlineRenderers[index]);
                 pieceOutlineRenderers.RemoveAt(index);
@@ -83,7 +82,7 @@ public class ActivePieceOutline : MonoBehaviour
 
         foreach (PieceOutlineRenderer pieceOutlineRenderer in pieceOutlineRenderers)
         {
-            pieceOutlineRenderer.ApplyProperties(OutlineColorPropertyId, outlineColor, OutlineWidthPropertyId, outlineWidthInTexels, reusablePropertyBlock);
+            pieceOutlineRenderer.ApplyProperties(OutlineColorPropertyId, outlineColor, reusablePropertyBlock);
         }
     }
 
@@ -116,26 +115,44 @@ public class ActivePieceOutline : MonoBehaviour
 
         public GameObject OutlineObject => outlineRenderer != null ? outlineRenderer.gameObject : null;
 
-        public bool TrySync()
+        public bool TrySync(float outlineWidthInWorldUnits)
         {
             if (sourceRenderer == null || outlineRenderer == null) return false;
 
-            outlineRenderer.sprite = sourceRenderer.sprite;
+            Sprite sprite = sourceRenderer.sprite;
+
+            outlineRenderer.sprite = sprite;
             outlineRenderer.flipX = sourceRenderer.flipX;
             outlineRenderer.flipY = sourceRenderer.flipY;
-            outlineRenderer.enabled = sourceRenderer.enabled && sourceRenderer.sprite != null;
+            outlineRenderer.enabled = sourceRenderer.enabled && sprite != null;
             outlineRenderer.sortingLayerID = sourceRenderer.sortingLayerID;
             outlineRenderer.sortingOrder = sourceRenderer.sortingOrder + sortingOrderOffset;
+
+            if (sprite != null)
+                EnlargeAroundSpriteCenter(sprite, outlineWidthInWorldUnits);
+
             return true;
         }
 
-        public void ApplyProperties(int colorPropertyId, Color color, int widthPropertyId, float width, MaterialPropertyBlock reusablePropertyBlock)
+        private void EnlargeAroundSpriteCenter(Sprite sprite, float outlineWidthInWorldUnits)
+        {
+            Vector2 spriteSize = sprite.bounds.size;
+            Vector3 spriteCenter = sprite.bounds.center;
+
+            float scaleX = spriteSize.x > 0f ? (spriteSize.x + 2f * outlineWidthInWorldUnits) / spriteSize.x : 1f;
+            float scaleY = spriteSize.y > 0f ? (spriteSize.y + 2f * outlineWidthInWorldUnits) / spriteSize.y : 1f;
+
+            Transform outlineTransform = outlineRenderer.transform;
+            outlineTransform.localScale = new Vector3(scaleX, scaleY, 1f);
+            outlineTransform.localPosition = new Vector3(spriteCenter.x * (1f - scaleX), spriteCenter.y * (1f - scaleY), 0f);
+        }
+
+        public void ApplyProperties(int colorPropertyId, Color color, MaterialPropertyBlock reusablePropertyBlock)
         {
             if (outlineRenderer == null) return;
 
             outlineRenderer.GetPropertyBlock(reusablePropertyBlock);
             reusablePropertyBlock.SetColor(colorPropertyId, color);
-            reusablePropertyBlock.SetFloat(widthPropertyId, width);
             outlineRenderer.SetPropertyBlock(reusablePropertyBlock);
         }
     }

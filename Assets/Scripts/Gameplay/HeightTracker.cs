@@ -6,17 +6,21 @@ public class HeightTracker : Singleton<HeightTracker>
     [SerializeField] private float delayAfterApex = 1f;
     [SerializeField] private float liftoffHeightThreshold = 0.5f;
     [SerializeField] private float maxTrackingDuration = 30f;
+    [Tooltip("Failsafe for a rocket that never lifts off (for example cargo resting on the floor). If the apex stops rising for this long, tracking ends and the round resolves even though the liftoff threshold was never reached.")]
+    [SerializeField] private float maxStallDuration = 5f;
 
     public float ApexHeight { get; private set; }
     public bool IsTracking { get; private set; }
 
     private float timeSinceApex;
+    private float timeSinceApexRose;
     private float elapsedTracking;
 
     public void BeginTracking()
     {
         ApexHeight = 0f;
         timeSinceApex = 0f;
+        timeSinceApexRose = 0f;
         elapsedTracking = 0f;
         IsTracking = true;
     }
@@ -44,10 +48,18 @@ public class HeightTracker : Singleton<HeightTracker>
         }
 
         float current = rocket.CargoPiece.transform.position.y - rocket.PadY;
-        if (current >= ApexHeight)
+        if (current > ApexHeight)
         {
             ApexHeight = current;
             timeSinceApex = 0f;
+            timeSinceApexRose = 0f;
+            return;
+        }
+
+        timeSinceApexRose += Time.fixedDeltaTime;
+        if (timeSinceApexRose >= maxStallDuration)
+        {
+            StopTracking();
             return;
         }
 

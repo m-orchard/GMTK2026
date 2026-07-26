@@ -36,10 +36,26 @@ public class DebugMenu : Singleton<DebugMenu> {
 
         GUILayout.Label("Debug Menu");
 
+        DrawLevelControls();
         DrawCountdownControls();
         DrawPieceTypeSection();
 
         GUILayout.EndArea();
+    }
+
+    private void DrawLevelControls()
+    {
+        if (GameManager.Instance == null)
+        {
+            return;
+        }
+
+        GUILayout.Label("Level");
+
+        if (GUILayout.Button("Complete Level"))
+        {
+            GameManager.Instance.DebugCompleteLevel();
+        }
     }
 
     private void DrawCountdownControls()

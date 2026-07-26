@@ -29,6 +29,8 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private bool autoDropCraneCargoEnabled;
     [SerializeField, Range(1, 5)] private int autoDropCraneCargoAtSecondsRemaining = 3;
     [SerializeField] private bool autoDroppedCargoIsControllable = false;
+    [Tooltip("Let the player press C during the build phase to release the crane cargo early, before the automatic drop time.")]
+    [SerializeField] private bool playerCanForceDropCargoEarly = true;
 
     private State state;
     private bool conveyorExitTriggered;
@@ -87,12 +89,12 @@ public class GameManager : Singleton<GameManager>
 
         if (Keyboard.current == null) return;
 
-        if (state == State.Result && Keyboard.current.spaceKey.wasPressedThisFrame)
+        if (state == State.Result && !lastRoundSucceeded && Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             Continue();
         }
 
-        if (state == State.Building && Keyboard.current.cKey.wasPressedThisFrame)
+        if (state == State.Building && playerCanForceDropCargoEarly && Keyboard.current.cKey.wasPressedThisFrame)
         {
             spawner.SpawnCargo();
         }
@@ -164,6 +166,7 @@ public class GameManager : Singleton<GameManager>
     private void EnterLaunching()
     {
         state = State.Launching;
+        spawner.DisableControl();
         spawner.ForceLockActive();
         rocket.LockSettledPieces();
         rocket.ReleaseFoundation();
@@ -205,5 +208,19 @@ public class GameManager : Singleton<GameManager>
     {
         LevelManager.Instance.AdvanceLevel();
         EnterBuilding();
+    }
+
+    public void DebugCompleteLevel()
+    {
+        if (state == State.Result) return;
+
+        buildTimer.StopTimer();
+        heightTracker.StopTracking();
+
+        state = State.Result;
+        lastRoundSucceeded = true;
+
+        float targetHeight = LevelManager.Instance.TargetHeight;
+        OnRoundResult?.Invoke(targetHeight, targetHeight, true);
     }
 }

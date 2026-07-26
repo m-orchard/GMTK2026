@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1603332884776032475
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 590249110855978375, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 590249110855978375, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 590249110855978375, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 590249110855978375, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 590249110855978375, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 590249110855978375, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 590249110855978375, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 590249110855978375, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 590249110855978375, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 590249110855978375, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5510283862006646533, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: value
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5510283862006646533, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: effect
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7940241017282840530, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7940241017282840530, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7955935264721572089, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: howItWorks
+      value: 3x2 T shape fuel piece that multiplies welded fuel.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7955935264721572089, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: displayName
+      value: T Fuel Multiplier
+      objectReference: {fileID: 0}
+    - target: {fileID: 8180135201765352854, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8180135201765352854, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8180135201765352854, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8180135201765352854, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8180135201765352854, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8180135201765352854, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8265909787928782443, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: m_Name
+      value: FuelT Multiplier
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 1065113471060985614, guid: 05821299b69631841b55a69697efe859, type: 3}
+    - {fileID: 5924530356662915123, guid: 05821299b69631841b55a69697efe859, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 05821299b69631841b55a69697efe859, type: 3}

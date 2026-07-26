@@ -45,6 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ActivePieceOutline
   outlineMaterial: {fileID: 2100000, guid: 4a0b2d8f3c9e5b6a0d1f2e3c4b5d6e7f, type: 2}
-  outlineColor: {r: 0.016130017, g: 0.01588643, b: 0.066037714, a: 1}
-  outlineWidthInTexels: 4
-  sortingOrderOffset: -1
+  outlineColor: {r: 0, g: 2.83, b: 2.83, a: 1}
+  outlineWidthInWorldUnits: 0.1
+  sortingOrderOffset: -10

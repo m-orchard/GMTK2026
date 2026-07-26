@@ -54,5 +54,9 @@ MonoBehaviour:
   settleTime: 2
   conveyorExitAtSecondsRemaining: 1
   conveyorOffScreenAtSecondsRemaining: 0
+  buildStartDelay: 1
+  cameraResetDelay: 1
   autoDropCraneCargoEnabled: 1
   autoDropCraneCargoAtSecondsRemaining: 3
+  autoDroppedCargoIsControllable: 0
+  playerCanForceDropCargoEarly: 0

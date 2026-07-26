@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1065113471060985614}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalPosition: {x: 0, y: -0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -118,7 +118,7 @@ Transform:
   m_GameObject: {fileID: 5924530356662915123}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5012, y: 0.4128, z: 0}
+  m_LocalPosition: {x: -0.5012, y: 1.1628, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -212,6 +212,30 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.9
       objectReference: {fileID: 0}
+    - target: {fileID: 2958770640773761232, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2958770640773761232, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2958770640773761232, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2958770640773761232, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2958770640773761232, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2958770640773761232, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3043429153780255533, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
       propertyPath: m_Name
       value: Fuel L
@@ -221,20 +245,40 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3943852252131355284, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
+      propertyPath: m_SizeDelta.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3943852252131355284, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3943852252131355284, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3943852252131355284, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3943852252131355284, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3943852252131355284, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955056987283340735, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: icon
+      value: 
+      objectReference: {fileID: -8174279903038659914, guid: de1fe22d2d50f01448792f8df2737ba7, type: 3}
+    - target: {fileID: 3955056987283340735, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: howItWorks
+      value: Basic 3x2 L shape fuel piece. Adds its indicated fuel to the tank.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955056987283340735, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: displayName
+      value: L Fuel
       objectReference: {fileID: 0}
     - target: {fileID: 4087524877325758583, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
       propertyPath: m_Mass
@@ -344,7 +388,7 @@ PolygonCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.75}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}

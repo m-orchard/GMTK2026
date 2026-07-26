@@ -53,6 +53,6 @@ MonoBehaviour:
   cargoPrefabs:
   - {fileID: 8976659357231157856, guid: 0dda6ef7762e7a24baa614cce3977481, type: 3}
   - {fileID: 8976659357231157856, guid: 0dda6ef7762e7a24baa614cce3977481, type: 3}
-  bagSize: 20
   wellMinX: -4
   wellMaxX: 4
+  cargoDropStopsConveyor: 0

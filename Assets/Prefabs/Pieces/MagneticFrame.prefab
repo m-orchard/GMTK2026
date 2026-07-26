@@ -102,6 +102,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: MagneticFrame
       objectReference: {fileID: 0}
+    - target: {fileID: 4275993252948803437, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: howItWorks
+      value: Breaks the game.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4275993252948803437, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: displayName
+      value: Magnet
+      objectReference: {fileID: 0}
     - target: {fileID: 6424228768344603949, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: m_Sprite
       value: 
