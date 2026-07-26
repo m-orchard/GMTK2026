@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: NoSpecials
   m_EditorClassIdentifier: Assembly-CSharp::PiecePool
   poolName: Basic Blocks
-  bagSize: 5
+  bagSize: 6
   members:
   - prefab: {fileID: 3043429153780255533, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
     chance: 0.3
@@ -31,5 +31,5 @@ MonoBehaviour:
     chance: 0.2
     group: 1
   - prefab: {fileID: 7610202894727582270, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
-    chance: 0.3
+    chance: 0.6
     group: 2
