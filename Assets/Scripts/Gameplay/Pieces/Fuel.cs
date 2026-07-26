@@ -17,9 +17,6 @@ public class Fuel : MonoBehaviour
     [SerializeField]
     private Effect effect = Effect.add;
 
-    [SerializeField]
-    private float multiplierChance = 0.5f;
-
     public Color addColour = new (53, 187, 22);
 
     public Color multiplyColour = new (187, 22, 175);
@@ -42,7 +39,6 @@ public class Fuel : MonoBehaviour
 
     void Awake()
     {
-        effect = UnityEngine.Random.value < multiplierChance ? Effect.multiply : Effect.add;
         piece = GetComponent<Piece>();
         RecomputeValue();
         UpdateLabelText();

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91425847f4d1e7442b01513795d2a7d3, type: 3}
+  m_Name: Multipliers
+  m_EditorClassIdentifier: Assembly-CSharp::PiecePool
+  poolName: Basic Blocks
+  bagSize: 5
+  members:
+  - prefab: {fileID: 3043429153780255533, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+    chance: 0.3
+    group: 0
+  - prefab: {fileID: 4348509434015854766, guid: 51a52faa39b7c51449154b0c5eb8f330, type: 3}
+    chance: 0.3
+    group: 0
+  - prefab: {fileID: 7610202894727582270, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
+    chance: 0.25
+    group: 2
+  - prefab: {fileID: 7534787288546763810, guid: 57bf2228de97be24db5a3d1ddc0d787d, type: 3}
+    chance: 0.2
+    group: 0
+  overrides: []
