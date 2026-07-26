@@ -287,7 +287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::OffScreenSlider
   exitTargetX: -25
   exitEase: 5
-  minimumDistanceAboveRocketTop: 0
+  minimumDistanceAboveRocketTop: -1
   rocketFollowThreshold: 0.1
   rocketFollowDuration: 0.12
   rocketFollowEase: 6

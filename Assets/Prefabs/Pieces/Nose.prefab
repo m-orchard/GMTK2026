@@ -65,8 +65,12 @@ PrefabInstance:
       value: Nose
       objectReference: {fileID: 0}
     - target: {fileID: 9136727232654715009, guid: 0dda6ef7762e7a24baa614cce3977481, type: 3}
+      propertyPath: settleDuration
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 9136727232654715009, guid: 0dda6ef7762e7a24baa614cce3977481, type: 3}
       propertyPath: autoLockOnSettle
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9136727232654715009, guid: 0dda6ef7762e7a24baa614cce3977481, type: 3}
       propertyPath: weldsToNeighbors
