@@ -61,20 +61,28 @@ public class Piece : MonoBehaviour
     public FixedJoint2D WeldTo(Piece other)
     {
         var weld = WeldTo(other.GetComponent<Rigidbody2D>());
-        var weldMarker = CreateWeldMarker(other);
+        var weldPosition = ResolveContactPoint(other);
+        var weldMarker = CreateWeldMarker(weldPosition);
+        PlayWeldSound(weldPosition);
         var pieceWeld = new PieceWeld { parent = this, child = other, joint = weld, weldMarker = weldMarker };
         WeldAsParent(pieceWeld);
         other.WeldAsChild(pieceWeld);
         return weld;
     }
 
-    private GameObject CreateWeldMarker(Piece other)
+    private GameObject CreateWeldMarker(Vector3 weldPosition)
     {
         var weldMarkerPrefab = RocketAssembly.Instance.WeldMarkerPrefab;
         if (weldMarkerPrefab == null) return null;
 
-        var weldPosition = ResolveContactPoint(other);
         return Instantiate(weldMarkerPrefab, weldPosition, Quaternion.identity, transform);
+    }
+
+    private void PlayWeldSound(Vector3 weldPosition)
+    {
+        if (AudioManager.Instance == null) return;
+
+        AudioManager.Instance.PlaySound(RocketAssembly.Instance.RandomPieceWeldedSound(), weldPosition);
     }
 
     private Vector3 ResolveContactPoint(Piece other)

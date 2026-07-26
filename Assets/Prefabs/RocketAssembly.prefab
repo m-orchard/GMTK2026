@@ -47,4 +47,13 @@ MonoBehaviour:
   _isGlobal: 0
   rocketFoundationPrefab: {fileID: 1715544375607837546, guid: 191fe16864e9df14d8560f811b55e921, type: 3}
   weldMarkerPrefab: {fileID: 3527902210969132497, guid: 9e8645fed9ef1004ea77501fdbeec778, type: 3}
+  pieceWeldedSounds:
+  - {fileID: 8300000, guid: 228d45efddd53574da391bcc5cadd822, type: 3}
+  - {fileID: 8300000, guid: 043cffe28d676c3439eca3c288d94d1e, type: 3}
+  - {fileID: 8300000, guid: 02d18d4cb338d09449014f9e0dd44000, type: 3}
+  - {fileID: 8300000, guid: e06197aa408faec499682dfa024bfc59, type: 3}
+  - {fileID: 8300000, guid: e7f2ce6dfddba364f8ab6c095bf2bcf7, type: 3}
+  - {fileID: 8300000, guid: d81998681542e0c4480651de170dbe5f, type: 3}
+  - {fileID: 8300000, guid: 9f37103cb4142ef4d838b69765a3ac13, type: 3}
+  - {fileID: 8300000, guid: 2d47b9b741f0b6540ace6ac86825ae97, type: 3}
   requireEngineBracing: 0

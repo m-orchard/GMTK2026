@@ -19,6 +19,7 @@ public class PiecePool : ScriptableObject {
     public string poolName; // editor/debug label only
     public int bagSize;
     public List<AvailablePiece> members;
+    public List<GameObject> overrides;
 }
 
 [System.Serializable]

@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7940241017282840530, guid: 6c017c7af4658474eb7d09cdb5618b2c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 8265909787928782443, guid: 6c017c7af4658474eb7d09cdb5618b2c, type: 3}
       propertyPath: m_Name
       value: Fuel L Variant

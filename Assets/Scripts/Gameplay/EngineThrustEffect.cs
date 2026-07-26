@@ -25,8 +25,11 @@ public class EngineThrustEffect : MonoBehaviour
 
     public bool Empowered { get; private set; }
 
+    public bool IsFiring => isFiring;
+
     private bool isFiring;
     private Tween auraPulseTween;
+    private AudioSource thrusterFireLoop;
 
     private void Awake()
     {
@@ -49,11 +52,12 @@ public class EngineThrustEffect : MonoBehaviour
 
         if (!wasFiring && firing)
         {
-            PlayThrusterFireSound();
+            StartThrusterFireSound();
             OnFiringStart?.Invoke();
         }
         else if (wasFiring && !firing)
         {
+            StopThrusterFireSound();
             OnFiringEnd?.Invoke();
         }
     }
@@ -98,18 +102,30 @@ public class EngineThrustEffect : MonoBehaviour
         puffParticles.Play();
     }
 
-    private void PlayThrusterFireSound()
+    private void StartThrusterFireSound()
     {
         if (AudioManager.Instance == null)
         {
             return;
         }
 
-        AudioManager.Instance.PlaySound(thrusterFireSound, transform);
+        thrusterFireLoop = AudioManager.Instance.PlayLoopingSound(thrusterFireSound, transform);
+    }
+
+    private void StopThrusterFireSound()
+    {
+        if (AudioManager.Instance == null)
+        {
+            return;
+        }
+
+        AudioManager.Instance.StopLoopingSound(thrusterFireLoop);
+        thrusterFireLoop = null;
     }
 
     private void OnDestroy()
     {
         auraPulseTween?.Kill();
+        StopThrusterFireSound();
     }
 }
