@@ -3984,7 +3984,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 153372420973006499, guid: 1de52cb552689a64fafbb32d19f079e4, type: 3}
       propertyPath: minimumDistanceAboveRocketTop
-      value: -2
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 2743515834597277369, guid: 1de52cb552689a64fafbb32d19f079e4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4210,7 +4210,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7455387663835578151, guid: dcf45a12ef500ba4180dc6d1aecdf431, type: 3}
       propertyPath: buildTopTarget
-      value: 
+      value:
       objectReference: {fileID: 1416516292}
     - target: {fileID: 7455387663835578151, guid: dcf45a12ef500ba4180dc6d1aecdf431, type: 3}
       propertyPath: buildFloorHeight
@@ -4774,7 +4774,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2336342031917090962, guid: b556b94d3705b784f95bd3058b1b6e28, type: 3}
       propertyPath: minimumDistanceAboveRocketTop
-      value: -2
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 4487449872661729662, guid: b556b94d3705b784f95bd3058b1b6e28, type: 3}
       propertyPath: m_LocalPosition.x
