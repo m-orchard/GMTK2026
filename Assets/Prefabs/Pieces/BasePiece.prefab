@@ -210,10 +210,11 @@ MonoBehaviour:
   lockedTint: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
   wiggleGraceDuration: 0
   pieceFriction: 0.6
-  settleDuration: 4
+  settleDuration: 2
   settleLinearSpeedThreshold: 1
   settleAngularSpeedThreshold: 15
   settleDecayRate: 0.5
+  weldsToNeighbors: 1
   tapToMoveHorizontally: 0
   blockSize: 1
   tapMoveStepInBlocks: 0.5
