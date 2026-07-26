@@ -18,9 +18,13 @@ public class Rocket
 
     public float PotentialThrust { get; private set; }
 
+    public float BurnDuration = 0f;
+
     public System.Action OnAddPiece;
 
     public bool requireEngineBracing = false;
+
+    public float fuelBurnRatio = 0.1f;
 
     public void Update(Piece root)
     {
@@ -82,6 +86,8 @@ public class Rocket
         FuelCells.Clear();
         FuelCells.AddRange(GetFuelCells());
         AvailableFuel = FuelCells.Where(fuelCell => fuelCell.Effect == Effect.add).Sum(fuelCell => fuelCell.Value);
+        var totalEngines = EngineGroups.Sum(group => group.Count());
+        BurnDuration = GameManager.Instance.baseBurnDuration + (AvailableFuel * fuelBurnRatio / (1 + totalEngines));
     }
 
     private void UpdateEngines()

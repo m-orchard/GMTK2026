@@ -46,7 +46,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SerializedCardProvider
   availablePiecePrefabs:
-  - {fileID: 4250123244721277833, guid: 7a3fef3f41928964fbcad258057827e1, type: 3}
   - {fileID: 8750320709873316647, guid: 3b692067be01b7a428037f52ff79c8ec, type: 3}
   - {fileID: 6128414855633721778, guid: 19028579c919ac34e8d6f8ff2fc2c249, type: 3}
   - {fileID: 2959881588920163696, guid: 91dd64b0e90727748bd7addbc3ffc231, type: 3}

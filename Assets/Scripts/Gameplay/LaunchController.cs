@@ -3,38 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class LaunchController : MonoBehaviour {
+public class LaunchController : Singleton<LaunchController> {
     private Coroutine launchRoutine;
 
-    public float fuelBurnRatio = 0.1f;
+    public System.Action<int> OnBurnStart;
 
-    public IEnumerator Launch(Rocket rocket, float baseBurnDuration, float settleTime) {
+    public System.Action<int> OnBurnEnd;
+
+    public IEnumerator Launch(Rocket rocket, float settleTime) {
         if (launchRoutine != null)
             StopCoroutine(launchRoutine);
 
-        launchRoutine = StartCoroutine(BurnEngines(rocket, baseBurnDuration, settleTime));
+        launchRoutine = StartCoroutine(BurnEngines(rocket, settleTime));
         yield return launchRoutine;
         launchRoutine = null;
     }
 
     private IEnumerator BurnEngines(
         Rocket rocket,
-        float baseBurnDuration,
         float settleTime
     ) {
         var engineGroups = rocket.EngineGroups;
-        var totalEngines = engineGroups.Sum(group => group.Count());
-        float burnDuration = baseBurnDuration + (rocket.AvailableFuel * fuelBurnRatio / (1 + totalEngines));
 
-        Debug.Log($"[LaunchController] Calculated burn duration: base={baseBurnDuration}, fuel={rocket.AvailableFuel}, burnRatio={fuelBurnRatio}, totalEngines={totalEngines}, burnDuration={burnDuration}");
-        Debug.Log($"[LaunchController] Burning {engineGroups.Count()} engine groups");
+        Debug.Log($"[LaunchController] Burning {engineGroups.Count()} engine groups for {rocket.BurnDuration}s");
 
         ScreenShake.Instance?.Shake(2f);
         for (var i = 0; i < engineGroups.Count(); i++)
         {
             var activeEngines = engineGroups[i];
             LogThrustVsWeight(rocket, i, activeEngines);
-            yield return Burn(i, activeEngines, burnDuration, settleTime);
+            yield return Burn(i, activeEngines, rocket.BurnDuration, settleTime);
         }
     }
 
@@ -51,6 +49,8 @@ public class LaunchController : MonoBehaviour {
     }
 
     private IEnumerator Burn(int phase, IEnumerable<EngineThrustEffect> activeEngines, float baseBurnDuration, float settleDuration) {
+        OnBurnStart?.Invoke(phase);
+
         var pieces = new Dictionary<EngineThrustEffect, Piece>();
         foreach (var engine in activeEngines) {
             var piece = engine.GetComponent<Piece>();
@@ -74,6 +74,8 @@ public class LaunchController : MonoBehaviour {
         foreach (var engine in activeEngines) {
             engine.SetFiring(false);
         }
+
+        OnBurnEnd?.Invoke(phase);
 
         Debug.Log($"[LaunchController] Phase {phase}: Settling");
         float elapsedSettle = 0f;
