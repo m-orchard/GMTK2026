@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7932563703491340602, guid: 0dda6ef7762e7a24baa614cce3977481, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8442872677909845622, guid: 0dda6ef7762e7a24baa614cce3977481, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -67,6 +71,10 @@ PrefabInstance:
     - target: {fileID: 9136727232654715009, guid: 0dda6ef7762e7a24baa614cce3977481, type: 3}
       propertyPath: settleDuration
       value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 9136727232654715009, guid: 0dda6ef7762e7a24baa614cce3977481, type: 3}
+      propertyPath: normalDropSpeed
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9136727232654715009, guid: 0dda6ef7762e7a24baa614cce3977481, type: 3}
       propertyPath: autoLockOnSettle

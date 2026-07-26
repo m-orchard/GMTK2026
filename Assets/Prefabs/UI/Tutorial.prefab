@@ -220,7 +220,7 @@ GameObject:
   - component: {fileID: 7745740390127951291}
   - component: {fileID: 5207312118277651057}
   m_Layer: 5
-  m_Name: ' Background Panel'
+  m_Name: Background Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -242,7 +242,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.25561523, y: -0.000015258789}
+  m_AnchoredPosition: {x: 0.25561523, y: 0}
   m_SizeDelta: {x: 873.5112, y: 445}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7745740390127951291
@@ -266,14 +266,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0.101960786, g: 0.14901961, b: 0.20392157, a: 0.87058824}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 3999358368815518081, guid: 8f193a68aea1546478fa684d01de1f74, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -348,8 +348,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 3999358368815518081, guid: 8f193a68aea1546478fa684d01de1f74, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -425,8 +425,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: This is a tutorial
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9a5bfbe076f0d9a4da6ffb9723bb8987, type: 2}
+  m_sharedMaterial: {fileID: -9160352284737365776, guid: 9a5bfbe076f0d9a4da6ffb9723bb8987, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -637,8 +637,8 @@ MonoBehaviour:
       onAction:
         m_PersistentCalls:
           m_Calls: []
-    - text: 'Oh one last thing: the CARGO. The cargo is VERY important. Drop it with
-        [C], or it''ll drop automatically right before takeoff. Ready to go? '
+    - text: 'Oh one last thing: the CARGO. The cargo is VERY important. It''ll drop
+        automatically right before takeoff. Ready to go? '
       image: {fileID: 21300000, guid: b26e8d8d147d746e9a0d276c52e6bdfb, type: 3}
       actionLabel: Of Course!
       onAction:
@@ -711,15 +711,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Skip
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9a5bfbe076f0d9a4da6ffb9723bb8987, type: 2}
+  m_sharedMaterial: {fileID: -9160352284737365776, guid: 9a5bfbe076f0d9a4da6ffb9723bb8987, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4292006633
+  m_fontColor: {r: 0.9150943, g: 0.82444817, b: 0.82444817, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -981,8 +981,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Button
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9a5bfbe076f0d9a4da6ffb9723bb8987, type: 2}
+  m_sharedMaterial: {fileID: -9160352284737365776, guid: 9a5bfbe076f0d9a4da6ffb9723bb8987, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
