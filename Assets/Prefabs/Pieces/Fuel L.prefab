@@ -212,12 +212,44 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.9
       objectReference: {fileID: 0}
+    - target: {fileID: 2958770640773761232, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2958770640773761232, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2958770640773761232, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2958770640773761232, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2958770640773761232, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2958770640773761232, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3043429153780255533, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
       propertyPath: m_Name
       value: Fuel L
       objectReference: {fileID: 0}
     - target: {fileID: 3585214237432613798, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3943852252131355284, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3943852252131355284, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3943852252131355284, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
