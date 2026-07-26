@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CloudSpawner
   spritePrefab: {fileID: 7330213287280699659, guid: 0d094f4d48300134885a070a52ce0018, type: 3}
-  minX: -500
-  maxX: 500
+  minX: -5000
+  maxX: 5000
   minY: 30
   maxY: 110
   spritesPerUnitArea: 0.002
@@ -273,8 +273,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteScatterer
   spritePrefab: {fileID: 8898305427456755013, guid: 441d8319f540e4b46aa406a8c58bd5b0, type: 3}
-  minX: -1000
-  maxX: 1000
+  minX: -5000
+  maxX: 5000
   minY: 100
-  maxY: 600
+  maxY: 6000
   spritesPerUnitArea: 0.02

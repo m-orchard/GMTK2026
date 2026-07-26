@@ -103,6 +103,11 @@ public class FallingPieceController : MonoBehaviour
         controllable = value;
     }
 
+    public void SetColliderEnabled(bool value)
+    {
+        collider2D.enabled = value;
+    }
+
     public void SetBounds(float min, float max)
     {
         minX = min;
@@ -203,6 +208,12 @@ public class FallingPieceController : MonoBehaviour
         else
         {
             wiggleTimer = 0f;
+        }
+
+        if (collider2D.IsTouching(Ground.Instance.TriggerCollider))
+        {
+            Release();
+            return;
         }
 
         var keyboard = controllable ? Keyboard.current : null;
