@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -33,7 +32,7 @@ public class Fuel : MonoBehaviour
 
     public GameObject LabelGroup;
 
-    public TextMeshPro Label;
+    public TextMeshProUGUI Label;
 
     private Piece piece;
 
