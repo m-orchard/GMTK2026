@@ -30,7 +30,7 @@ public class ResultDisplay : MonoBehaviour
 
         if (panel != null) panel.SetActive(true);
 
-        label.text = $"Reached {apex:0.0}m / target {target:0.0}m — FAIL\nPress Space to continue";
+        label.text = $"Reached {apex:0.0}m / target {target:0.0}m — FAIL\nPress Space to retry";
     }
 
     private void HidePanel()
