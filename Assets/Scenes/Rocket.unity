@@ -3882,7 +3882,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302866624247831565, guid: 4695ed1a00f554c4590c824d714e43a2, type: 3}
       propertyPath: buildDurationIncrement
-      value: 60
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4302866624247831565, guid: 4695ed1a00f554c4590c824d714e43a2, type: 3}
       propertyPath: addablePieces.Array.size
