@@ -25,9 +25,10 @@ public class MagneticFrame : MonoBehaviour
         {
             // this magnetic frame is itself the falling piece - it should snap to
             // anything it touches instantly, skipping the normal wiggle/settle flow.
-            if (activeController.CheckContacts() > 0)
+            if (activeController.HasWeldableContacts())
             {
                 Debug.Log("Magnetic Frame: Falling piece is magnetic; locking instantly");
+                activeController.Release();
                 activeController.ForceLock();
             }
             return;
@@ -39,9 +40,7 @@ public class MagneticFrame : MonoBehaviour
             return;
         }
 
-        Debug.Log(piece.IsLocked
-            ? "[MagneticFrame]: Found collision with falling piece; locking"
-            : "[MagneticFrame]: Found collision with locked piece; locking");
+        Debug.Log("[MagneticFrame]: Found collision with falling piece; locking");
         activeController.Release();
         activeController.ForceLock();
     }
