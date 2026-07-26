@@ -76,7 +76,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.2, y: 1.2}
   m_EdgeRadius: 0
 --- !u!1001 &1052642173992047759
 PrefabInstance:
@@ -86,6 +86,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2255951894693226906, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: m_Size.x
+      value: 1.95
+      objectReference: {fileID: 0}
     - target: {fileID: 2255951894693226906, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 0.890625
@@ -102,9 +106,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: MagneticFrame
       objectReference: {fileID: 0}
+    - target: {fileID: 3328365950053633513, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: m_Size.x
+      value: 2.046875
+      objectReference: {fileID: 0}
+    - target: {fileID: 3328365950053633513, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: m_Size.y
+      value: 1.0625
+      objectReference: {fileID: 0}
+    - target: {fileID: 3328365950053633513, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 4877825377717948546, guid: 019e6dfc3fd9a714e8db019a68d9414b, type: 3}
+    - target: {fileID: 4275993252948803437, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: icon
+      value: 
+      objectReference: {fileID: 4877825377717948546, guid: 019e6dfc3fd9a714e8db019a68d9414b, type: 3}
     - target: {fileID: 4275993252948803437, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: howItWorks
-      value: Breaks the game.
+      value: 2x1 block that instantly connects to touching blocks.
       objectReference: {fileID: 0}
     - target: {fileID: 4275993252948803437, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: displayName
@@ -128,11 +148,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6705496721772700179, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6705496721772700179, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6705496721772700179, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -174,17 +194,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2255951894693226906, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6705496721772700179, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5190865421433386353}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2848562934725609983, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
-      insertIndex: 3
-      addedObject: {fileID: 8075344955164472119}
     - targetCorrespondingSourceObject: {fileID: 2848562934725609983, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2383185981788875994}
@@ -194,80 +210,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2848562934725609983, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
   m_PrefabInstance: {fileID: 1052642173992047759}
   m_PrefabAsset: {fileID: 0}
---- !u!60 &8075344955164472119
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2959881588920163696}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.3671875, y: -0.26171875}
-      - {x: 0.39453125, y: -0.21484375}
-      - {x: 0.42578125, y: -0.16015625}
-      - {x: 0.484375, y: -0.05859375}
-      - {x: 0.5, y: -0.02734375}
-      - {x: 0.5, y: 0.03125}
-      - {x: 0.484375, y: 0.05859375}
-      - {x: 0.3671875, y: 0.26171875}
-      - {x: 0.265625, y: 0.4375}
-      - {x: 0.25390625, y: 0.4453125}
-      - {x: -0.25390625, y: 0.4453125}
-      - {x: -0.265625, y: 0.4375}
-      - {x: -0.29296875, y: 0.390625}
-      - {x: -0.30859375, y: 0.36328125}
-      - {x: -0.3671875, y: 0.26171875}
-      - {x: -0.39453125, y: 0.21484375}
-      - {x: -0.42578125, y: 0.16015625}
-      - {x: -0.5, y: 0.03125}
-      - {x: -0.5, y: -0.03125}
-      - {x: -0.484375, y: -0.05859375}
-      - {x: -0.41015625, y: -0.1875}
-      - {x: -0.265625, y: -0.4375}
-      - {x: -0.25390625, y: -0.4453125}
-      - {x: 0.25390625, y: -0.4453125}
-      - {x: 0.265625, y: -0.4375}
-      - {x: 0.29296875, y: -0.390625}
-      - {x: 0.30859375, y: -0.36328125}
-  m_UseDelaunayMesh: 1
 --- !u!114 &2383185981788875994
 MonoBehaviour:
   m_ObjectHideFlags: 0
