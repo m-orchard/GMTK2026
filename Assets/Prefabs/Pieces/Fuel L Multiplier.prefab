@@ -56,6 +56,14 @@ PrefabInstance:
       propertyPath: effect
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7940241017282840530, guid: 6c017c7af4658474eb7d09cdb5618b2c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7940241017282840530, guid: 6c017c7af4658474eb7d09cdb5618b2c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7955935264721572089, guid: 6c017c7af4658474eb7d09cdb5618b2c, type: 3}
       propertyPath: howItWorks
       value: 3x2 L shape piece that multiplies welded fuel.
@@ -63,6 +71,30 @@ PrefabInstance:
     - target: {fileID: 7955935264721572089, guid: 6c017c7af4658474eb7d09cdb5618b2c, type: 3}
       propertyPath: displayName
       value: L Fuel Multiplier
+      objectReference: {fileID: 0}
+    - target: {fileID: 8180135201765352854, guid: 6c017c7af4658474eb7d09cdb5618b2c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8180135201765352854, guid: 6c017c7af4658474eb7d09cdb5618b2c, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8180135201765352854, guid: 6c017c7af4658474eb7d09cdb5618b2c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8180135201765352854, guid: 6c017c7af4658474eb7d09cdb5618b2c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8180135201765352854, guid: 6c017c7af4658474eb7d09cdb5618b2c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8180135201765352854, guid: 6c017c7af4658474eb7d09cdb5618b2c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8265909787928782443, guid: 6c017c7af4658474eb7d09cdb5618b2c, type: 3}
       propertyPath: m_Name
