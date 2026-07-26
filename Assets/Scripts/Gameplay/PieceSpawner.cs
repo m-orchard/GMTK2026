@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,6 +17,7 @@ public class PieceSpawner : Singleton<PieceSpawner>
 
     private readonly List<GameObject> bag = new List<GameObject>();
     private PiecePool pool;
+    private List<GameObject> pendingPoolOverrides;
 
     private bool conveyorDispensingStopped;
     private bool craneBlocked;
@@ -26,6 +28,7 @@ public class PieceSpawner : Singleton<PieceSpawner>
     public void SetPool(PiecePool pool)
     {
         this.pool = pool;
+        pendingPoolOverrides = new(pool.overrides);
     }
 
     public void ReplaceFrontConveyorPiece(GameObject prefab)
@@ -164,9 +167,24 @@ public class PieceSpawner : Singleton<PieceSpawner>
         bag.RemoveAt(lastIndex);
         return prefab;
     }
+
     private void RefillBag()
     {
         bag.Clear();
+
+        var bagSize = pool.bagSize;
+        var overridesToAdd = Math.Min(pendingPoolOverrides.Count(), bagSize);
+
+        if (overridesToAdd > 0)
+        {
+            Debug.Log($"[PieceSpawner]: Refilling bag with overrides (count={overridesToAdd})");
+
+            var overrides = pendingPoolOverrides.GetRange(0, overridesToAdd);
+            overrides.Reverse();
+            bag.AddRange(overrides);
+            pendingPoolOverrides.RemoveRange(0, overridesToAdd);
+            bagSize -= overridesToAdd;
+        }
 
         var groups = new List<(int group, List<AvailablePiece> members)>();
         var groupIndex = new Dictionary<int, int>();
@@ -183,9 +201,9 @@ public class PieceSpawner : Singleton<PieceSpawner>
         }
 
         var groupWeights = groups.Select(g => g.members.Sum(m => m.chance)).ToList();
-        var groupCounts = AllocateCounts(pool.bagSize, groupWeights);
+        var groupCounts = AllocateCounts(bagSize, groupWeights);
 
-        Debug.Log($"[PieceSpawner]: Refilling bag (bag size={pool.bagSize}, groups={groups.Count})");
+        Debug.Log($"[PieceSpawner]: Adding random pieces to bag (count={bagSize}, groups={groups.Count})");
 
         for (int g = 0; g < groups.Count; g++)
         {
@@ -203,9 +221,9 @@ public class PieceSpawner : Singleton<PieceSpawner>
             }
         }
 
-        for (int i = bag.Count - 1; i > 0; i--)
+        for (int i = bag.Count - 1; i > overridesToAdd; i--)
         {
-            int j = Random.Range(0, i + 1);
+            int j = UnityEngine.Random.Range(overridesToAdd, i + 1);
             (bag[i], bag[j]) = (bag[j], bag[i]);
         }
 
@@ -247,11 +265,11 @@ public class PieceSpawner : Singleton<PieceSpawner>
             int chosen;
             if (totalFrac <= 0f)
             {
-                chosen = indices[Random.Range(0, indices.Count)];
+                chosen = indices[UnityEngine.Random.Range(0, indices.Count)];
             }
             else
             {
-                float roll = Random.Range(0f, totalFrac);
+                float roll = UnityEngine.Random.Range(0f, totalFrac);
                 float cumulative = 0f;
                 chosen = indices[indices.Count - 1];
                 foreach (int i in indices)
