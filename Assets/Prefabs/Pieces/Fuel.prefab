@@ -939,6 +939,14 @@ PrefabInstance:
       propertyPath: m_Mass
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 4275993252948803437, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: howItWorks
+      value: Basic 2x2 fuel piece. Adds its indicated fuel to the tank.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4275993252948803437, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: displayName
+      value: Square Fuel
+      objectReference: {fileID: 0}
     - target: {fileID: 6705496721772700179, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

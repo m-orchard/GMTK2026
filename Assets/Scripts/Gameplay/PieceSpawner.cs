@@ -29,6 +29,7 @@ public class PieceSpawner : Singleton<PieceSpawner>
     {
         this.pool = pool;
         pendingPoolOverrides = new(pool.overrides);
+        pendingPoolOverrides.AddRange(LevelManager.Instance.AcquiredPieces);
     }
 
     public void ReplaceFrontConveyorPiece(GameObject prefab)

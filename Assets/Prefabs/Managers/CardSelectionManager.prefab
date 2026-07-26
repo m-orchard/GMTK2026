@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8774610548180803478
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9182929622972251400}
+  - component: {fileID: 7697571871446134006}
+  - component: {fileID: 1988056743741871380}
+  m_Layer: 0
+  m_Name: CardSelectionManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9182929622972251400
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8774610548180803478}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7697571871446134006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8774610548180803478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59d7fb821f3f41119279e5520ebf2d3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SerializedCardProvider
+  piecePrefabsByCompletedLevel:
+  - {fileID: 4250123244721277833, guid: 7a3fef3f41928964fbcad258057827e1, type: 3}
+  - {fileID: 8750320709873316647, guid: 3b692067be01b7a428037f52ff79c8ec, type: 3}
+  - {fileID: 6128414855633721778, guid: 19028579c919ac34e8d6f8ff2fc2c249, type: 3}
+  - {fileID: 2959881588920163696, guid: 91dd64b0e90727748bd7addbc3ffc231, type: 3}
+--- !u!114 &1988056743741871380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8774610548180803478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4be17564023845558d6cbadd2eec6014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardSelectionManager
+  cardProvider: {fileID: 7697571871446134006}
+  cardPrefab: {fileID: 3388567830851295793, guid: ab4f792d0f0cc334785ad46c98887a8c, type: 3}
+  cardContainer: {fileID: 0}

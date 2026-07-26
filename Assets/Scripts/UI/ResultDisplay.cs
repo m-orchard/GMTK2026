@@ -22,10 +22,15 @@ public class ResultDisplay : MonoBehaviour
 
     private void UpdateLabel(float apex, float target, bool success)
     {
+        if (success)
+        {
+            HidePanel();
+            return;
+        }
+
         if (panel != null) panel.SetActive(true);
 
-        string verdict = success ? "SUCCESS" : "FAIL";
-        label.text = $"Reached {apex:0.0}m / target {target:0.0}m — {verdict}\nPress Space to continue";
+        label.text = $"Reached {apex:0.0}m / target {target:0.0}m — FAIL\nPress Space to continue";
     }
 
     private void HidePanel()

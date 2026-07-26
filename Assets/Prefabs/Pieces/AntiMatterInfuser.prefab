@@ -12,6 +12,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: AntiMatterInfuser
       objectReference: {fileID: 0}
+    - target: {fileID: 4275993252948803437, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: howItWorks
+      value: 2x1 piece that reduces the weight of pieces welded to it.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4275993252948803437, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
+      propertyPath: displayName
+      value: Antimatter Infuser
+      objectReference: {fileID: 0}
     - target: {fileID: 6424228768344603949, guid: 735130ed1d091254e81fb1168c0a789a, type: 3}
       propertyPath: m_Color.b
       value: 0.3584906

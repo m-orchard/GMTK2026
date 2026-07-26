@@ -14,15 +14,24 @@ public class LevelManager : Singleton<LevelManager> {
 
     private PiecePool currentPool;
 
+    private readonly List<GameObject> acquiredPieces = new();
+
     public int CurrentLevel { get; private set; }
     public float TargetHeight { get; private set; }
     public float BuildDuration { get; private set; }
     public PiecePool CurrentPool => currentPool;
+    public IReadOnlyList<GameObject> AcquiredPieces => acquiredPieces;
 
     public event Action<int> OnLevelChanged;
 
     public void ResetToFirstLevel() {
+        acquiredPieces.Clear();
         SetLevel(initialLevel);
+    }
+
+    public void AcquirePiece(GameObject piecePrefab) {
+        if (piecePrefab == null) return;
+        acquiredPieces.Add(piecePrefab);
     }
 
     public void AdvanceLevel() {

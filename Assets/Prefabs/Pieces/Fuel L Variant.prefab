@@ -60,6 +60,15 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: -1
       objectReference: {fileID: 0}
+    - target: {fileID: 7955935264721572089, guid: 6c017c7af4658474eb7d09cdb5618b2c, type: 3}
+      propertyPath: howItWorks
+      value: Basic 3x2 inverse L shape fuel piece. Adds its indicated fuel to the
+        tank.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7955935264721572089, guid: 6c017c7af4658474eb7d09cdb5618b2c, type: 3}
+      propertyPath: displayName
+      value: Inverse L Fuel
+      objectReference: {fileID: 0}
     - target: {fileID: 8265909787928782443, guid: 6c017c7af4658474eb7d09cdb5618b2c, type: 3}
       propertyPath: m_Name
       value: Fuel L Variant

@@ -87,7 +87,7 @@ public class GameManager : Singleton<GameManager>
 
         if (Keyboard.current == null) return;
 
-        if (state == State.Result && Keyboard.current.spaceKey.wasPressedThisFrame)
+        if (state == State.Result && !lastRoundSucceeded && Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             Continue();
         }
@@ -205,5 +205,19 @@ public class GameManager : Singleton<GameManager>
     {
         LevelManager.Instance.AdvanceLevel();
         EnterBuilding();
+    }
+
+    public void DebugCompleteLevel()
+    {
+        if (state == State.Result) return;
+
+        buildTimer.StopTimer();
+        heightTracker.StopTracking();
+
+        state = State.Result;
+        lastRoundSucceeded = true;
+
+        float targetHeight = LevelManager.Instance.TargetHeight;
+        OnRoundResult?.Invoke(targetHeight, targetHeight, true);
     }
 }

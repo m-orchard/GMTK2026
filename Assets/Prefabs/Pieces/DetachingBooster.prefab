@@ -112,6 +112,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: DetachingBooster
       objectReference: {fileID: 0}
+    - target: {fileID: 8449772039034889388, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
+      propertyPath: howItWorks
+      value: 2x1 Thruster that detaches after a peroid of time to save weight. Uses
+        fuel to push the rocket.
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449772039034889388, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
+      propertyPath: displayName
+      value: Detachable Thruster
+      objectReference: {fileID: 0}
     - target: {fileID: 8870261398212585828, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
       propertyPath: m_Mass
       value: 2
