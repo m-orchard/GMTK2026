@@ -51,7 +51,7 @@ MonoBehaviour:
   slammingNumberParent: {fileID: 0}
   countdownStartSecond: 5
   emitThrusterPuffAtSecond: 3
-  countdownStartSound: {fileID: 8300000, guid: e20f745f33f5f924e8d5e3fd297dca94, type: 3}
+  countdownStartSound: {fileID: 8300000, guid: b2005be77296a534bb11c297215af90b, type: 3}
   countdownSteps:
   - number: 5
     clip: {fileID: 8300000, guid: 72fdf49a36cd3e84a8c1ddc09efaf502, type: 3}

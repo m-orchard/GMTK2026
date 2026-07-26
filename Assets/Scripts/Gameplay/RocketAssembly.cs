@@ -6,9 +6,16 @@ public class RocketAssembly : Singleton<RocketAssembly>
 {
     [SerializeField] private GameObject rocketFoundationPrefab;
     [SerializeField] private GameObject weldMarkerPrefab;
+    [SerializeField] private List<AudioClip> pieceWeldedSounds = new();
     [SerializeField] private bool requireEngineBracing = false;
 
     public GameObject WeldMarkerPrefab => weldMarkerPrefab;
+
+    public AudioClip RandomPieceWeldedSound()
+    {
+        if (pieceWeldedSounds.Count == 0) return null;
+        return pieceWeldedSounds[Random.Range(0, pieceWeldedSounds.Count)];
+    }
 
     public float PadY { get; private set; }
     public readonly List<Piece> PadPieces = new();
