@@ -212,9 +212,13 @@ public class PieceSpawner : Singleton<PieceSpawner>
         Debug.Log($"[PieceSpawner]: Refilled bag (count={bag.Count()})");
     }
 
-    // Splits `total` across `weights` using exact floors, then randomly distributes
-    // the leftover remainder (weighted by fractional share), so proportional splits
-    // stay exact but rounding ties resolve differently each call.
+    // Guarantees every positive-weight entry at least one slot (when the bag has
+    // room for it), then splits whatever remains across `weights` using exact
+    // floors plus a randomly-distributed remainder (weighted by fractional
+    // share), so proportional splits stay exact but rounding ties resolve
+    // differently each call. The upfront guarantee is what makes "you'll always
+    // get at least one engine per bag" an actual guarantee rather than a
+    // coincidence of today's exact weight values.
     private int[] AllocateCounts(int total, List<float> weights)
     {
         int n = weights.Count;
@@ -227,18 +231,33 @@ public class PieceSpawner : Singleton<PieceSpawner>
             return counts;
         }
 
+        int positiveWeightCount = weights.Count(w => w > 0f);
+        int remaining = total;
+        if (positiveWeightCount <= total)
+        {
+            for (int i = 0; i < n; i++)
+            {
+                if (weights[i] <= 0f) continue;
+                counts[i] = 1;
+                remaining--;
+            }
+        }
+
+        if (remaining <= 0) return counts;
+
         var fractions = new float[n];
         int assigned = 0;
 
         for (int i = 0; i < n; i++)
         {
-            float exact = total * (weights[i] / totalWeight);
-            counts[i] = Mathf.FloorToInt(exact);
-            fractions[i] = exact - counts[i];
-            assigned += counts[i];
+            float exact = remaining * (weights[i] / totalWeight);
+            int extra = Mathf.FloorToInt(exact);
+            counts[i] += extra;
+            fractions[i] = exact - extra;
+            assigned += extra;
         }
 
-        int remainder = total - assigned;
+        int remainder = remaining - assigned;
         var indices = Enumerable.Range(0, n).ToList();
 
         for (int r = 0; r < remainder; r++)

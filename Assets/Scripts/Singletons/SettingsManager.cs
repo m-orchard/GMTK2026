@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SettingsManager : Singleton<SettingsManager>
 {
-    public bool tutorialEnabled;
+    public bool tutorialEnabled = true;
 
     public void ToggleTutorial() {
         tutorialEnabled = !tutorialEnabled;

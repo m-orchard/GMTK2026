@@ -31,7 +31,7 @@ MonoBehaviour:
     chance: 0.2
     group: 1
   - prefab: {fileID: 7610202894727582270, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
-    chance: 0.3
+    chance: 0.5
     group: 2
   - prefab: {fileID: 8750320709873316647, guid: 3b692067be01b7a428037f52ff79c8ec, type: 3}
     chance: 0.3

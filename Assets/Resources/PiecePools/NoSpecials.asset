@@ -21,15 +21,6 @@ MonoBehaviour:
   - prefab: {fileID: 4348509434015854766, guid: 51a52faa39b7c51449154b0c5eb8f330, type: 3}
     chance: 0.3
     group: 0
-  - prefab: {fileID: 8265909787928782443, guid: 6c017c7af4658474eb7d09cdb5618b2c, type: 3}
-    chance: 0.2
-    group: 1
-  - prefab: {fileID: 5214020119653457056, guid: e9e6a349388890f429a0d86280bd4716, type: 3}
-    chance: 0.2
-    group: 1
-  - prefab: {fileID: 8265909787928782443, guid: 05821299b69631841b55a69697efe859, type: 3}
-    chance: 0.2
-    group: 1
   - prefab: {fileID: 7610202894727582270, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
-    chance: 0.3
+    chance: 0.25
     group: 2
