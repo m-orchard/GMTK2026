@@ -210,6 +210,12 @@ public class FallingPieceController : MonoBehaviour
             wiggleTimer = 0f;
         }
 
+        if (collider2D.IsTouching(Ground.Instance.TriggerCollider))
+        {
+            Release();
+            return;
+        }
+
         var keyboard = controllable ? Keyboard.current : null;
         bool softDrop = keyboard != null && (keyboard.downArrowKey.isPressed || keyboard.sKey.isPressed);
 
