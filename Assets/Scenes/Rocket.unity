@@ -3891,14 +3891,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2751250629469760294}
     - target: {fileID: 5412701273852950779, guid: 2b47d7d27921ace4191bb64b6a3b3f28, type: 3}
-      propertyPath: wellMaxX
-      value: 3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5412701273852950779, guid: 2b47d7d27921ace4191bb64b6a3b3f28, type: 3}
-      propertyPath: wellMinX
-      value: -3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5412701273852950779, guid: 2b47d7d27921ace4191bb64b6a3b3f28, type: 3}
       propertyPath: conveyorRig
       value: 
       objectReference: {fileID: 6467613142118052110}
