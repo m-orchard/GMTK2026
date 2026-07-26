@@ -423,7 +423,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: This is a tutorial
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9a5bfbe076f0d9a4da6ffb9723bb8987, type: 2}
   m_sharedMaterial: {fileID: -9160352284737365776, guid: 9a5bfbe076f0d9a4da6ffb9723bb8987, type: 2}
@@ -979,7 +979,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9a5bfbe076f0d9a4da6ffb9723bb8987, type: 2}
   m_sharedMaterial: {fileID: -9160352284737365776, guid: 9a5bfbe076f0d9a4da6ffb9723bb8987, type: 2}

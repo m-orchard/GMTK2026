@@ -39,9 +39,12 @@ public class MusicManager : Singleton<MusicManager> {
     }
 
     private void OnDisable() {
-        GameManager.Instance.OnBuildingStarted -= PlayLoop;
         countdownTimer.OnTimerStarted -= PlayLoop;
         countdownTimer.OnTimerStopped -= StopMusic;
+
+        if (!GameManager.Instance) { return; }
+
+        GameManager.Instance.OnBuildingStarted -= PlayLoop;
     }
 
     private void Update() {
