@@ -52,6 +52,14 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3955056987283340735, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: howItWorks
+      value: 2x2 fuel piece that multiplies welded fuel.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955056987283340735, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
+      propertyPath: displayName
+      value: Square Fuel Multiplier
+      objectReference: {fileID: 0}
     - target: {fileID: 5817238846332936385, guid: 0584d2bb39355be44bbfeb8c902ebbf2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

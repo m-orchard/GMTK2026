@@ -17,6 +17,7 @@ public class PieceCardView : MonoBehaviour
     [SerializeField] private AudioClip entranceSound;
     [SerializeField] private AudioClip hoverSound;
     [SerializeField] private AudioClip clickSound;
+    [SerializeField] private AudioClip exitSound;
 
     [Header("Entrance")]
     [SerializeField] private float entranceStartScale = 0f;
@@ -200,6 +201,16 @@ public class PieceCardView : MonoBehaviour
         interactionSequence.Join(animatedTransform.DOLocalRotate(new Vector3(0f, 0f, targetTilt), duration).SetEase(ease));
     }
 
+    public void Dismiss()
+    {
+        if (isDismissing)
+            return;
+
+        isDismissing = true;
+        PlaySound(exitSound);
+        PlayExit(DestroySelf);
+    }
+
     private void HandleCardButtonClicked()
     {
         if (!isReady || isDismissing)
@@ -207,12 +218,13 @@ public class PieceCardView : MonoBehaviour
 
         isDismissing = true;
         PlaySound(clickSound);
-        PlayDismiss();
+        PlayPickedDismiss();
     }
 
-    private void PlayDismiss()
+    private void PlayPickedDismiss()
     {
         interactionSequence?.Kill();
+        entranceSequence?.Kill();
 
         dismissSequence = DOTween.Sequence();
         dismissSequence.SetUpdate(true);
@@ -220,19 +232,43 @@ public class PieceCardView : MonoBehaviour
         dismissSequence.Append(animatedTransform.DOScale(Vector3.one * clickPunchScale, clickPunchDuration)
             .SetEase(Ease.OutBack, clickPunchOvershoot));
 
-        dismissSequence.Append(animatedTransform.DOScale(Vector3.one * exitScale, exitDuration)
-            .SetEase(Ease.InBack));
-        dismissSequence.Join(animatedTransform.DOLocalRotate(new Vector3(0f, 0f, exitSpinRotation), exitDuration)
-            .SetEase(Ease.InQuad));
-        dismissSequence.Join(canvasGroup.DOFade(0f, exitDuration)
-            .SetEase(Ease.InQuad));
+        AppendExitTweens(dismissSequence);
 
-        dismissSequence.OnComplete(NotifyClicked);
+        dismissSequence.OnComplete(HandlePickedDismissComplete);
     }
 
-    private void NotifyClicked()
+    private void PlayExit(TweenCallback onComplete)
+    {
+        interactionSequence?.Kill();
+        entranceSequence?.Kill();
+
+        dismissSequence = DOTween.Sequence();
+        dismissSequence.SetUpdate(true);
+
+        AppendExitTweens(dismissSequence);
+
+        dismissSequence.OnComplete(onComplete);
+    }
+
+    private void AppendExitTweens(Sequence sequence)
+    {
+        sequence.Append(animatedTransform.DOScale(Vector3.one * exitScale, exitDuration)
+            .SetEase(Ease.InBack));
+        sequence.Join(animatedTransform.DOLocalRotate(new Vector3(0f, 0f, exitSpinRotation), exitDuration)
+            .SetEase(Ease.InQuad));
+        sequence.Join(canvasGroup.DOFade(0f, exitDuration)
+            .SetEase(Ease.InQuad));
+    }
+
+    private void HandlePickedDismissComplete()
     {
         Clicked?.Invoke();
+        DestroySelf();
+    }
+
+    private void DestroySelf()
+    {
+        Destroy(gameObject);
     }
 
     private void PlaySound(AudioClip clip)

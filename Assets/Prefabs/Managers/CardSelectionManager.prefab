@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59d7fb821f3f41119279e5520ebf2d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SerializedCardProvider
-  piecePrefabsByCompletedLevel:
+  availablePiecePrefabs:
   - {fileID: 4250123244721277833, guid: 7a3fef3f41928964fbcad258057827e1, type: 3}
   - {fileID: 8750320709873316647, guid: 3b692067be01b7a428037f52ff79c8ec, type: 3}
   - {fileID: 6128414855633721778, guid: 19028579c919ac34e8d6f8ff2fc2c249, type: 3}
@@ -55,6 +55,8 @@ MonoBehaviour:
   - {fileID: 7183475148628704690, guid: c33f19c380cded4488a3fb3a38f5f310, type: 3}
   - {fileID: 6679651037304786347, guid: 11110b521d1b2bc408b68b36d021ff8b, type: 3}
   - {fileID: 7275081325980974768, guid: b2f1740b448bc20429b5b8310aa1760d, type: 3}
+  selectRandomly: 1
+  cardsToOffer: 3
 --- !u!114 &1988056743741871380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,5 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardSelectionManager
   cardProvider: {fileID: 7697571871446134006}
+  bannerPrefab: {fileID: 0}
+  bannerContainer: {fileID: 0}
   cardPrefab: {fileID: 3388567830851295793, guid: ab4f792d0f0cc334785ad46c98887a8c, type: 3}
   cardContainer: {fileID: 0}

@@ -12,6 +12,14 @@ PrefabInstance:
       propertyPath: effect
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2343634987877910076, guid: 51a52faa39b7c51449154b0c5eb8f330, type: 3}
+      propertyPath: howItWorks
+      value: 2x1 fuel piece that multiplies welded fuel.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2343634987877910076, guid: 51a52faa39b7c51449154b0c5eb8f330, type: 3}
+      propertyPath: displayName
+      value: Long Fuel Multiplier
+      objectReference: {fileID: 0}
     - target: {fileID: 4348509434015854766, guid: 51a52faa39b7c51449154b0c5eb8f330, type: 3}
       propertyPath: m_Name
       value: FuelLong Multiplier

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CardSelectionManager : MonoBehaviour
@@ -9,8 +10,8 @@ public class CardSelectionManager : MonoBehaviour
     [SerializeField] private Transform cardContainer;
 
     private RewardIntroBanner activeBanner;
-    private PieceCardView activeCard;
-    private PieceCard offeredCard;
+    private readonly List<PieceCardView> activeCards = new();
+    private List<PieceCard> offeredCards;
 
     private void OnEnable()
     {
@@ -22,7 +23,7 @@ public class CardSelectionManager : MonoBehaviour
         if (GameManager.Instance != null)
             GameManager.Instance.OnRoundResult -= HandleRoundResult;
 
-        DespawnCard();
+        DespawnCards();
         DespawnBanner();
     }
 
@@ -31,8 +32,8 @@ public class CardSelectionManager : MonoBehaviour
         if (!success)
             return;
 
-        offeredCard = cardProvider.GetOfferedCard(LevelManager.Instance.CurrentLevel);
-        if (offeredCard == null)
+        offeredCards = cardProvider.GetOfferedCards();
+        if (offeredCards == null || offeredCards.Count == 0)
         {
             Debug.LogWarning($"[CardSelectionManager] No card offered for completed level {LevelManager.Instance.CurrentLevel}; advancing without a card.");
             GameManager.Instance.GoToNextLevel();
@@ -40,37 +41,58 @@ public class CardSelectionManager : MonoBehaviour
         }
 
         activeBanner = Instantiate(bannerPrefab, bannerContainer);
-        activeBanner.IntroCompleted += ShowCard;
+        activeBanner.IntroCompleted += ShowCards;
     }
 
-    private void ShowCard()
+    private void ShowCards()
     {
         if (activeBanner != null)
-            activeBanner.IntroCompleted -= ShowCard;
+            activeBanner.IntroCompleted -= ShowCards;
 
-        activeCard = Instantiate(cardPrefab, cardContainer);
-        activeCard.Populate(offeredCard);
-        activeCard.Clicked += HandleCardPicked;
+        foreach (PieceCard offeredCard in offeredCards)
+        {
+            PieceCard cardToAcquire = offeredCard;
+
+            PieceCardView cardView = Instantiate(cardPrefab, cardContainer);
+            cardView.Populate(cardToAcquire);
+            cardView.Clicked += () => HandleCardPicked(cardToAcquire);
+            activeCards.Add(cardView);
+        }
     }
 
-    private void HandleCardPicked()
+    private void HandleCardPicked(PieceCard pickedCard)
     {
-        LevelManager.Instance.AcquirePiece(offeredCard.PiecePrefab);
-        offeredCard = null;
+        if (offeredCards == null)
+            return;
 
-        DespawnCard();
+        LevelManager.Instance.AcquirePiece(pickedCard.PiecePrefab);
+        offeredCards = null;
+
+        DismissCards();
         DismissBanner();
         GameManager.Instance.GoToNextLevel();
     }
 
-    private void DespawnCard()
+    private void DismissCards()
     {
-        if (activeCard == null)
-            return;
+        foreach (PieceCardView cardView in activeCards)
+        {
+            if (cardView != null)
+                cardView.Dismiss();
+        }
 
-        activeCard.Clicked -= HandleCardPicked;
-        Destroy(activeCard.gameObject);
-        activeCard = null;
+        activeCards.Clear();
+    }
+
+    private void DespawnCards()
+    {
+        foreach (PieceCardView cardView in activeCards)
+        {
+            if (cardView != null)
+                Destroy(cardView.gameObject);
+        }
+
+        activeCards.Clear();
     }
 
     private void DismissBanner()
@@ -78,7 +100,7 @@ public class CardSelectionManager : MonoBehaviour
         if (activeBanner == null)
             return;
 
-        activeBanner.IntroCompleted -= ShowCard;
+        activeBanner.IntroCompleted -= ShowCards;
         activeBanner.Dismiss();
         activeBanner = null;
     }
@@ -88,7 +110,7 @@ public class CardSelectionManager : MonoBehaviour
         if (activeBanner == null)
             return;
 
-        activeBanner.IntroCompleted -= ShowCard;
+        activeBanner.IntroCompleted -= ShowCards;
         Destroy(activeBanner.gameObject);
         activeBanner = null;
     }

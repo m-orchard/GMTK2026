@@ -56,6 +56,14 @@ PrefabInstance:
       propertyPath: effect
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7955935264721572089, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: howItWorks
+      value: 3x2 T shape fuel piece that multiplies welded fuel.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7955935264721572089, guid: 05821299b69631841b55a69697efe859, type: 3}
+      propertyPath: displayName
+      value: T Fuel Multiplier
+      objectReference: {fileID: 0}
     - target: {fileID: 8265909787928782443, guid: 05821299b69631841b55a69697efe859, type: 3}
       propertyPath: m_Name
       value: FuelT Multiplier
