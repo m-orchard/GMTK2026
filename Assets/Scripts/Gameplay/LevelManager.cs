@@ -45,7 +45,6 @@ public class LevelManager : Singleton<LevelManager> {
         BuildDuration = startingBuildDuration + ((level - 1) * buildDurationIncrement);
         int poolIndex = Math.Min(CurrentLevel - 1, levelPools.Count - 1);
         currentPool = levelPools[poolIndex];
-        Debug.Log($"[LevelManager] {CurrentLevel-1}, {levelPools.Count - 1}, {Math.Min(CurrentLevel - 1, levelPools.Count - 1)}");
         Debug.Log($"[LevelManager] Setting level to {CurrentLevel} (target height={TargetHeight}, build duration={BuildDuration}, pool index={poolIndex}, pool={CurrentPool.poolName})");
         OnLevelChanged?.Invoke(CurrentLevel);
     }
