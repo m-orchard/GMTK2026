@@ -49,6 +49,8 @@ MonoBehaviour:
   levelPools:
   - {fileID: 11400000, guid: 2c0a36e03df4f384388b1ec525c5bbdd, type: 2}
   startingTargetHeight: 16
+  targetHeightProgression: 1
   targetHeightIncrement: 4
+  targetHeightMultiplier: 2
   startingBuildDuration: 20
   buildDurationIncrement: 5

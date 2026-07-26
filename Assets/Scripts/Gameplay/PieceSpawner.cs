@@ -42,7 +42,10 @@ public class PieceSpawner : Singleton<PieceSpawner>
         GameObject instance = Instantiate(prefab, Vector3.zero, Quaternion.identity);
         var controller = instance.GetComponent<FallingPieceController>();
         if (controller != null)
+        {
             controller.enabled = false;
+            controller.SetColliderEnabled(false);
+        }
         conveyor.ReplaceFront(instance);
     }
 
@@ -111,6 +114,7 @@ public class PieceSpawner : Singleton<PieceSpawner>
 
         var controller = instance.GetComponent<FallingPieceController>();
         controller.enabled = true;
+        controller.SetColliderEnabled(true);
         controller.SetControllable(false);
         controller.SetBounds(wellMinX, wellMaxX);
         controller.Release();
@@ -142,7 +146,9 @@ public class PieceSpawner : Singleton<PieceSpawner>
     private void AddPieceToConveyor(GameObject prefab)
     {
         GameObject instance = Instantiate(prefab, Vector3.zero, Quaternion.identity);
-        instance.GetComponent<FallingPieceController>().enabled = false;
+        var controller = instance.GetComponent<FallingPieceController>();
+        controller.enabled = false;
+        controller.SetColliderEnabled(false);
         conveyor.Enqueue(instance);
     }
 
@@ -157,6 +163,7 @@ public class PieceSpawner : Singleton<PieceSpawner>
 
         var controller = instance.GetComponent<FallingPieceController>();
         controller.enabled = true;
+        controller.SetColliderEnabled(true);
         controller.SetControllable(controllable && !controlDisabled);
         controller.SetBounds(wellMinX, wellMaxX);
         controller.SetLockCeiling(instance.transform.position.y);

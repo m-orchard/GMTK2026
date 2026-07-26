@@ -103,6 +103,11 @@ public class FallingPieceController : MonoBehaviour
         controllable = value;
     }
 
+    public void SetColliderEnabled(bool value)
+    {
+        collider2D.enabled = value;
+    }
+
     public void SetBounds(float min, float max)
     {
         minX = min;
