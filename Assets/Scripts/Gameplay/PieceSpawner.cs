@@ -15,11 +15,16 @@ public class PieceSpawner : Singleton<PieceSpawner>
     [SerializeField] private float wellMinX = -4.5f;
     [SerializeField] private float wellMaxX = 4.5f;
 
+    [Header("Cargo Drop")]
+    [Tooltip("When on, dropping cargo takes over the active slot so the conveyor pauses until the cargo is placed. When off, the cargo falls on its own and the conveyor keeps delivering pieces uninterrupted.")]
+    [SerializeField] private bool cargoDropStopsConveyor = true;
+
     private readonly List<GameObject> bag = new List<GameObject>();
     private PiecePool pool;
     private List<GameObject> pendingPoolOverrides;
 
     private bool conveyorDispensingStopped;
+    private bool controlDisabled;
     private bool craneBlocked;
     private int nextCargoIndex;
 
@@ -44,6 +49,7 @@ public class PieceSpawner : Singleton<PieceSpawner>
     public void StartBelt()
     {
         conveyorDispensingStopped = false;
+        controlDisabled = false;
         conveyorRig.ResetPosition();
         conveyorRig.BeginFollowingRocketTop();
         conveyor.OnPieceReachedDrop -= HandlePieceReachedDrop;
@@ -61,6 +67,7 @@ public class PieceSpawner : Singleton<PieceSpawner>
     public void BeginBuildEndExit(float exitDuration)
     {
         conveyorDispensingStopped = true;
+        conveyor.StopDispensing();
         conveyorRig.ExitOffScreen(exitDuration);
 
         craneBlocked = true;
@@ -72,21 +79,41 @@ public class PieceSpawner : Singleton<PieceSpawner>
     {
         if (craneBlocked || !crane.IsReady)
             return;
-        if (Active != null)
-            DiscardActive();
 
         GameObject cargo = crane.ReleaseHeld();
-        BecomeActiveFallingPiece(cargo, controllable);
+
+        if (cargoDropStopsConveyor)
+        {
+            if (Active != null)
+                DropActive();
+            BecomeActiveFallingPiece(cargo, controllable);
+        }
+        else
+        {
+            ReleaseAsFreeFallingPiece(cargo);
+        }
+
         rocket.SetCargoPiece(cargo.GetComponent<Piece>());
 
         FetchNextCargo();
     }
 
-    private void DiscardActive()
+    private void DropActive()
     {
         Active.OnReleased -= HandleReleased;
-        Destroy(Active.gameObject);
+        Active.Release();
         Active = null;
+    }
+
+    private void ReleaseAsFreeFallingPiece(GameObject instance)
+    {
+        instance.transform.SetParent(rocket.transform, worldPositionStays: true);
+
+        var controller = instance.GetComponent<FallingPieceController>();
+        controller.enabled = true;
+        controller.SetControllable(false);
+        controller.SetBounds(wellMinX, wellMaxX);
+        controller.Release();
     }
 
     public void ResetCargo()
@@ -119,16 +146,28 @@ public class PieceSpawner : Singleton<PieceSpawner>
         conveyor.Enqueue(instance);
     }
 
+    public void DisableControl()
+    {
+        controlDisabled = true;
+    }
+
     private void BecomeActiveFallingPiece(GameObject instance, bool controllable = true)
     {
         instance.transform.SetParent(rocket.transform, worldPositionStays: true);
 
         var controller = instance.GetComponent<FallingPieceController>();
         controller.enabled = true;
-        controller.SetControllable(controllable);
+        controller.SetControllable(controllable && !controlDisabled);
         controller.SetBounds(wellMinX, wellMaxX);
         controller.SetLockCeiling(instance.transform.position.y);
         controller.SnapToMovementStep();
+
+        if (controlDisabled)
+        {
+            controller.Release();
+            return;
+        }
+
         controller.OnReleased += HandleReleased;
         Active = controller;
     }

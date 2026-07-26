@@ -29,6 +29,8 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private bool autoDropCraneCargoEnabled;
     [SerializeField, Range(1, 5)] private int autoDropCraneCargoAtSecondsRemaining = 3;
     [SerializeField] private bool autoDroppedCargoIsControllable = false;
+    [Tooltip("Let the player press C during the build phase to release the crane cargo early, before the automatic drop time.")]
+    [SerializeField] private bool playerCanForceDropCargoEarly = true;
 
     private State state;
     private bool conveyorExitTriggered;
@@ -92,7 +94,7 @@ public class GameManager : Singleton<GameManager>
             Continue();
         }
 
-        if (state == State.Building && Keyboard.current.cKey.wasPressedThisFrame)
+        if (state == State.Building && playerCanForceDropCargoEarly && Keyboard.current.cKey.wasPressedThisFrame)
         {
             spawner.SpawnCargo();
         }
@@ -164,6 +166,7 @@ public class GameManager : Singleton<GameManager>
     private void EnterLaunching()
     {
         state = State.Launching;
+        spawner.DisableControl();
         spawner.ForceLockActive();
         rocket.LockSettledPieces();
         rocket.ReleaseFoundation();

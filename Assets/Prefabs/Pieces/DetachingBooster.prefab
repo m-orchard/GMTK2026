@@ -108,13 +108,25 @@ PrefabInstance:
       propertyPath: engineSupportCapacity
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6927737862967973416, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
+      propertyPath: m_Color.b
+      value: 0.063218236
+      objectReference: {fileID: 0}
+    - target: {fileID: 6927737862967973416, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6927737862967973416, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7610202894727582270, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
       propertyPath: m_Name
       value: DetachingBooster
       objectReference: {fileID: 0}
     - target: {fileID: 8449772039034889388, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}
       propertyPath: howItWorks
-      value: 2x1 Thruster that detaches after a peroid of time to save weight. Uses
+      value: 2x1 Thruster that detaches after a period of time to save weight. Uses
         fuel to push the rocket.
       objectReference: {fileID: 0}
     - target: {fileID: 8449772039034889388, guid: 4103ad15f705f3541ae742e200c61e59, type: 3}

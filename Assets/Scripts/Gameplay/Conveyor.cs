@@ -16,6 +16,7 @@ public class Conveyor : MonoBehaviour
 
     private readonly List<Rigidbody2D> queue = new List<Rigidbody2D>();
     private Rigidbody2D releasing;
+    private bool dispensing = true;
 
     public event Action<GameObject> OnPieceReachedDrop;
 
@@ -25,9 +26,7 @@ public class Conveyor : MonoBehaviour
     {
         var body = instance.GetComponent<Rigidbody2D>();
         instance.transform.SetParent(transform, worldPositionStays: true);
-        Vector2 entryPosition = SlotPosition(queue.Count + 1);
-        body.position = entryPosition;
-        instance.transform.position = entryPosition;
+        SetLocalPosition(body, SlotLocalPosition(queue.Count + 1));
         queue.Add(body);
     }
 
@@ -46,20 +45,28 @@ public class Conveyor : MonoBehaviour
             return;
 
         Rigidbody2D outgoing = queue[0];
-        Vector2 frontPosition = outgoing != null ? outgoing.position : SlotPosition(0);
+        Vector2 frontLocalPosition = outgoing != null
+            ? (Vector2)outgoing.transform.localPosition
+            : SlotLocalPosition(0);
 
         if (outgoing != null)
             Destroy(outgoing.gameObject);
 
         var body = instance.GetComponent<Rigidbody2D>();
         instance.transform.SetParent(transform, worldPositionStays: true);
-        body.position = frontPosition;
-        instance.transform.position = frontPosition;
+        SetLocalPosition(body, frontLocalPosition);
         queue[0] = body;
+    }
+
+    public void StopDispensing()
+    {
+        dispensing = false;
     }
 
     public void Clear()
     {
+        dispensing = true;
+
         foreach (var body in queue)
         {
             if (body != null)
@@ -83,8 +90,8 @@ public class Conveyor : MonoBehaviour
             if (body == null)
                 continue;
 
-            Vector2 next = Vector2.MoveTowards(body.position, SlotPosition(i), queueStep);
-            body.MovePosition(next);
+            Vector2 nextLocal = Vector2.MoveTowards(body.transform.localPosition, SlotLocalPosition(i), queueStep);
+            SetLocalPosition(body, nextLocal);
         }
 
         AdvanceReleasingPiece();
@@ -92,14 +99,14 @@ public class Conveyor : MonoBehaviour
 
     private void AdvanceReleasingPiece()
     {
-        if (releasing == null)
+        if (releasing == null || !dispensing)
             return;
 
-        Vector2 target = dropPoint != null ? (Vector2)dropPoint.position : SlotPosition(0);
-        Vector2 next = Vector2.MoveTowards(releasing.position, target, releaseSpeed * Time.fixedDeltaTime);
-        releasing.MovePosition(next);
+        Vector2 targetLocal = DropLocalPosition();
+        Vector2 nextLocal = Vector2.MoveTowards(releasing.transform.localPosition, targetLocal, releaseSpeed * Time.fixedDeltaTime);
+        SetLocalPosition(releasing, nextLocal);
 
-        if (Vector2.Distance(next, target) > arrivalThreshold)
+        if (Vector2.Distance(nextLocal, targetLocal) > arrivalThreshold)
             return;
 
         GameObject arrived = releasing.gameObject;
@@ -117,9 +124,20 @@ public class Conveyor : MonoBehaviour
         beltSurface.material.mainTextureOffset = offset;
     }
 
-    private Vector2 SlotPosition(int slotIndex)
+    private Vector2 SlotLocalPosition(int slotIndex)
     {
-        Vector2 origin = frontSlot != null ? (Vector2)frontSlot.position : (Vector2)transform.position;
+        Vector2 origin = frontSlot != null ? (Vector2)transform.InverseTransformPoint(frontSlot.position) : Vector2.zero;
         return origin + slotOffset * slotIndex;
+    }
+
+    private Vector2 DropLocalPosition()
+    {
+        return dropPoint != null ? (Vector2)transform.InverseTransformPoint(dropPoint.position) : SlotLocalPosition(0);
+    }
+
+    private static void SetLocalPosition(Rigidbody2D body, Vector2 localPosition)
+    {
+        Vector3 current = body.transform.localPosition;
+        body.transform.localPosition = new Vector3(localPosition.x, localPosition.y, current.z);
     }
 }
