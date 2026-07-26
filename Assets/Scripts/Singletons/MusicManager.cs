@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class MusicManager : Singleton<MusicManager>
-{
+public class MusicManager : Singleton<MusicManager> {
+
     private enum MusicPhase { None, Loop, Build, Final }
 
     [SerializeField] private Timer countdownTimer;
@@ -24,8 +24,7 @@ public class MusicManager : Singleton<MusicManager>
     private MusicPhase currentPhase = MusicPhase.None;
     private float loopFadeRemaining;
 
-    private void Awake()
-    {
+    private void Awake() {
         loopSource = CreateMusicSource();
         loopSource.loop = true;
 
@@ -33,49 +32,42 @@ public class MusicManager : Singleton<MusicManager>
         primarySource.loop = false;
     }
 
-    private void OnEnable()
-    {
-        countdownTimer.OnTimerStarted += PlayLoop;
+    private void OnEnable() {
+        GameManager.Instance.OnBuildingStarted += PlayLoop;
+        //countdownTimer.OnTimerStarted += PlayLoop;
         countdownTimer.OnTimerStopped += StopMusic;
     }
 
-    private void OnDisable()
-    {
+    private void OnDisable() {
+        GameManager.Instance.OnBuildingStarted -= PlayLoop;
         countdownTimer.OnTimerStarted -= PlayLoop;
         countdownTimer.OnTimerStopped -= StopMusic;
     }
 
-    private void Update()
-    {
+    private void Update() {
         FadeLoop();
 
-        if (!countdownTimer.IsRunning)
-        {
+        if (!countdownTimer.IsRunning) {
             return;
         }
 
         float timeRemaining = countdownTimer.TimeRemaining;
 
-        if (currentPhase < MusicPhase.Final && timeRemaining <= finalStartsAtSecondsRemaining)
-        {
+        if (currentPhase < MusicPhase.Final && timeRemaining <= finalStartsAtSecondsRemaining) {
             PlayPrimary(finalTrack, MusicPhase.Final);
-        }
-        else if (currentPhase < MusicPhase.Build && timeRemaining <= buildStartsAtSecondsRemaining)
-        {
+        } else if (currentPhase < MusicPhase.Build && timeRemaining <= buildStartsAtSecondsRemaining) {
             PlayPrimary(buildTrack, MusicPhase.Build);
             StartLoopFadeOut();
         }
     }
 
-    private void PlayLoop()
-    {
+    private void PlayLoop() {
         currentPhase = MusicPhase.Loop;
         loopFadeRemaining = 0f;
 
         primarySource.Stop();
 
-        if (loopTrack == null)
-        {
+        if (loopTrack == null) {
             return;
         }
 
@@ -84,20 +76,17 @@ public class MusicManager : Singleton<MusicManager>
         loopSource.Play();
     }
 
-    private void StopMusic()
-    {
+    private void StopMusic() {
         currentPhase = MusicPhase.None;
         loopFadeRemaining = 0f;
         loopSource.Stop();
         primarySource.Stop();
     }
 
-    private void PlayPrimary(AudioClip track, MusicPhase phase)
-    {
+    private void PlayPrimary(AudioClip track, MusicPhase phase) {
         currentPhase = phase;
 
-        if (track == null)
-        {
+        if (track == null) {
             return;
         }
 
@@ -106,10 +95,8 @@ public class MusicManager : Singleton<MusicManager>
         primarySource.Play();
     }
 
-    private void StartLoopFadeOut()
-    {
-        if (loopFadeOutSeconds <= 0f)
-        {
+    private void StartLoopFadeOut() {
+        if (loopFadeOutSeconds <= 0f) {
             loopSource.Stop();
             return;
         }
@@ -117,17 +104,14 @@ public class MusicManager : Singleton<MusicManager>
         loopFadeRemaining = loopFadeOutSeconds;
     }
 
-    private void FadeLoop()
-    {
-        if (loopFadeRemaining <= 0f)
-        {
+    private void FadeLoop() {
+        if (loopFadeRemaining <= 0f) {
             return;
         }
 
         loopFadeRemaining -= Time.unscaledDeltaTime;
 
-        if (loopFadeRemaining <= 0f)
-        {
+        if (loopFadeRemaining <= 0f) {
             loopFadeRemaining = 0f;
             loopSource.volume = 0f;
             loopSource.Stop();
@@ -137,8 +121,7 @@ public class MusicManager : Singleton<MusicManager>
         loopSource.volume = volume * (loopFadeRemaining / loopFadeOutSeconds);
     }
 
-    private AudioSource CreateMusicSource()
-    {
+    private AudioSource CreateMusicSource() {
         AudioSource source = gameObject.AddComponent<AudioSource>();
         source.playOnAwake = false;
         source.spatialBlend = 0f;
