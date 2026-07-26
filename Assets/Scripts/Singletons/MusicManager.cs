@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-[RequireComponent(typeof(AudioSource))]
 public class MusicManager : Singleton<MusicManager>
 {
     private enum MusicPhase { None, Loop, Build, Final }
@@ -16,18 +15,22 @@ public class MusicManager : Singleton<MusicManager>
     [SerializeField, Min(0f)] private float buildStartsAtSecondsRemaining = 16f;
     [SerializeField, Min(0f)] private float finalStartsAtSecondsRemaining = 8f;
 
+    [SerializeField, Min(0f)] private float loopFadeOutSeconds = 2f;
+
     [SerializeField, Range(0f, 1f)] private float volume = 1f;
 
-    private AudioSource musicSource;
+    private AudioSource loopSource;
+    private AudioSource primarySource;
     private MusicPhase currentPhase = MusicPhase.None;
+    private float loopFadeRemaining;
 
     private void Awake()
     {
-        musicSource = GetComponent<AudioSource>();
-        musicSource.playOnAwake = false;
-        musicSource.spatialBlend = 0f;
-        musicSource.volume = volume;
-        musicSource.outputAudioMixerGroup = musicMixer;
+        loopSource = CreateMusicSource();
+        loopSource.loop = true;
+
+        primarySource = CreateMusicSource();
+        primarySource.loop = false;
     }
 
     private void OnEnable()
@@ -44,6 +47,8 @@ public class MusicManager : Singleton<MusicManager>
 
     private void Update()
     {
+        FadeLoop();
+
         if (!countdownTimer.IsRunning)
         {
             return;
@@ -53,26 +58,41 @@ public class MusicManager : Singleton<MusicManager>
 
         if (currentPhase < MusicPhase.Final && timeRemaining <= finalStartsAtSecondsRemaining)
         {
-            PlayTrack(finalTrack, MusicPhase.Final);
+            PlayPrimary(finalTrack, MusicPhase.Final);
         }
         else if (currentPhase < MusicPhase.Build && timeRemaining <= buildStartsAtSecondsRemaining)
         {
-            PlayTrack(buildTrack, MusicPhase.Build);
+            PlayPrimary(buildTrack, MusicPhase.Build);
+            StartLoopFadeOut();
         }
     }
 
     private void PlayLoop()
     {
-        PlayTrack(loopTrack, MusicPhase.Loop);
+        currentPhase = MusicPhase.Loop;
+        loopFadeRemaining = 0f;
+
+        primarySource.Stop();
+
+        if (loopTrack == null)
+        {
+            return;
+        }
+
+        loopSource.clip = loopTrack;
+        loopSource.volume = volume;
+        loopSource.Play();
     }
 
     private void StopMusic()
     {
         currentPhase = MusicPhase.None;
-        musicSource.Stop();
+        loopFadeRemaining = 0f;
+        loopSource.Stop();
+        primarySource.Stop();
     }
 
-    private void PlayTrack(AudioClip track, MusicPhase phase)
+    private void PlayPrimary(AudioClip track, MusicPhase phase)
     {
         currentPhase = phase;
 
@@ -81,8 +101,49 @@ public class MusicManager : Singleton<MusicManager>
             return;
         }
 
-        musicSource.clip = track;
-        musicSource.loop = phase == MusicPhase.Loop;
-        musicSource.Play();
+        primarySource.clip = track;
+        primarySource.volume = volume;
+        primarySource.Play();
+    }
+
+    private void StartLoopFadeOut()
+    {
+        if (loopFadeOutSeconds <= 0f)
+        {
+            loopSource.Stop();
+            return;
+        }
+
+        loopFadeRemaining = loopFadeOutSeconds;
+    }
+
+    private void FadeLoop()
+    {
+        if (loopFadeRemaining <= 0f)
+        {
+            return;
+        }
+
+        loopFadeRemaining -= Time.unscaledDeltaTime;
+
+        if (loopFadeRemaining <= 0f)
+        {
+            loopFadeRemaining = 0f;
+            loopSource.volume = 0f;
+            loopSource.Stop();
+            return;
+        }
+
+        loopSource.volume = volume * (loopFadeRemaining / loopFadeOutSeconds);
+    }
+
+    private AudioSource CreateMusicSource()
+    {
+        AudioSource source = gameObject.AddComponent<AudioSource>();
+        source.playOnAwake = false;
+        source.spatialBlend = 0f;
+        source.volume = volume;
+        source.outputAudioMixerGroup = musicMixer;
+        return source;
     }
 }

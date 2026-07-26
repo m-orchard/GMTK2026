@@ -89,6 +89,26 @@ public class AudioManager : Singleton<AudioManager> {
         CreateAudioSource(clip, soundGameObject, options);
     }
 
+    public AudioSource PlayLoopingSound(AudioClip clip, Transform parent, AudioClipOptions options = null) {
+        if (!clip) {
+            return null;
+        }
+
+        AudioClipOptions loopingOptions = options != null ? options : new AudioClipOptions();
+        loopingOptions.Loop = true;
+
+        GameObject soundGameObject = CreateSoundGameObject(clip.name, parent);
+        return CreateAudioSource(clip, soundGameObject, loopingOptions);
+    }
+
+    public void StopLoopingSound(AudioSource audioSource) {
+        if (audioSource == null) {
+            return;
+        }
+
+        Destroy(audioSource.gameObject);
+    }
+
     private GameObject CreateSoundGameObject(string clipName, Vector3 worldPosition) {
         GameObject soundGameObject = new GameObject("Sound " + clipName);
         soundGameObject.transform.position = worldPosition;
@@ -103,7 +123,7 @@ public class AudioManager : Singleton<AudioManager> {
         return soundGameObject;
     }
 
-    private void CreateAudioSource(AudioClip clip, GameObject audioObject, AudioClipOptions options) {
+    private AudioSource CreateAudioSource(AudioClip clip, GameObject audioObject, AudioClipOptions options) {
         AudioClipOptions audioOptions = options != null ? options : new AudioClipOptions();
 
         float pitch = audioOptions.RandomPitch ?
@@ -123,7 +143,11 @@ public class AudioManager : Singleton<AudioManager> {
 
         audioSource.Play();
 
-        Destroy(audioObject, audioSource.clip.length);
+        if (!audioOptions.Loop) {
+            Destroy(audioObject, audioSource.clip.length);
+        }
+
+        return audioSource;
     }
 
     public void SetMasterVolume(float volume) {
